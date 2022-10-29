@@ -1,0 +1,22 @@
+{
+  "name": "auger-templating",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/docEdub/auger-templating.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/docEdub/auger-templating/issues"
+  },
+  "homepage": "https://github.com/docEdub/auger-templating#readme",
+  "dependencies": {
+    "handlebars": "^4.7.7"
+  }
+}
