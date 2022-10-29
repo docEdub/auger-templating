@@ -1,7 +1,11 @@
-import Handlebars from "handlebars/dist/handlebars.js"
+import Handlebars from "handlebars/dist/handlebars.min.js"
+
+import { CsoundHandlebarsHelpers } from "./csoundHandlebarsHelpers"
 
 console.log("Hello csound.ts!");
 
-const template = Handlebars.compile("foo is {{foo}}");
+new CsoundHandlebarsHelpers;
+
+const template = Handlebars.compile("foo is {{wrapped foo}}");
 const output = template({ foo: "bar!" });
 console.log(output);
