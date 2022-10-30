@@ -1,0 +1,13 @@
+{
+    "form": {
+        "width": 1000,
+        "height": 1000,
+        "caption": "Test",
+        "pluginId": "0001",
+        "widgets": [
+            {
+
+            }
+        ]
+    }
+}

@@ -3,10 +3,10 @@ const fs = require('fs');
 const appDirectory = fs.realpathSync(process.cwd());
 
 module.exports = {
-    entry: path.resolve(appDirectory, "src/csound.ts"),
+    entry: path.resolve(appDirectory, "src/cabbageHandlebars.ts"),
     output: {
         path: path.resolve(appDirectory, ".build"),
-        filename: 'csound.js'
+        filename: 'cabbageHandlebars.js'
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
