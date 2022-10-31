@@ -1,7 +1,7 @@
 
 import { Widget } from "./widget";
 
-export class GroupWidget extends Widget {
+export class Group extends Widget {
     constructor() {
         super()
     }

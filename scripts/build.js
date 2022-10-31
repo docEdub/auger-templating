@@ -3,8 +3,7 @@ const path = require("path");
 const Handlebars = require("handlebars/dist/handlebars.min.js");
 require("../.build/cabbageHandlebars.js");
 
-const cabbageHandlebars = new CabbageHandlebars(Handlebars);
-console.log(cabbageHandlebars);
+new CabbageHandlebars(Handlebars);
 
 const rootDir = ".";
 const csd = fs.readFileSync(path.join(rootDir, "csd", "test.csd"), 'ascii');
