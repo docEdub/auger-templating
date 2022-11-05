@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build": "webpack && node ./scripts/build.js"
+    "build": "webpack && node ./scripts/build.js ./csd/test.csd ./csd/test.csd.json",
+    "webpack": "webpack"
   },
   "devDependencies": {
     "handlebars": "^4.7.7",

@@ -5,18 +5,16 @@ require("../.build/cabbageHandlebars.js");
 
 new CabbageHandlebars(Handlebars);
 
-const argStartIndex = 2
-const csdFileName = process.argv[argStartIndex]
+const argStartIndex = 1
 const templateFileName = process.argv[argStartIndex + 1]
-console.log(`csd = ${csdFileName}, template = ${templateFileName}`)
+const templateDataFileName = process.argv[argStartIndex + 2]
+console.log(`csd = ${templateFileName}, template = ${templateFileName}`)
 
-const rootDir = ".";
-const csd = fs.readFileSync(path.join(rootDir, "csd", csdFileName), 'ascii');
-const csdJsonString = fs.readFileSync(path.join(rootDir, "csd", templateFileName), 'ascii');
-const csdJson = JSON.parse(csdJsonString);
-
+const csd = fs.readFileSync(templateFileName, 'ascii');
 const template = Handlebars.compile(csd);
-const output = template(csdJson);
+
+const csdJsonString = fs.readFileSync(templateDataFileName, 'ascii');
+const output = template(JSON.parse(csdJsonString));
 
 console.log(output);
 fs.writeFileSync(path.join(".build", "test.csd"), output, 'ascii');
