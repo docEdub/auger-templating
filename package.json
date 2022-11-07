@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "build": "webpack && node ./scripts/build.js ./csd/test.csd ./csd/test.csd.json",
+    "configure": "cmake -B .build",
+    "make:edit_cache": "make -f .build/Makefile edit_cache",
+    "make": "cmake --build .build",
     "webpack": "webpack"
   },
   "devDependencies": {

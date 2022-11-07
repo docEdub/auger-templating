@@ -5,7 +5,7 @@ const appDirectory = fs.realpathSync(process.cwd());
 module.exports = {
     entry: path.resolve(appDirectory, "src/cabbageHandlebars.ts"),
     output: {
-        path: path.resolve(appDirectory, ".build"),
+        path: path.resolve(appDirectory, ".build/.js"),
         filename: 'cabbageHandlebars.js'
     },
     resolve: {
