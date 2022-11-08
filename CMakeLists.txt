@@ -11,7 +11,7 @@ get_filename_component(ROOT_DIR "${CMAKE_SOURCE_DIR}" ABSOLUTE)
 message("ROOT_DIR = ${ROOT_DIR}")
 
 get_filename_component(BUILD_DIR "${CMAKE_BINARY_DIR}" ABSOLUTE)
-get_filename_component(SCRIPTS_DIR "${ROOT_DIR}/scripts" ABSOLUTE)
+get_filename_component(TOOLS_DIR "${ROOT_DIR}/tools" ABSOLUTE)
 get_filename_component(SRC_DIR "${ROOT_DIR}/src" ABSOLUTE)
 
 
@@ -46,10 +46,10 @@ function(add_handlebar_target)
         add_custom_command(
             OUTPUT "${BUILD_DIR}/${source}"
             WORKING_DIRECTORY "${ROOT_DIR}"
-            COMMAND node "${SCRIPTS_DIR}/buildHandlebars.js" "${BUILD_DIR}" "${ARG_HANDLEBAR_JSON}" "${source}"
+            COMMAND node "${TOOLS_DIR}/buildHandlebars.js" "${BUILD_DIR}" "${ARG_HANDLEBAR_JSON}" "${source}"
             DEPENDS
                 "${source}"
-                "${SCRIPTS_DIR}/buildHandlebars.js"
+                "${TOOLS_DIR}/buildHandlebars.js"
                 "${BUILD_DIR}/.js/cabbageHandlebars.js"
         )
 
