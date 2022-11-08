@@ -1,7 +1,7 @@
 
 import { Form } from "./Types/form";
 
-global.CabbageHandlebars = class {
+global.CabbageTemplateHelper = class {
     constructor(Handlebars: any) {
         Handlebars.registerHelper("Cabbage", (input, options) => {
             let output = "";

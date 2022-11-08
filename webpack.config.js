@@ -3,10 +3,10 @@ const fs = require('fs');
 const appDirectory = fs.realpathSync(process.cwd());
 
 module.exports = {
-    entry: path.resolve(appDirectory, "src/Cabbage/handlebars.ts"),
+    entry: path.resolve(appDirectory, "src/Cabbage/cabbageTemplateHelper.ts"),
     output: {
-        path: path.resolve(appDirectory, ".build/.js/Cabbage"),
-        filename: 'handlebars.js'
+        path: path.resolve(appDirectory, ".build/.root/src/Cabbage"),
+        filename: 'cabbageTemplateHelper.js'
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
