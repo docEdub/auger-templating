@@ -16,11 +16,11 @@ get_filename_component(SRC_DIR "${ROOT_DIR}/src" ABSOLUTE)
 
 
 add_custom_command(
-    OUTPUT "${BUILD_DIR}/.js/cabbageHandlebars.js"
+    OUTPUT "${BUILD_DIR}/.js/Cabbage/handlebars.js"
     WORKING_DIRECTORY "${ROOT_DIR}"
-    COMMAND ${CMAKE_COMMAND} -E remove "${BUILD_DIR}/.js/cabbageHandlebars.js" && npm run webpack
+    COMMAND ${CMAKE_COMMAND} -E remove "${BUILD_DIR}/.js/Cabbage/handlebars.js" && npm run webpack
     DEPENDS
-        "${SRC_DIR}/cabbageHandlebars.ts"
+        "${SRC_DIR}/Cabbage/handlebars.ts"
         "${ROOT_DIR}/webpack.config.js"
 )
 
@@ -46,11 +46,11 @@ function(add_handlebar_target)
         add_custom_command(
             OUTPUT "${BUILD_DIR}/${source}"
             WORKING_DIRECTORY "${ROOT_DIR}"
-            COMMAND node "${TOOLS_DIR}/buildHandlebars.js" "${BUILD_DIR}" "${ARG_HANDLEBAR_JSON}" "${source}"
+            COMMAND node "${TOOLS_DIR}/buildTemplateFiles.js" "${BUILD_DIR}" "${ARG_HANDLEBAR_JSON}" "${source}"
             DEPENDS
                 "${source}"
-                "${TOOLS_DIR}/buildHandlebars.js"
-                "${BUILD_DIR}/.js/cabbageHandlebars.js"
+                "${TOOLS_DIR}/buildTemplateFiles.js"
+                "${BUILD_DIR}/.js/Cabbage/handlebars.js"
         )
 
         get_filename_as_target("${source}" target)

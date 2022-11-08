@@ -1,5 +1,5 @@
 
-import { Form } from "./Cabbage/form";
+import { Form } from "./Types/form";
 
 global.CabbageHandlebars = class {
     constructor(Handlebars: any) {

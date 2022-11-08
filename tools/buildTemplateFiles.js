@@ -10,7 +10,7 @@ console.log(`buildDir = ${buildDir}`);
 console.log(`json = ${jsonFilename}`);
 console.log(`source = ${sourceFilename}`);
 
-require(path.join(buildDir, ".js", "cabbageHandlebars.js"));
+require(path.join(buildDir, ".js", "Cabbage", "handlebars.js"));
 new CabbageHandlebars(Handlebars);
 
 const source = fs.readFileSync(sourceFilename, 'ascii');
