@@ -3,6 +3,10 @@ const path = require("path");
 const Handlebars = require("handlebars/dist/handlebars.min.js");
 
 const isVerbose = process.argv.indexOf("--verbose") != -1 || process.argv.indexOf("-v") != -1;
+if (isVerbose) {
+    console.log("\nbuildTemplateFiles.js ...");
+}
+
 
 // Note:
 // - The `buildDir` arg is expected to be an absolute path.
@@ -16,6 +20,7 @@ const jsonFilename = process.argv[argStartIndex++];
 const sourceFilename = process.argv[argStartIndex++];
 
 if (isVerbose) {
+    console.log("\nArguments:\n")
     console.log(`buildDir = ${buildDir}`);
     console.log(`helper = ${helperFilename}`);
     console.log(`json = ${jsonFilename}`);
@@ -36,6 +41,7 @@ const helperClassName =
 ;
 
 if (isVerbose) {
+    console.log("\nVariables:\n");
     console.log(`buildRootDir = ${buildRootDir}`);
     console.log(`helperTypescriptBasename = ${helperTypescriptBasename}`);
     console.log(`helperRelativeDir = ${helperRelativeDir}`);
@@ -67,8 +73,14 @@ const jsonString = fs.readFileSync(jsonFilename, 'ascii');
 const output = template(JSON.parse(jsonString));
 
 if (isVerbose) {
+    console.log("\nOutput:\n")
     console.log(output);
 }
 
 fs.mkdirSync(sourceBuildDir, { recursive: true });
 fs.writeFileSync(sourceBuildFilename, output, 'ascii');
+
+
+if (isVerbose) {
+    console.log("\nbuildTemplateFiles.js - done\n");
+}

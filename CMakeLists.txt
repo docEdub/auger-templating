@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 3.17)
 
 project("Test")
 
+set(VERBOSE off CACHE BOOL "")
+set(VERBOSE_FLAG "")
+if(${VERBOSE})
+    set(VERBOSE_FLAG "--verbose")
+endif()
+
 get_filename_component(ROOT_DIR "${CMAKE_SOURCE_DIR}" ABSOLUTE)
 
 get_filename_component(BUILD_DIR "${CMAKE_BINARY_DIR}" ABSOLUTE)
@@ -39,7 +45,7 @@ function(add_handlebar_target)
         add_custom_command(
             OUTPUT "${BUILD_DIR}/.root/${source}"
             WORKING_DIRECTORY "${ROOT_DIR}"
-            COMMAND node "${TOOLS_DIR}/buildTemplateFiles.js" "${BUILD_DIR}" "${ARG_HELPER}" "${ARG_JSON}" "${source}"
+            COMMAND node "${TOOLS_DIR}/buildTemplateFiles.js" "${BUILD_DIR}" "${ARG_HELPER}" "${ARG_JSON}" "${source}" ${VERBOSE_FLAG}
             DEPENDS
                 "${source}"
                 "${TOOLS_DIR}/buildTemplateFiles.js"
