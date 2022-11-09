@@ -20,7 +20,6 @@ add_custom_command(
 
 
 function(get_filename_as_target filename out_target)
-    message("filename = ${filename}")
     string(REPLACE "/" "_" target "${filename}")
     string(REPLACE " " "-" target "${target}")
     set(${out_target} "${target}" PARENT_SCOPE)
