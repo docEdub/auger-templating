@@ -45,7 +45,12 @@ function(add_handlebar_target)
         add_custom_command(
             OUTPUT "${BUILD_DIR}/.root/${source}"
             WORKING_DIRECTORY "${ROOT_DIR}"
-            COMMAND node "${TOOLS_DIR}/buildTemplateFiles.js" "${BUILD_DIR}" "${ARG_HELPER}" "${ARG_JSON}" "${source}" ${VERBOSE_FLAG}
+            COMMAND node "${TOOLS_DIR}/buildTemplateFiles.js"
+                --build-dir "${BUILD_DIR}"
+                --helper-files "${ARG_HELPER}"
+                --json-files "${ARG_JSON}"
+                --source "${source}"
+                ${VERBOSE_FLAG}
             DEPENDS
                 "${source}"
                 "${TOOLS_DIR}/buildTemplateFiles.js"
