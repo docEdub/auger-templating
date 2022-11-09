@@ -4,6 +4,11 @@ const CliArgs = require("command-line-args");
 const CliUsage = require("command-line-usage");
 const Handlebars = require("handlebars/dist/handlebars.min.js");
 
+// Note:
+// - The `buildDir` arg is expected to be an absolute path.
+// - All other path arguments are expected to be relative to the root directory.
+// - The `helper-files` arg is expected to be given as the Typescript source filenames.
+
 const cliOptions = [
     {
         name: "build-dir",
@@ -41,30 +46,33 @@ const cliOptions = [
     }
 ];
 
-const arg = CliArgs(cliOptions, { camelCase: true});
+const getCliArgs = () => {
+    try {
+        return CliArgs(cliOptions, { camelCase: true});
+    }
+    catch(e) {
+        console.log(e.message);
+        return null;
+    }
+}
 
-if (arg.help) {
+const arg = getCliArgs()
+
+if (!arg || arg.help) {
     const cliUsage = [
         {
-            header: "Options",
+            header: "Usage",
             optionList: cliOptions
         }
     ]
-
     console.log(CliUsage(cliUsage));
     return 0;
 }
 
-const isVerbose = process.argv.indexOf("--verbose") != -1 || process.argv.indexOf("-v") != -1;
+const isVerbose = arg.verbose;
 if (isVerbose) {
     console.log("\nbuildTemplateFiles.js ...");
 }
-
-
-// Note:
-// - The `buildDir` arg is expected to be an absolute path.
-// - All other path arguments are expected to be relative to the root directory.
-// - The `helperFilename` arg is expected to be given as the Typescript source filename.
 
 if (isVerbose) {
     console.log(`\nArguments:`)
