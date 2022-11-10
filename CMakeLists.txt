@@ -8,7 +8,7 @@ if(${VERBOSE})
     set(VERBOSE_CLI_FLAG "--verbose")
 endif()
 
-function(verbose_message)
+function(verbose_log)
     if(${VERBOSE})
         message("${ARGN}")
     endif()
@@ -34,7 +34,7 @@ function(add_custom_command_for_template_helper)
 
 
         get_template_helper_output_filename("${source}" output)
-        verbose_message("Adding custom command for \"${source}\" -> \"${output}\".")
+        verbose_log("Adding custom command for \"${source}\" -> \"${output}\".")
 
         add_custom_command(
             COMMENT "Generating template helper .js files"
@@ -81,7 +81,7 @@ function(add_custom_commands_for_template_sources)
             COMMAND node "${TOOLS_DIR}/buildTemplateFiles.js"
                 --build-dir "${BUILD_DIR}"
                 --helper-files ${ARG_HELPERS}
-                --json-files "${ARG_JSON}"
+                --json-files ${ARG_JSON}
                 --source "${source}"
                 ${VERBOSE_CLI_FLAG}
             DEPENDS
@@ -100,8 +100,12 @@ add_custom_commands_for_template_sources(
     HELPERS
         "src/Cabbage/cabbageTemplateHelper.ts"
         "src/CsoundQt/csoundQtTemplateHelper.ts"
-    JSON "csd/test.csd.json"
-    SOURCES "csd/test.csd"
+    JSON
+        "csd/test.ui.json"
+        "csd/types-a.json"
+        "csd/types-b.json"
+    SOURCES
+        "csd/test.csd"
 )
 
 add_custom_target(templates. ALL DEPENDS ${_generated_templates})

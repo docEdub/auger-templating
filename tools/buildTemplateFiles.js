@@ -3,11 +3,15 @@ const path = require("path");
 const CliArgs = require("command-line-args");
 const CliUsage = require("command-line-usage");
 const Handlebars = require("handlebars/dist/handlebars.min.js");
+const JsonMerger = require("json-merger");
+
+
+// Configure and parse command line interface arguments
 
 // Note:
 // - The `buildDir` arg is expected to be an absolute path.
 // - All other path arguments are expected to be relative to the root directory.
-// - The `helper-files` arg is expected to be given as the Typescript source filenames.
+// - The `helper-files` arg items are expected to be given as Typescript filenames.
 
 const cliOptions = [
     {
@@ -69,29 +73,28 @@ if (!arg || arg.help) {
     return 0;
 }
 
-const isVerbose = arg.verbose;
-if (isVerbose) {
-    console.log(`\n`);
-    console.log("buildTemplateFiles.js ...");
+const verbose_log = (message) => {
+    if (arg.verbose) {
+        console.log(message);
+    }
 }
 
-if (isVerbose) {
-    console.log(`\n`);
-    console.log(`Arguments:`)
-    console.log(arg);
-}
+verbose_log(`\n`);
+verbose_log("buildTemplateFiles.js ...");
+
+verbose_log(`\n`);
+verbose_log(`Arguments:`)
+verbose_log(arg);
 
 
 // Load helpers
 
 const buildRootDir = path.join(arg.buildDir, ".root");
 
-if (isVerbose) {
-    console.log(`\n`);
-    console.log(`Constants:`);
-    console.log(`{`);
-    console.log(`  buildRootDir = ${buildRootDir}`);
-}
+verbose_log(``);
+verbose_log(`Constants:`);
+verbose_log(`{`);
+verbose_log(`  buildRootDir = ${buildRootDir}`);
 
 for (let i = 0; i < arg.helperFiles.length; i++) {
     const helperTypescriptBasename = path.basename(arg.helperFiles[i]);
@@ -103,22 +106,30 @@ for (let i = 0; i < arg.helperFiles.length; i++) {
         `${helperBasenameWithoutExtension.charAt(0).toUpperCase()}${helperBasenameWithoutExtension.slice(1)}`
     ;
 
-    if (isVerbose) {
-        console.log(`\n`);
-        console.log(`  Helper[${i}]:`);
-        console.log(`  {`)
-        console.log(`    helperTypescriptBasename = ${helperTypescriptBasename}`);
-        console.log(`    helperRelativeDir = ${helperRelativeDir}`);
-        console.log(`    helperJavascriptBasename = ${helperJavascriptBasename}`);
-        console.log(`    helperBuildFilename = ${helperBuildFilename}`);
-        console.log(`    helperClassName = ${helperClassName}`);
-        console.log(`  }`)
-    }
+    verbose_log(``);
+    verbose_log(`  Helper[${i}]:`);
+    verbose_log(`  {`)
+    verbose_log(`    helperTypescriptBasename = ${helperTypescriptBasename}`);
+    verbose_log(`    helperRelativeDir = ${helperRelativeDir}`);
+    verbose_log(`    helperJavascriptBasename = ${helperJavascriptBasename}`);
+    verbose_log(`    helperBuildFilename = ${helperBuildFilename}`);
+    verbose_log(`    helperClassName = ${helperClassName}`);
+    verbose_log(`  }`)
 
     require(helperBuildFilename);
     eval(`new ${helperClassName}(Handlebars)`);
 }
 
+
+// Merge JSON files
+
+const json = JsonMerger.mergeFiles(arg.jsonFiles, {
+    defaultArrayMergeOperation: "concat"
+});
+
+verbose_log(``);
+verbose_log(`  JSON:`);
+verbose_log(arg.verbose ? `  ${JSON.stringify(json, null, 2).replaceAll("\n", "\n  ")}` : "");
 
 // Build template source
 
@@ -126,34 +137,28 @@ const sourceBuildDir = path.join(buildRootDir, path.dirname(arg.source));
 const sourceBasename = path.basename(arg.source);
 const sourceBuildFilename = path.join(sourceBuildDir, sourceBasename);
 
-if (isVerbose) {
-    console.log(`\n`);
-    console.log(`  sourceBuildDir = ${sourceBuildDir}`);
-    console.log(`  sourceBasename = ${sourceBasename}`);
-    console.log(`  sourceBuildFilename = ${sourceBuildFilename}`);
-    console.log(`}`);
-}
+verbose_log(``);
+verbose_log(`  sourceBuildDir = ${sourceBuildDir}`);
+verbose_log(`  sourceBasename = ${sourceBasename}`);
+verbose_log(`  sourceBuildFilename = ${sourceBuildFilename}`);
+verbose_log(`}`);
 
 const source = fs.readFileSync(arg.source, 'ascii');
 const template = Handlebars.compile(source);
+const output = template(json);
 
-const jsonString = fs.readFileSync(arg.jsonFiles[0], 'ascii');
-const output = template(JSON.parse(jsonString));
-
-if (isVerbose) {
-    console.log(`\n`);
-    console.log(`Output:`);
-    console.log(`{`);
-    console.log(`  ${output.replaceAll("\n", "\n  ")}`);
-    console.log(`}`);
-}
+verbose_log(``);
+verbose_log(`Output:`);
+verbose_log(`{`);
+verbose_log(`  ${output.replaceAll("\n", "\n  ")}`);
+verbose_log(`}`);
 
 fs.mkdirSync(sourceBuildDir, { recursive: true });
 fs.writeFileSync(sourceBuildFilename, output, 'ascii');
 
 
-if (isVerbose) {
-    console.log(`\n`);
-    console.log(`buildTemplateFiles.js - done`);
-    console.log(`\n`);
-}
+// Done
+
+verbose_log(``);
+verbose_log(`buildTemplateFiles.js - done`);
+verbose_log(``);
