@@ -1,8 +1,10 @@
 {
   "scripts": {
-    "configure": "cmake -B .build",
-    "make:edit_cache": "make -f .build/Makefile edit_cache",
+    "cmake": "cmake -B .build",
+    "cmake:clean": "cmake -E rm -rf .build",
     "make": "cmake --build .build",
+    "make:clean": "cmake -E rm -rf .build/.root",
+    "make:edit_cache": "make -f .build/Makefile edit_cache",
     "webpack": "webpack"
   },
   "devDependencies": {
