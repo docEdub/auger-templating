@@ -4,8 +4,10 @@ project("Test")
 
 set(VERBOSE off CACHE BOOL "")
 set(VERBOSE_CLI_FLAG "")
+set(VERBOSE_CLI_SILENCER ">/dev/null")
 if(${VERBOSE})
     set(VERBOSE_CLI_FLAG "--verbose")
+    set(VERBOSE_CLI_SILENCER "")
 endif()
 
 function(verbose_log)
@@ -39,7 +41,7 @@ function(add_custom_command_for_template_helper)
             COMMENT "Generating template helper .js files"
             OUTPUT "${output}"
             WORKING_DIRECTORY "${ROOT_DIR}"
-            COMMAND npm run webpack
+            COMMAND npm run webpack ${VERBOSE_CLI_SILENCER}
             DEPENDS
                 "${source}"
                 "${ROOT_DIR}/webpack.config.js"
