@@ -12,3 +12,5 @@ i1 1 z
 </CsoundSynthesizer>
 {{#Cabbage}}
 {{/Cabbage}}
+{{#CsoundQt}}
+{{/CsoundQt}}

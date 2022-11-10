@@ -1,12 +1,16 @@
 const path = require("path");
 const fs = require('fs');
-const appDirectory = fs.realpathSync(process.cwd());
 
 module.exports = {
-    entry: path.resolve(appDirectory, "src/Cabbage/cabbageTemplateHelper.ts"),
+    entry: {
+        ["src/Cabbage/cabbageTemplateHelper"]: path.resolve(__dirname, "src/Cabbage/cabbageTemplateHelper.ts"),
+        ["src/CsoundQt/csoundQtTemplateHelper"]: path.resolve(__dirname, "src/CsoundQt/csoundQtTemplateHelper.ts")
+    },
     output: {
-        path: path.resolve(appDirectory, ".build/.root/src/Cabbage"),
-        filename: 'cabbageTemplateHelper.js'
+        clean: true,
+        filename: '[name].js',
+        path: path.join(__dirname, '.build/.root'),
+        publicPath: '/',
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js"]

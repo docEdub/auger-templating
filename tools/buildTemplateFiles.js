@@ -71,40 +71,53 @@ if (!arg || arg.help) {
 
 const isVerbose = arg.verbose;
 if (isVerbose) {
-    console.log("\nbuildTemplateFiles.js ...");
+    console.log(`\n`);
+    console.log("buildTemplateFiles.js ...");
 }
 
 if (isVerbose) {
-    console.log(`\nArguments:`)
+    console.log(`\n`);
+    console.log(`Arguments:`)
     console.log(arg);
 }
 
 
-// Load helper
+// Load helpers
 
 const buildRootDir = path.join(arg.buildDir, ".root");
-const helperTypescriptBasename = path.basename(arg.helperFiles[0]);
-const helperRelativeDir = path.dirname(arg.helperFiles[0]);
-const helperJavascriptBasename = helperTypescriptBasename.replace(".ts", ".js");
-const helperBuildFilename = path.join(buildRootDir, helperRelativeDir, helperJavascriptBasename);
-const helperBasenameWithoutExtension = helperJavascriptBasename.replace(".js", "");
-const helperClassName =
-    `${helperBasenameWithoutExtension.charAt(0).toUpperCase()}${helperBasenameWithoutExtension.slice(1)}`
-;
 
 if (isVerbose) {
-    console.log(`\nConstants:`);
+    console.log(`\n`);
+    console.log(`Constants:`);
     console.log(`{`);
     console.log(`  buildRootDir = ${buildRootDir}`);
-    console.log(`  helperTypescriptBasename = ${helperTypescriptBasename}`);
-    console.log(`  helperRelativeDir = ${helperRelativeDir}`);
-    console.log(`  helperJavascriptBasename = ${helperJavascriptBasename}`);
-    console.log(`  helperBuildFilename = ${helperBuildFilename}`);
-    console.log(`  helperClassName = ${helperClassName}`);
 }
 
-require(helperBuildFilename);
-eval(`new ${helperClassName}(Handlebars)`);
+for (let i = 0; i < arg.helperFiles.length; i++) {
+    const helperTypescriptBasename = path.basename(arg.helperFiles[i]);
+    const helperRelativeDir = path.dirname(arg.helperFiles[i]);
+    const helperJavascriptBasename = helperTypescriptBasename.replace(".ts", ".js");
+    const helperBuildFilename = path.join(buildRootDir, helperRelativeDir, helperJavascriptBasename);
+    const helperBasenameWithoutExtension = helperJavascriptBasename.replace(".js", "");
+    const helperClassName =
+        `${helperBasenameWithoutExtension.charAt(0).toUpperCase()}${helperBasenameWithoutExtension.slice(1)}`
+    ;
+
+    if (isVerbose) {
+        console.log(`\n`);
+        console.log(`  Helper[${i}]:`);
+        console.log(`  {`)
+        console.log(`    helperTypescriptBasename = ${helperTypescriptBasename}`);
+        console.log(`    helperRelativeDir = ${helperRelativeDir}`);
+        console.log(`    helperJavascriptBasename = ${helperJavascriptBasename}`);
+        console.log(`    helperBuildFilename = ${helperBuildFilename}`);
+        console.log(`    helperClassName = ${helperClassName}`);
+        console.log(`  }`)
+    }
+
+    require(helperBuildFilename);
+    eval(`new ${helperClassName}(Handlebars)`);
+}
 
 
 // Build template source
@@ -114,6 +127,7 @@ const sourceBasename = path.basename(arg.source);
 const sourceBuildFilename = path.join(sourceBuildDir, sourceBasename);
 
 if (isVerbose) {
+    console.log(`\n`);
     console.log(`  sourceBuildDir = ${sourceBuildDir}`);
     console.log(`  sourceBasename = ${sourceBasename}`);
     console.log(`  sourceBuildFilename = ${sourceBuildFilename}`);
@@ -127,7 +141,8 @@ const jsonString = fs.readFileSync(arg.jsonFiles[0], 'ascii');
 const output = template(JSON.parse(jsonString));
 
 if (isVerbose) {
-    console.log(`\nOutput:`);
+    console.log(`\n`);
+    console.log(`Output:`);
     console.log(`{`);
     console.log(`  ${output.replaceAll("\n", "\n  ")}`);
     console.log(`}`);
@@ -138,5 +153,7 @@ fs.writeFileSync(sourceBuildFilename, output, 'ascii');
 
 
 if (isVerbose) {
-    console.log(`\nbuildTemplateFiles.js - done\n`);
+    console.log(`\n`);
+    console.log(`buildTemplateFiles.js - done`);
+    console.log(`\n`);
 }
