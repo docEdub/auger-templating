@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 3.17)
 
 project("Test")
 
+get_filename_component(ROOT_DIR "${CMAKE_SOURCE_DIR}" ABSOLUTE)
+get_filename_component(BUILD_DIR "${CMAKE_BINARY_DIR}" ABSOLUTE)
+get_filename_component(SRC_DIR "${ROOT_DIR}/src" ABSOLUTE)
+get_filename_component(TOOLS_DIR "${ROOT_DIR}/tools" ABSOLUTE)
+
+
 set(VERBOSE off CACHE BOOL "")
 set(VERBOSE_CLI_FLAG "")
 set(VERBOSE_CLI_SILENCER ">/dev/null")
@@ -10,22 +16,19 @@ if(${VERBOSE})
     set(VERBOSE_CLI_SILENCER "")
 endif()
 
+
 function(verbose_log)
     if(${VERBOSE})
         message("${ARGN}")
     endif()
 endfunction()
 
-get_filename_component(ROOT_DIR "${CMAKE_SOURCE_DIR}" ABSOLUTE)
-get_filename_component(BUILD_DIR "${CMAKE_BINARY_DIR}" ABSOLUTE)
-get_filename_component(SRC_DIR "${ROOT_DIR}/src" ABSOLUTE)
-get_filename_component(TOOLS_DIR "${ROOT_DIR}/tools" ABSOLUTE)
-
 
 function(get_template_helper_output_filename)
     string(REPLACE ".ts" ".js" output "${BUILD_DIR}/.root/${ARGV0}")
     set(${ARGV1} "${output}" PARENT_SCOPE)
 endfunction()
+
 
 function(add_custom_command_for_template_helper)
     set(source "${ARGN}")
