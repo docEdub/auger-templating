@@ -32,7 +32,6 @@ function(add_custom_command_for_template_helper)
         list(APPEND _custom_command_template_helper_sources "${source}")
         set(_custom_command_template_helper_sources ${_custom_command_template_helper_sources} PARENT_SCOPE)
 
-
         get_template_helper_output_filename("${source}" output)
         verbose_log("Adding custom command for \"${source}\" -> \"${output}\".")
 
