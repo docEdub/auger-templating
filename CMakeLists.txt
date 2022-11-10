@@ -40,6 +40,25 @@ function(add_custom_command_for_template_helper)
         get_template_helper_output_filename("${source}" output)
         verbose_log("Adding custom command for \"${source}\" -> \"${output}\".")
 
+        get_filename_component(source_dir "${source}" DIRECTORY)
+
+        execute_process(
+            WORKING_DIRECTORY "${ROOT_DIR}"
+            COMMAND node "${TOOLS_DIR}/getTypescriptFileDependencies.js"
+                --helper-file "${source}"
+            OUTPUT_VARIABLE dependencies
+        )
+        verbose_log("raw dependencies = ${dependencies}")
+        string(REPLACE "[ " "" dependencies "${dependencies}")
+        string(REPLACE " ]" "" dependencies "${dependencies}")
+        string(REPLACE "'" "" dependencies "${dependencies}")
+        string(REPLACE ", " ".ts;" dependencies "${dependencies}")
+        string(REPLACE "./" "${ROOT_DIR}/${source_dir}/" dependencies "${dependencies}")
+        string(REPLACE "\n" ".ts" dependencies "${dependencies}")
+        verbose_log("dependencies = ${dependencies}")
+
+        list(APPEND _configure_cmake_dependencies ${dependencies})
+
         add_custom_command(
             COMMENT "Generating template helper .js files"
             OUTPUT "${output}"
@@ -47,6 +66,7 @@ function(add_custom_command_for_template_helper)
             COMMAND npm run webpack ${VERBOSE_CLI_SILENCER}
             DEPENDS
                 "${source}"
+                # ${dependencies}
                 "${ROOT_DIR}/webpack.config.js"
         )
     endif()
@@ -112,5 +132,11 @@ add_custom_commands_for_template_sources(
         "csd/test-a.csd"
         "csd/test-b.csd"
 )
+
+# add_custom_target(reconfigure.
+#     WORKING_DIRECTORY "${ROOT_DIR}"
+#     COMMAND npm run cmake
+#     DEPENDS ${_configure_cmake_dependencies}
+# )
 
 add_custom_target(templates. ALL DEPENDS ${_generated_templates})
