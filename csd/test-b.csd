@@ -3,11 +3,11 @@
 -dm0 -n
 </CsOptions>
 <CsInstruments>
-instr 1
+instr B
 endin
 </CsInstruments>
 <CsScore>
-i1 1 z
+i"B" 0 z
 </CsScore>
 </CsoundSynthesizer>
 {{#Cabbage}}

@@ -105,7 +105,8 @@ add_custom_commands_for_template_sources(
         "csd/types-a.json"
         "csd/types-b.json"
     SOURCES
-        "csd/test.csd"
+        "csd/test-a.csd"
+        "csd/test-b.csd"
 )
 
 add_custom_target(templates. ALL DEPENDS ${_generated_templates})
