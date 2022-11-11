@@ -71,4 +71,4 @@ const dependencies = Detective(helperFile);
 verbose_log(dependencies);
 
 fs.mkdirSync(path.dirname(arg.outputFile), { recursive: true });
-fs.writeFileSync(arg.outputFile, dependencies.toString().replaceAll(",", "\n"), "ascii");
+fs.writeFileSync(arg.outputFile, `${dependencies.toString().replaceAll(",", "\n")}\n./${path.basename(arg.helperFile)}`, "ascii");

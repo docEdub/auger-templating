@@ -30,6 +30,12 @@ function(get_template_helper_output_filename)
 endfunction()
 
 
+function(get_template_helper_depdencies_output_filename)
+    string(REPLACE ".ts" ".js.d" output "${BUILD_DIR}/.dependencies/${ARGV0}")
+    set(${ARGV1} "${output}" PARENT_SCOPE)
+endfunction()
+
+
 function(add_custom_command_for_template_helper)
     set(source "${ARGN}")
 
@@ -40,52 +46,57 @@ function(add_custom_command_for_template_helper)
         get_template_helper_output_filename("${source}" output)
         verbose_log("Adding custom command for \"${source}\" -> \"${output}\".")
 
-        get_filename_component(source_dir "${source}" DIRECTORY)
-
+        get_template_helper_depdencies_output_filename("${source}" dependencies_output)
         execute_process(
             WORKING_DIRECTORY "${ROOT_DIR}"
             COMMAND node "${TOOLS_DIR}/getTypescriptFileDependencies.js"
                 --helper-file "${source}"
-                --output-file "${output}.d.tmp"
+                --output-file "${dependencies_output}.tmp"
         )
-        if(EXISTS "${output}.d")
+        if(EXISTS "${dependencies_output}")
+            set(command "${CMAKE_COMMAND}" -E copy_if_different "${dependencies_output}.tmp" "${dependencies_output}")
+            verbose_log("Executing process \"${command}\"")
             execute_process(
                 WORKING_DIRECTORY "${ROOT_DIR}"
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different "${output}.d.tmp" "${output}.d"
+                COMMAND ${command}
             )
         else()
+            set(command "${CMAKE_COMMAND}" -E copy "${dependencies_output}.tmp" "${dependencies_output}")
+            verbose_log("Executing process \"${command}\"")
             execute_process(
                 WORKING_DIRECTORY "${ROOT_DIR}"
-                COMMAND ${CMAKE_COMMAND} -E copy "${output}.d.tmp" "${output}.d"
+                COMMAND ${command}
             )
         endif()
-        file(READ "${output}.d" dependencies)
+        set(command "${CMAKE_COMMAND}" -E touch "${BUILD_DIR}/.dependencies/.reconfigure.stamp")
+        verbose_log("Executing process \"${command}\"")
+        execute_process(
+            WORKING_DIRECTORY "${ROOT_DIR}"
+            COMMAND ${command}
+        )
+        file(READ "${dependencies_output}" dependencies)
 
+        get_filename_component(source_dir "${source}" DIRECTORY)
         string(REPLACE "./" "${ROOT_DIR}/${source_dir}/" dependencies "${dependencies}")
         string(REPLACE "\n" ".ts;" dependencies "${dependencies}")
-        set(dependencies "${dependencies}.ts")
         verbose_log("dependencies = ${dependencies}")
 
         add_custom_command(
-            COMMENT "Updating ${source} dependencies"
-            OUTPUT "${output}.d.tmp"
+            COMMENT "Updating ${source} dependencies ..."
+            OUTPUT "${dependencies_output}.tmp"
             WORKING_DIRECTORY "${ROOT_DIR}"
             COMMAND node "${TOOLS_DIR}/getTypescriptFileDependencies.js"
                 --helper-file "${source}"
-                --output-file "${output}.d.tmp"
-                && ${CMAKE_COMMAND} -E copy_if_different "${output}.d.tmp" "${output}.d"
+                --output-file "${dependencies_output}.tmp"
+                && ${CMAKE_COMMAND} -E copy_if_different "${dependencies_output}.tmp" "${dependencies_output}"
             DEPENDS ${dependencies}
         )
 
-        list(APPEND _reconfigure_dependencies "${output}.d")
-        set(_reconfigure_dependencies ${_reconfigure_dependencies} PARENT_SCOPE)
-
-        list(APPEND _webpack_outputs "${output}")
-        set(_webpack_outputs ${_webpack_outputs} PARENT_SCOPE)
+        set_property(GLOBAL APPEND PROPERTY _reconfigure_dependencies "${dependencies_output}.tmp")
 
         add_custom_command(
-            COMMENT "Running webpack"
-            OUTPUT "${output}"
+            COMMENT "Running webpack ..."
+            OUTPUT "${BUILD_DIR}/.root/.webpack.stamp"
             WORKING_DIRECTORY "${BUILD_DIR}"
             COMMAND npm run webpack ${VERBOSE_CLI_SILENCER}
             DEPENDS
@@ -123,7 +134,7 @@ function(add_custom_commands_for_template_sources)
 
     foreach(source ${ARG_SOURCES})
         add_custom_command(
-            COMMENT "Generating ${source}"
+            COMMENT "Generating ${source} ..."
             OUTPUT "${BUILD_DIR}/.root/${source}"
             WORKING_DIRECTORY "${ROOT_DIR}"
             COMMAND node "${TOOLS_DIR}/buildTemplateFiles.js"
@@ -157,9 +168,15 @@ add_custom_commands_for_template_sources(
         "csd/test-b.csd"
 )
 
-add_custom_target(remove_webpack_outputs
+get_property(_reconfigure_dependencies GLOBAL PROPERTY _reconfigure_dependencies)
+verbose_log("_reconfigure_dependencies = ${_reconfigure_dependencies}")
+add_custom_command(
+    COMMENT "Updating CMake configuration due to changed dependencies ..."
+    OUTPUT "${BUILD_DIR}/.dependencies/.reconfigure.stamp"
     WORKING_DIRECTORY "${ROOT_DIR}"
-    COMMAND ${CMAKE_COMMAND} -E rm ${_webpack_outputs}
+    COMMAND "${CMAKE_COMMAND}" -B "${BUILD_DIR}" # && "${CMAKE_COMMAND}" -E touch "${BUILD_DIR}/.dependencies/.reconfigure.stamp"
+    DEPENDS ${_reconfigure_dependencies}
 )
-add_custom_target(reconfigure. DEPENDS ${_reconfigure_dependencies})
-add_custom_target(templates. ALL DEPENDS ${_generated_templates} reconfigure.)
+add_custom_target(dependencies ALL DEPENDS "${BUILD_DIR}/.dependencies/.reconfigure.stamp")
+
+add_custom_target(templates ALL DEPENDS "${BUILD_DIR}/.root/.webpack.stamp" ${_generated_templates} dependencies)

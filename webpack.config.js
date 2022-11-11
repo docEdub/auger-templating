@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require('fs');
+const WebpackTouch = require('webpack-touch');
 
 module.exports = {
     entry: {
@@ -7,10 +8,14 @@ module.exports = {
         ["src/CsoundQt/csoundQtTemplateHelper"]: path.resolve(__dirname, "src/CsoundQt/csoundQtTemplateHelper.ts")
     },
     output: {
+        clean: true,
         filename: '[name].js',
         path: path.join(__dirname, '.build/.root'),
         publicPath: '/',
     },
+    plugins: [
+        new WebpackTouch({ filename: '.build/.root/.webpack.stamp', delay: 0 })
+    ],
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
     },
