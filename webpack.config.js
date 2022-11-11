@@ -7,7 +7,6 @@ module.exports = {
         ["src/CsoundQt/csoundQtTemplateHelper"]: path.resolve(__dirname, "src/CsoundQt/csoundQtTemplateHelper.ts")
     },
     output: {
-        clean: true,
         filename: '[name].js',
         path: path.join(__dirname, '.build/.root'),
         publicPath: '/',

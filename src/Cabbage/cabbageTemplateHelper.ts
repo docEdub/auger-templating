@@ -1,6 +1,7 @@
 
 import { Box } from "./Types/box"
 import { Form } from "./Types/form";
+import { Group } from "./Types/group";
 
 // Note:
 // - The class name must be the same as the filename starting with an uppercase letter, without the `.ts` suffix.

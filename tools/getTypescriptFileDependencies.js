@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const Detective = require("detective-typescript");
 const CliArgs = require("command-line-args");
 const CliUsage = require("command-line-usage");
@@ -8,6 +9,11 @@ const cliOptions = [
         name: "helper-file",
         type: String,
         description: "The Handlebar TypeScript helper file to search."
+    },
+    {
+        name: "output-file",
+        type: String,
+        description: "The file to write the resulting JavaScript array to."
     },
     {
         name: "verbose",
@@ -60,5 +66,9 @@ verbose_log(`Arguments:`)
 verbose_log(arg);
 
 const helperFile = fs.readFileSync(arg.helperFile, "utf8");
+
 const dependencies = Detective(helperFile);
-console.log(dependencies);
+verbose_log(dependencies);
+
+fs.mkdirSync(path.dirname(arg.outputFile), { recursive: true });
+fs.writeFileSync(arg.outputFile, dependencies.toString().replaceAll(",", "\n"), "ascii");

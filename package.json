@@ -6,7 +6,7 @@
     "make:clean": "cmake -E rm -rf .build/.root",
     "make:edit_cache": "make -f .build/Makefile edit_cache",
     "test": "jest",
-    "webpack": "webpack"
+    "webpack": "make remove_webpack_outputs && webpack"
   },
   "devDependencies": {
     "command-line-args": "^5.2.1",
