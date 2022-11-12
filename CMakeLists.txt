@@ -145,7 +145,6 @@ function(add_custom_commands_for_template_sources)
 
     foreach(helper ${ARG_HELPERS})
         add_custom_command_for_template_helper("${helper}")
-
         get_template_helper_output_filename("${helper}" output_filename)
         list(APPEND helpers "${output_filename}")
     endforeach()
@@ -200,7 +199,7 @@ add_custom_command(
     COMMENT "Updating CMake configuration due to changed dependencies ..."
     OUTPUT "${BUILD_DIR}/.dependencies/.reconfigure.stamp"
     WORKING_DIRECTORY "${ROOT_DIR}"
-    COMMAND "${CMAKE_COMMAND}" -B "${BUILD_DIR}" # && "${CMAKE_COMMAND}" -E touch "${BUILD_DIR}/.dependencies/.reconfigure.stamp"
+    COMMAND "${CMAKE_COMMAND}" -B "${BUILD_DIR}"
     DEPENDS ${_reconfigure_dependencies}
 )
 add_custom_target(dependencies ALL DEPENDS "${BUILD_DIR}/.dependencies/.reconfigure.stamp")
