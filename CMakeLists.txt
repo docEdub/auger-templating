@@ -36,6 +36,13 @@ function(get_template_helper_depdencies_output_filename)
 endfunction()
 
 
+function(get_filename_as_target filename out_target)
+    string(REPLACE "/" "-" target "${filename}")
+    string(REPLACE " " "-" target "${target}")
+    set(${out_target} "${target}" PARENT_SCOPE)
+endfunction()
+
+
 function(add_custom_command_for_template_helper)
     set(source "${ARGN}")
 
@@ -92,7 +99,11 @@ function(add_custom_command_for_template_helper)
             DEPENDS ${dependencies}
         )
 
-        set_property(GLOBAL APPEND PROPERTY _reconfigure_dependencies "${dependencies_output}.tmp")
+        string(REPLACE "${BUILD_DIR}/.dependencies/" "" target "${dependencies_output}.tmp")
+        get_filename_as_target("${target}" target)
+        add_custom_target(${target} ALL DEPENDS "${dependencies_output}.tmp")
+
+        set_property(GLOBAL APPEND PROPERTY _reconfigure_dependencies ${target} "${dependencies_output}")
 
         add_custom_command(
             COMMENT "Running webpack ..."
@@ -105,13 +116,6 @@ function(add_custom_command_for_template_helper)
                 "${ROOT_DIR}/webpack.config.js"
         )
     endif()
-endfunction()
-
-
-function(get_filename_as_target filename out_target)
-    string(REPLACE "/" "-" target "${filename}")
-    string(REPLACE " " "-" target "${target}")
-    set(${out_target} "${target}" PARENT_SCOPE)
 endfunction()
 
 
