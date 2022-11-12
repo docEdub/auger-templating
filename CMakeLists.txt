@@ -166,8 +166,7 @@ function(add_custom_commands_for_template_sources)
                 "${TOOLS_DIR}/buildTemplateFiles.js"
         )
 
-        list(APPEND _generated_templates "${BUILD_DIR}/.root/${source}")
-        set(_generated_templates ${_generated_templates} PARENT_SCOPE)
+        set_property(GLOBAL APPEND PROPERTY _generated_templates "${BUILD_DIR}/.root/${source}")
     endforeach()
 endfunction()
 
@@ -209,4 +208,6 @@ add_custom_target(dependencies ALL DEPENDS "${BUILD_DIR}/.dependencies/.reconfig
 #
 # This target must be run after the `dependencies` target has run.
 #
+get_property(_generated_templates GLOBAL PROPERTY _generated_templates)
+verbose_log("_generated_templates = ${_generated_templates}")
 add_custom_target(templates ALL DEPENDS "${BUILD_DIR}/.root/.webpack.stamp" ${_generated_templates} dependencies)
