@@ -24,15 +24,15 @@ function(verbose_log)
 endfunction()
 
 
-function(get_template_helper_output_filename)
-    string(REPLACE ".ts" ".js" output "${BUILD_DIR}/.root/${ARGV0}")
-    set(${ARGV1} "${output}" PARENT_SCOPE)
+function(get_template_helper_output_filename source out_filename)
+    string(REPLACE ".ts" ".js" output "${BUILD_DIR}/.root/${source}")
+    set(${out_filename} "${output}" PARENT_SCOPE)
 endfunction()
 
 
-function(get_template_helper_depdencies_output_filename)
-    string(REPLACE ".ts" ".js.d" output "${BUILD_DIR}/.dependencies/${ARGV0}")
-    set(${ARGV1} "${output}" PARENT_SCOPE)
+function(get_template_helper_dependencies_output_filename source out_filename)
+    string(REPLACE ".ts" ".js.d" output "${BUILD_DIR}/.dependencies/${source}")
+    set(${out_filename} "${output}" PARENT_SCOPE)
 endfunction()
 
 
@@ -67,7 +67,7 @@ function(add_custom_command_for_template_helper)
         get_template_helper_output_filename("${source}" output)
         verbose_log("Adding custom command for \"${source}\" -> \"${output}\".")
 
-        get_template_helper_depdencies_output_filename("${source}" dependencies_output)
+        get_template_helper_dependencies_output_filename("${source}" dependencies_output)
         execute_process(
             WORKING_DIRECTORY "${ROOT_DIR}"
             COMMAND node "${TOOLS_DIR}/getTypescriptFileDependencies.js"
@@ -113,8 +113,8 @@ function(add_custom_command_for_template_helper)
             DEPENDS ${dependencies}
         )
 
-        string(REPLACE "${BUILD_DIR}/.dependencies/" "" target "${dependencies_output}.tmp")
-        get_filename_as_target("${target}" target)
+        get_filename_component(target "${source}" NAME)
+        set(target "dependencies_${target}")
         add_custom_target(${target} ALL DEPENDS "${dependencies_output}.tmp")
 
         set_property(GLOBAL APPEND PROPERTY _reconfigure_dependencies ${target} "${dependencies_output}")
