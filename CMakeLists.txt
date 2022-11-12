@@ -43,6 +43,20 @@ function(get_filename_as_target filename out_target)
 endfunction()
 
 
+# Adds a custom command to run `webpack` if the given template helper source changes, or if any of its dependencies
+# change ("dependencies" being the files brought in by the TypeScript `import` statement).
+#
+# To ensure the final dependency file is only updated when the dependencies actually change and not just when the
+# source or current dependencies are modified without changing the TypeScript `import` statements, dependency change
+# tracking is done in two steps:
+# 1. The first step blindly dumps the template helper source's current dependencies to an intermediate file suffixed
+#    with `.js.d.tmp when the source or any of its dependencies change.
+# 2. If the final dependencies file does not exist it is created by copying the intermediate file. If the final
+#    dependencies file already exists it is updated to match the intermediate file if its contents differ. If the
+#    contents are the same then the final dependencies file is left unchanged.
+# If any of the final dependency files change then the `dependencies` target (added later) will re-run CMake configure
+# to update the template helper source's dependencies list in the generated project or makefile.
+#
 function(add_custom_command_for_template_helper)
     set(source "${ARGN}")
 
@@ -172,6 +186,14 @@ add_custom_commands_for_template_sources(
         "csd/test-b.csd"
 )
 
+
+# Add target needed to update CMake configuration when TypeScript imports change.
+#
+# The `_reconfigure_dependencies` list contains the targets that update the .js.d files if different from the matching
+# .js.d.tmp files, and the .js.d files themselves. The targets in this list ensure the .js.d.tmp files are always
+# updated when their .ts files change. The .js.d files in this list ensure the following command is run when the
+# TypeScript imports actually change.
+#
 get_property(_reconfigure_dependencies GLOBAL PROPERTY _reconfigure_dependencies)
 verbose_log("_reconfigure_dependencies = ${_reconfigure_dependencies}")
 add_custom_command(
@@ -183,4 +205,9 @@ add_custom_command(
 )
 add_custom_target(dependencies ALL DEPENDS "${BUILD_DIR}/.dependencies/.reconfigure.stamp")
 
+
+# Add target needed to generate templates if webpack was run or template sources changed.
+#
+# This target must be run after the `dependencies` target has run.
+#
 add_custom_target(templates ALL DEPENDS "${BUILD_DIR}/.root/.webpack.stamp" ${_generated_templates} dependencies)
