@@ -25,14 +25,14 @@ endfunction()
 
 
 function(get_template_helper_output_filename source out_filename)
-    string(REPLACE ".ts" ".js" output "${BUILD_DIR}/.root/${source}")
-    set(${out_filename} "${output}" PARENT_SCOPE)
+    string(REPLACE ".ts" ".js" filename "${BUILD_DIR}/.root/${source}")
+    set(${out_filename} "${filename}" PARENT_SCOPE)
 endfunction()
 
 
 function(get_template_helper_dependencies_output_filename source out_filename)
-    string(REPLACE ".ts" ".js.d" output "${BUILD_DIR}/.dependencies/${source}")
-    set(${out_filename} "${output}" PARENT_SCOPE)
+    string(REPLACE ".ts" ".js.d" filename "${BUILD_DIR}/.dependencies/${source}")
+    set(${out_filename} "${filename}" PARENT_SCOPE)
 endfunction()
 
 
@@ -187,10 +187,13 @@ add_custom_commands_for_template_sources(
 
 # Add target needed to update CMake configuration when TypeScript imports change.
 #
-# The `_reconfigure_dependencies` list contains the targets that update the .js.d files if different from the matching
-# .js.d.tmp files, and the .js.d files themselves. The targets in this list ensure the .js.d.tmp files are always
-# updated when their .ts files change. The .js.d files in this list ensure the following command is run when the
-# TypeScript imports actually change.
+# The `_reconfigure_dependencies` list contains;
+#   1. The targets that update the .js.d files if different from the matching .js.d.tmp files.
+#   2. The .js.d files themselves.
+#
+# The targets in the `_reconfigure_dependencies` list ensure the .js.d.tmp files are always updated when their .ts
+# files change. The .js.d files in this list ensure the following command is run when the TypeScript imports actually
+# change.
 #
 get_property(_reconfigure_dependencies GLOBAL PROPERTY _reconfigure_dependencies)
 verbose_log("_reconfigure_dependencies = ${_reconfigure_dependencies}")
@@ -204,7 +207,7 @@ add_custom_command(
 add_custom_target(dependencies ALL DEPENDS "${BUILD_DIR}/.dependencies/.reconfigure.stamp")
 
 
-# Add target needed to generate templates if webpack was run or template sources changed.
+# Add the target needed to generate the templates if the webpack command was run or the template sources changed.
 #
 # This target must be run after the `dependencies` target has run.
 #
