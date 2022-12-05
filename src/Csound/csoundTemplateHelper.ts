@@ -15,7 +15,7 @@ global.CsoundTemplateHelper = class {
         Handlebars.registerHelper(`log_i_trace`, (input) => {
             let output = ``;
             if (input.data.root.log_i_trace_enabled) {
-                output += `prints("[trc] __FILE__:__LINE__")\n`;
+                output += `prints("[trc] ${input.data.root.fileName}(${input.loc.start.line}): ")\n`;
                 output += `    $log_i_trace`;
             }
             else {

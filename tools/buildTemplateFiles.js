@@ -126,6 +126,7 @@ for (let i = 0; i < arg.helperFiles.length; i++) {
 const json = JsonMerger.mergeFiles(arg.jsonFiles, {
     defaultArrayMergeOperation: "concat"
 });
+json.fileName = arg.source;
 
 verbose_log(``);
 verbose_log(`  JSON:`);
