@@ -104,8 +104,10 @@ export class Box {
     }
 
     public output(): string {
-        // NB: We don't output x, y, width, or height because the format varies between form boxes and widget boxes.
-        return "";
+        let output = "";
+        output += `<width>${this.width}</width>\n`;
+        output += `<height>${this.height}</height>\n`;
+        return output;
     }
 
     private _parent: Box = null;

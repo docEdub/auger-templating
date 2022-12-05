@@ -7,9 +7,9 @@ global.CsoundQtTemplateHelper = class {
     constructor(Handlebars: any) {
         Handlebars.registerHelper("CsoundQt", (input, options) => {
             let output = "";
-            output += `<CsoundQt>\n`;
+            output += `<bsbPanel>\n`;
             output += (new Form(input.data.root.form)).output();
-            output += `</CsoundQt>\n`;
+            output += `</bsbPanel>\n`;
             return new Handlebars.SafeString(output);
         });
     }

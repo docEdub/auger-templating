@@ -9,12 +9,8 @@ export class Form extends Box {
     public output(): string {
         const json = this._json;
         let output = "";
-        output += `form`;
-        output += ` size(${this.width}, ${this.height})`
-        output +=   super.output();
-        output += ` caption("${json.name}")`;
-        output += ` pluginId("${json.id}")`;
-        output += `\n`;
+        output += `<label>${json.name}</label>\n`;
+        output += super.output();
         return output;
     }
 
