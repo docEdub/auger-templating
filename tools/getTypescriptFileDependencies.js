@@ -65,10 +65,26 @@ verbose_log(`\n`);
 verbose_log(`Arguments:`)
 verbose_log(arg);
 
-const helperFile = fs.readFileSync(arg.helperFile, "utf8");
+const recursedDependencies = (absoluteFileName) => {
+    const dependencies = [];
+    dependencies.push(absoluteFileName);
+    const file = fs.readFileSync(absoluteFileName, "utf8");
+    const dependencyFileNames = Detective(file);
+    for (let i = 0; i < dependencyFileNames.length; i++) {
+        let dependencyFileName = dependencyFileNames[i];
+        if (!path.isAbsolute(dependencyFileName)) {
+            if (path.extname(dependencyFileName) === "") {
+                dependencyFileName += ".ts";
+            }
+            dependencyFileName = path.resolve(path.dirname(absoluteFileName), dependencyFileName);
+        }
+        dependencies.push(...recursedDependencies(dependencyFileName));
+    }
+    return dependencies;
+}
 
-const dependencies = Detective(helperFile);
+const dependencies = recursedDependencies(path.resolve(".", arg.helperFile));
 verbose_log(dependencies);
 
 fs.mkdirSync(path.dirname(arg.outputFile), { recursive: true });
-fs.writeFileSync(arg.outputFile, `${dependencies.toString().replaceAll(",", "\n")}\n./${path.basename(arg.helperFile)}`, "ascii");
+fs.writeFileSync(arg.outputFile, `${dependencies.toString().replaceAll(",", "\n")}\n`, "ascii");

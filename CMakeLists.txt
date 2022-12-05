@@ -73,6 +73,7 @@ function(add_custom_command_for_template_helper)
             COMMAND node "${TOOLS_DIR}/getTypescriptFileDependencies.js"
                 --helper-file "${source}"
                 --output-file "${dependencies_output}.tmp"
+                ${VERBOSE_CLI_FLAG}
         )
         if(EXISTS "${dependencies_output}")
             set(command "${CMAKE_COMMAND}" -E copy_if_different "${dependencies_output}.tmp" "${dependencies_output}")
@@ -99,7 +100,7 @@ function(add_custom_command_for_template_helper)
 
         get_filename_component(source_dir "${source}" DIRECTORY)
         string(REPLACE "./" "${ROOT_DIR}/${source_dir}/" dependencies "${dependencies}")
-        string(REPLACE "\n" ".ts;" dependencies "${dependencies}")
+        string(REPLACE "\n" ";" dependencies "${dependencies}")
         verbose_log("dependencies = ${dependencies}")
 
         add_custom_command(
@@ -109,6 +110,7 @@ function(add_custom_command_for_template_helper)
             COMMAND node "${TOOLS_DIR}/getTypescriptFileDependencies.js"
                 --helper-file "${source}"
                 --output-file "${dependencies_output}.tmp"
+                ${VERBOSE_CLI_FLAG}
                 && ${CMAKE_COMMAND} -E copy_if_different "${dependencies_output}.tmp" "${dependencies_output}"
             DEPENDS ${dependencies}
         )
@@ -118,17 +120,7 @@ function(add_custom_command_for_template_helper)
         add_custom_target(${target} ALL DEPENDS "${dependencies_output}.tmp")
 
         set_property(GLOBAL APPEND PROPERTY _reconfigure_dependencies ${target} "${dependencies_output}")
-
-        add_custom_command(
-            COMMENT "Running webpack ..."
-            OUTPUT "${BUILD_DIR}/.root/.webpack.stamp"
-            WORKING_DIRECTORY "${BUILD_DIR}"
-            COMMAND npm run webpack ${VERBOSE_CLI_SILENCER}
-            DEPENDS
-                "${source}"
-                ${dependencies}
-                "${ROOT_DIR}/webpack.config.js"
-        )
+        set_property(GLOBAL APPEND PROPERTY _webpack_dependencies ${dependencies})
     endif()
 endfunction()
 
@@ -207,10 +199,24 @@ add_custom_command(
 add_custom_target(dependencies ALL DEPENDS "${BUILD_DIR}/.dependencies/.reconfigure.stamp")
 
 
+get_property(_webpack_dependencies GLOBAL PROPERTY _webpack_dependencies)
+verbose_log("_webpack_dependencies = ${_webpack_dependencies}")
+add_custom_command(
+    COMMENT "Running webpack ..."
+    OUTPUT "${BUILD_DIR}/.root/.webpack.stamp"
+    WORKING_DIRECTORY "${BUILD_DIR}"
+    COMMAND npm run webpack ${VERBOSE_CLI_SILENCER}
+    DEPENDS
+        ${_webpack_dependencies}
+        "${ROOT_DIR}/webpack.config.js"
+)
+add_custom_target(webpack ALL DEPENDS "${BUILD_DIR}/.root/.webpack.stamp")
+
+
 # Add the target needed to generate the templates if the webpack command was run or the template sources changed.
 #
 # This target must be run after the `dependencies` target has run.
 #
 get_property(_generated_templates GLOBAL PROPERTY _generated_templates)
 verbose_log("_generated_templates = ${_generated_templates}")
-add_custom_target(templates ALL DEPENDS "${BUILD_DIR}/.root/.webpack.stamp" ${_generated_templates} dependencies)
+add_custom_target(templates ALL DEPENDS dependencies webpack ${_generated_templates})
