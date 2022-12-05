@@ -24,13 +24,13 @@ function(verbose_log)
 endfunction()
 
 
-function(get_template_helper_output_filename source out_filename)
+function(get_typescript_build_root_filename source out_filename)
     string(REPLACE ".ts" ".js" filename "${BUILD_DIR}/.root/${source}")
     set(${out_filename} "${filename}" PARENT_SCOPE)
 endfunction()
 
 
-function(get_template_helper_dependencies_output_filename source out_filename)
+function(get_typescript_build_dependencies_filename source out_filename)
     string(REPLACE ".ts" ".js.d" filename "${BUILD_DIR}/.dependencies/${source}")
     set(${out_filename} "${filename}" PARENT_SCOPE)
 endfunction()
@@ -64,10 +64,10 @@ function(add_custom_command_for_template_helper)
         list(APPEND _custom_command_template_helper_sources "${source}")
         set(_custom_command_template_helper_sources ${_custom_command_template_helper_sources} PARENT_SCOPE)
 
-        get_template_helper_output_filename("${source}" output)
+        get_typescript_build_root_filename("${source}" output)
         verbose_log("Adding custom command for \"${source}\" -> \"${output}\".")
 
-        get_template_helper_dependencies_output_filename("${source}" dependencies_output)
+        get_typescript_build_dependencies_filename("${source}" dependencies_output)
         execute_process(
             WORKING_DIRECTORY "${ROOT_DIR}"
             COMMAND node "${TOOLS_DIR}/getTypescriptFileDependencies.js"
@@ -145,7 +145,7 @@ function(add_custom_commands_for_template_sources)
 
     foreach(helper ${ARG_HELPERS})
         add_custom_command_for_template_helper("${helper}")
-        get_template_helper_output_filename("${helper}" output_filename)
+        get_typescript_build_root_filename("${helper}" output_filename)
         list(APPEND helpers "${output_filename}")
     endforeach()
 
