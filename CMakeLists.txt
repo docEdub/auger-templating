@@ -24,9 +24,10 @@ function(verbose_log)
 endfunction()
 
 
-function(get_typescript_build_root_filename source out_filename)
-    string(REPLACE ".ts" ".js" filename "${BUILD_DIR}/.root/${source}")
-    set(${out_filename} "${filename}" PARENT_SCOPE)
+function(get_filename_as_target filename out_target)
+    string(REPLACE "/" "-" target "${filename}")
+    string(REPLACE " " "-" target "${target}")
+    set(${out_target} "${target}" PARENT_SCOPE)
 endfunction()
 
 
@@ -36,10 +37,9 @@ function(get_typescript_build_dependencies_filename source out_filename)
 endfunction()
 
 
-function(get_filename_as_target filename out_target)
-    string(REPLACE "/" "-" target "${filename}")
-    string(REPLACE " " "-" target "${target}")
-    set(${out_target} "${target}" PARENT_SCOPE)
+function(get_typescript_build_root_filename source out_filename)
+    string(REPLACE ".ts" ".js" filename "${BUILD_DIR}/.root/${source}")
+    set(${out_filename} "${filename}" PARENT_SCOPE)
 endfunction()
 
 
