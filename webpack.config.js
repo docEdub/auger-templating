@@ -5,6 +5,7 @@ const WebpackTouch = require('webpack-touch');
 module.exports = {
     entry: {
         ["src/Cabbage/cabbageTemplateHelper"]: path.resolve(__dirname, "src/Cabbage/cabbageTemplateHelper.ts"),
+        ["src/Csound/csoundTemplateHelper"]: path.resolve(__dirname, "src/Csound/csoundTemplateHelper.ts"),
         ["src/CsoundQt/csoundQtTemplateHelper"]: path.resolve(__dirname, "src/CsoundQt/csoundQtTemplateHelper.ts")
     },
     output: {
