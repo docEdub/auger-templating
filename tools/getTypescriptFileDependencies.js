@@ -31,7 +31,7 @@ const cliOptions = [
 
 const getCliArgs = () => {
     try {
-        return CliArgs(cliOptions, { camelCase: true});
+        return CliArgs(cliOptions, { camelCase: true });
     }
     catch(e) {
         console.log(e.message);

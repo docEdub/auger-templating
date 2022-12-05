@@ -1,4 +1,4 @@
-import { Box } from "./box"
+import { Box } from "./box";
 
 export class Form extends Box {
     constructor(json: any) {
