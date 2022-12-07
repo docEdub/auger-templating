@@ -168,7 +168,6 @@ add_custom_commands_for_template_sources(
     HELPERS
         "src/Cabbage/cabbageTemplateHelper.ts"
         "src/Csound/csoundTemplateHelper.ts"
-        "src/CsoundQt/csoundQtTemplateHelper.ts"
     JSON
         "csd/csound-definitions.json"
         "csd/test.ui.json"
