@@ -155,6 +155,7 @@ function(add_custom_commands_for_template_sources)
             DEPENDS
                 "${source}"
                 ${helpers}
+                "${ARG_JSON}"
                 "${TOOLS_DIR}/buildTemplateFiles.js"
         )
 
@@ -215,7 +216,10 @@ add_custom_command(
 add_custom_target(webpack ALL DEPENDS "${BUILD_DIR}/.root/.webpack.stamp")
 
 
-# Add the target needed to generate the templates if the webpack command was run or the template sources changed.
+# Add the target needed to generate the templates when one or more of the following occurred:
+#   1. A template helper changed and the webpack command was run.
+#   2. A template .json file changed.
+#   2. A template source changed.
 #
 # This target must be run after the `dependencies` target has run.
 #
