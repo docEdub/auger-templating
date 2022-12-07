@@ -6,7 +6,10 @@ global.CsoundTemplateHelper = class {
         Handlebars.registerHelper(`csound_macros`, (input) => {
             let output = ``;
             if (input.data.root.log_i_trace_enabled) {
-                output += `#define log_i_trace(args) #\n    prints($args)\n    prints("\\n")\n#\n`;
+                output += `#define log_i_trace(args) #\n`;
+                output += `    prints($args)\n`;
+                output += `    prints("\\n")\n`;
+                output += `#\n`;
             }
             output += `# define noop(a) ##`
             return new Handlebars.SafeString(output);
