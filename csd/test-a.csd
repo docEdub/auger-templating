@@ -20,6 +20,3 @@ i"A" 0 z
 
 {{#Cabbage}}
 {{/Cabbage}}
-
-{{#CsoundQt}}
-{{/CsoundQt}}
