@@ -1,3 +1,7 @@
 {
-    "log_i_trace_enabled": true
+    "log_i_trace_enabled": true,
+    "log_i_debug_enabled": true,
+    "log_i_info_enabled": true,
+    "log_i_warning_enabled": true,
+    "log_i_error_enabled": true
 }
