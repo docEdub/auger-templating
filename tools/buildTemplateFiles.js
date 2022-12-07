@@ -132,6 +132,7 @@ verbose_log(``);
 verbose_log(`  JSON:`);
 verbose_log(arg.verbose ? `  ${JSON.stringify(json, null, 2).replaceAll("\n", "\n  ")}` : "");
 
+
 // Build template source
 
 const sourceBuildDir = path.join(buildRootDir, path.dirname(arg.source));
