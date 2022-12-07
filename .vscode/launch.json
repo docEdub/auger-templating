@@ -1,0 +1,15 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Csound",
+            "preLaunchTask": "Run Csound with current file",
+            "type": "node",
+            "request": "launch",
+            "args": [ "${workspaceFolder}/tools/noop.js" ]
+        }
+    ]
+}
