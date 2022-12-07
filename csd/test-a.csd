@@ -17,7 +17,7 @@ endin
 </CsInstruments>
 <CsScore>
 
-i"A" 0 z
+i"A" 0 1
 
 </CsScore>
 </CsoundSynthesizer>
