@@ -43,11 +43,11 @@ function(get_typescript_build_root_filename source out_filename)
 endfunction()
 
 
-# Adds a custom command to run `webpack` if the given template helper source changes, or if any of its dependencies
+# Adds a custom command to run `webpack` if the given template helper source changes or if any of its dependencies
 # change ("dependencies" being the files brought in by the TypeScript `import` statement).
 #
 # To ensure the final dependency file is only updated when the dependencies actually change and not just when the
-# source or current dependencies are modified without changing the TypeScript `import` statements, dependency change
+# source or current dependencies are saved without changing the TypeScript `import` statements, dependency change
 # tracking is done in two steps:
 # 1. The first step blindly dumps the template helper source's current dependencies to an intermediate file suffixed
 #    with `.js.d.tmp when the source or any of its dependencies change.
@@ -216,10 +216,10 @@ add_custom_command(
 add_custom_target(webpack ALL DEPENDS "${BUILD_DIR}/.root/.webpack.stamp")
 
 
-# Add the target needed to generate the templates when one or more of the following occurred:
-#   1. A template helper changed and the webpack command was run.
-#   2. A template .json file changed.
-#   2. A template source changed.
+# Add the target needed to generate the templates when one or more of the following occurs:
+#   1. Template helper files change causing the webpack command to be run.
+#   2. Template .json files change.
+#   3. Template source files change.
 #
 # This target must be run after the `dependencies` target has run.
 #
