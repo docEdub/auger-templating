@@ -207,7 +207,7 @@ add_custom_command(
     COMMENT "Running webpack ..."
     OUTPUT "${BUILD_DIR}/.root/.webpack.stamp"
     WORKING_DIRECTORY "${BUILD_DIR}"
-    COMMAND npm run webpack ${VERBOSE_CLI_SILENCER}
+    COMMAND npm run webpack
     DEPENDS
         ${_webpack_dependencies}
         "${ROOT_DIR}/webpack.config.js"
