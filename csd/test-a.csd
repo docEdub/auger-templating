@@ -1,23 +1,34 @@
 <CsoundSynthesizer>
 <CsOptions>
--dm0 -n
+{{csdCoreOptions}}
 </CsOptions>
 <CsInstruments>
 
-{{csound_macros}}
+sr = {{sr}}
+kr = {{kr}}
+
+{{csdCoreOrcGlobal}}
 
 instr A
-    {{log_i_trace}}("%s %d, %d, %d ...", "test trace", 1, 2, 3)
-    {{log_i_debug}}("%s %d, %d, %d ...", "test debug", 1, 2, 3)
-    {{log_i_info}}("%s %d, %d, %d ...", "test info", 1, 2, 3)
-    {{log_i_warning}}("%s %d, %d, %d ...", "test warning", 1, 2, 3)
-    {{log_i_error}}("%s %d, %d, %d ...", "test error", 1, 2, 3)
+    {{logTrace_i}}("%s %d, %d, %d ...", "test trace", 1, 2, 3)
+    {{logDebug_i}}("%s %d, %d, %d ...", "test debug", 1, 2, 3)
+    {{logInfo_i}}("%s %d, %d, %d ...", "test info", 1, 2, 3)
+    {{logWarning_i}}("%s %d, %d, %d ...", "test warning", 1, 2, 3)
+    {{logError_i}}("%s %d, %d, %d ...", "test error", 1, 2, 3)
+
+    {{logTrace_k}}("%s %d, %d, %d ...", "test trace", 1, 2, 3)
+    {{logDebug_k}}("%s %d, %d, %d ...", "test debug", 1, 2, 3)
+    {{logInfo_k}}("%s %d, %d, %d ...", "test info", 1, 2, 3)
+    {{logWarning_k}}("%s %d, %d, %d ...", "test warning", 1, 2, 3)
+    {{logError_k}}("%s %d, %d, %d ...", "test error", 1, 2, 3)
 endin
 
 </CsInstruments>
 <CsScore>
 
-i"A" 0 1
+{{csdCoreScoGlobal}}
+
+i"A" 0 0.031
 
 </CsScore>
 </CsoundSynthesizer>

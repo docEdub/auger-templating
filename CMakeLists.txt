@@ -130,7 +130,10 @@ function(add_custom_commands_for_template_sources)
     set(one_value_keywords ONE_VALUE_KEYWORDS)
     set(multi_value_keywords
         HELPERS
+        INSTRUMENTS
         JSON
+        OPCODES
+        SCORES
         SOURCES
     )
     cmake_parse_arguments(ARG "${options}" "${one_value_keywords}" "${multi_value_keywords}" ${ARGN})
@@ -141,22 +144,25 @@ function(add_custom_commands_for_template_sources)
         list(APPEND helpers "${output_filename}")
     endforeach()
 
-    foreach(source ${ARG_SOURCES})
+    foreach(source ${ARG_OPCODES} ${ARG_INSTRUMENTS} ${ARG_SCORES} ${ARG_SOURCES})
         add_custom_command(
             COMMENT "Generating ${source} ..."
             OUTPUT "${BUILD_DIR}/.root/${source}"
             WORKING_DIRECTORY "${ROOT_DIR}"
             COMMAND node "${TOOLS_DIR}/buildTemplateFiles.js"
                 --build-dir "${BUILD_DIR}"
+                --instruments ${ARG_INSTRUMENTS}
+                --opcodes ${ARG_OPCODES}
+                --scores ${ARG_SCORES}
                 --helper-files ${ARG_HELPERS}
                 --json-files ${ARG_JSON}
                 --source "${source}"
                 ${VERBOSE_CLI_FLAG}
             DEPENDS
-                "${source}"
+                "${TOOLS_DIR}/buildTemplateFiles.js"
                 ${helpers}
                 "${ARG_JSON}"
-                "${TOOLS_DIR}/buildTemplateFiles.js"
+                "${source}"
         )
 
         set_property(GLOBAL APPEND PROPERTY _generated_templates "${BUILD_DIR}/.root/${source}")
@@ -173,6 +179,15 @@ add_custom_commands_for_template_sources(
         "csd/test.ui.json"
         "csd/types-a.json"
         "csd/types-b.json"
+    OPCODES
+        "udo/time_i.orc"
+        "udo/time_k.orc"
+        "udo/timeString_i.orc"
+        "udo/timeString_k.orc"
+    INSTRUMENTS
+        "instr/instr 1.orc"
+    SCORES
+        "sco/instr 1.sco"
     SOURCES
         "csd/test-a.csd"
         "csd/test-b.csd"

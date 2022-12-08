@@ -20,6 +20,24 @@ const cliOptions = [
         description: "Should be the same as CMAKE_BINARY_DIR."
     },
     {
+        name: "instruments",
+        type: String,
+        multiple: true,
+        description: "The list of instrument .orc files to include."
+    },
+    {
+        name: "opcodes",
+        type: String,
+        multiple: true,
+        description: "The list of opcode .orc files to include."
+    },
+    {
+        name: "scores",
+        type: String,
+        multiple: true,
+        description: "The list of score .sco files to include."
+    },
+    {
         name: "helper-files",
         type: String,
         multiple: true,
@@ -126,6 +144,9 @@ for (let i = 0; i < arg.helperFiles.length; i++) {
 const json = JsonMerger.mergeFiles(arg.jsonFiles, {
     defaultArrayMergeOperation: "concat"
 });
+json[`Instruments`] = arg.instruments;
+json[`Scores`] = arg.scores;
+json[`User defined opcodes`] = arg.opcodes;
 json.fileName = arg.source;
 
 verbose_log(``);

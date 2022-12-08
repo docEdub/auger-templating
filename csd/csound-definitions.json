@@ -1,7 +1,16 @@
 {
-    "log_i_trace_enabled": true,
-    "log_i_debug_enabled": true,
-    "log_i_info_enabled": true,
-    "log_i_warning_enabled": true,
-    "log_i_error_enabled": true
+    "sr": 48000,
+    "kr": 1000,
+
+    "Enable logDebug_i": true,
+    "Enable logTrace_i": true,
+    "Enable logInfo_i": true,
+    "Enable logWarning_i": true,
+    "Enable logError_i": true,
+
+    "Enable logTrace_k": true,
+    "Enable logDebug_k": true,
+    "Enable logInfo_k": true,
+    "Enable logWarning_k": true,
+    "Enable logError_k": true
 }

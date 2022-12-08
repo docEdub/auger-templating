@@ -19,7 +19,10 @@
             "label": "Run Csound with current file",
             "dependsOn": "Build",
             "type": "shell",
-            "command": "csound ${file} -odac",
+            "command": "csound ${relativeFile} -odac",
+            "options": {
+                "cwd": "${workspaceFolder}/.build/.root"
+            },
             "presentation": {
                 "clear": true
             }
