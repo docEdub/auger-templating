@@ -138,7 +138,7 @@ global.CsoundTemplateHelper = class {
 
         registerHelper(`includeGuardEnd`, (input) => {
             let output = ``;
-            output += `#endif\n`;
+            output += `#endif`;
             return output;
         });
 
