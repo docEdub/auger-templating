@@ -6,7 +6,7 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": "npm run make",
+            "command": "time npm run make",
             "group": {
                 "kind": "build",
                 "isDefault": true
