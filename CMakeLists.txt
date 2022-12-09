@@ -53,6 +53,7 @@ function(add_check_dependencies_are_gone_target dependency_file out_target)
         COMMENT "Checking ${dependency_file_basename} dependencies"
         COMMAND node "${TOOLS_DIR}/areDependenciesGone.js"
             --dependency-file "${dependency_file}"
+            ${VERBOSE_CLI_FLAG}
             || (
                 echo "test" &&
                 echo "Reconfiguring CMake due to missing dependency in \"${relative_dependency_file}\"\\\\n" &&
