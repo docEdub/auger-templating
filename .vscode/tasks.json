@@ -4,15 +4,25 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Run CMake if .build folder is gone",
+            "type": "shell",
+            "command": "ls .build >/dev/null 2>&1 || time npm run cmake",
+            "presentation": {
+                "clear": true
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
             "label": "Build",
+            "dependsOn": "Run CMake if .build folder is gone",
             "type": "shell",
             "command": "time npm run make",
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "presentation": {
-                "clear": true
             }
         },
         {
