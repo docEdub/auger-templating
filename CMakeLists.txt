@@ -47,7 +47,7 @@ function(add_check_dependencies_are_gone_target dependency_file out_target)
     string(REPLACE "${ROOT_DIR}/" "" relative_dependency_file "${dependency_file}")
     get_filename_component(dependency_file_basename "${dependency_file}" NAME)
     get_filename_as_target("${dependency_file_basename}" target)
-    set(target "areDependenciesGone-${target}")
+    set(target "areDependenciesGone_${target}")
     string(REPLACE ".d.tmp" "" dependency_file_basename "${dependency_file_basename}")
     add_custom_target(${target}
         COMMENT "Checking ${dependency_file_basename} dependencies"
