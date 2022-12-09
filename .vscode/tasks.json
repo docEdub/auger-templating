@@ -22,9 +22,6 @@
             "command": "csound ${relativeFile} -odac",
             "options": {
                 "cwd": "${workspaceFolder}/.build/.root"
-            },
-            "presentation": {
-                "clear": true
             }
         }
     ]
