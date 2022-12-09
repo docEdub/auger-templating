@@ -2,7 +2,7 @@
 export type cssUnit = number | string;
 
 export class CssUnit {
-    static ToNumber(cssUnit: cssUnit, referenceWidth: number): number {
+    static ToNumber(cssUnit: cssUnit, referenceUnit?: number): number {
         if (typeof cssUnit == `number`) {
             return cssUnit as number;
         }
@@ -13,7 +13,7 @@ export class CssUnit {
             }
             else if (cssUnitString.endsWith(`%`)) {
                 const percentage = (Number.parseFloat(cssUnitString.replace(`%`, ``)) || 0) / 100;
-                return percentage * referenceWidth || 0;
+                return percentage * referenceUnit || 0;
             }
             else {
                 return Number.parseFloat(cssUnitString) || 0;
@@ -21,4 +21,8 @@ export class CssUnit {
         }
         return 0;
     }
+}
+
+if (global.testing) {
+    global.CssUnit = CssUnit;
 }
