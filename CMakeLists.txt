@@ -171,14 +171,6 @@ endfunction()
 
 
 add_custom_commands_for_template_sources(
-    HELPERS
-        "src/Cabbage/cabbageTemplateHelper.ts"
-        "src/Csound/csoundTemplateHelper.ts"
-    JSON
-        "csd/csound-definitions.json"
-        "csd/test.ui.json"
-        "csd/types-a.json"
-        "csd/types-b.json"
     OPCODES
         "udo/time_i.orc"
         "udo/time_k.orc"
@@ -191,6 +183,15 @@ add_custom_commands_for_template_sources(
     SOURCES
         "csd/test-a.csd"
         "csd/test-b.csd"
+    JSON
+        "csd/test-a.json"
+        "csd/test-b.json"
+        "json/types-a.json"
+        "json/types-b.json"
+        "json/csound-definitions.json"
+    HELPERS
+        "src/Cabbage/cabbageTemplateHelper.ts"
+        "src/Csound/csoundTemplateHelper.ts"
 )
 
 

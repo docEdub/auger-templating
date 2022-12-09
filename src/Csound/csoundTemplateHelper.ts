@@ -99,13 +99,13 @@ global.CsoundTemplateHelper = class {
             return output;
         }
 
-        registerHelper(`csdCoreOptions`, (input) => {
+        registerHelper(`CsdOptionsCore`, (input) => {
             let output = ``;
             output += `--env:INCDIR=${buildRootDir()}`
             return output;
         });
 
-        registerHelper(`csdCoreOrcGlobal`, (input) => {
+        registerHelper(`CsdOrcGlobalCore`, (input) => {
             let output = ``;
             output += `0dbfs = 1\n`;
             output += `\n`;
@@ -116,7 +116,7 @@ global.CsoundTemplateHelper = class {
             return output;
         });
 
-        registerHelper(`csdCoreScoGlobal`, (input) => {
+        registerHelper(`CsdScoGlobalCore`, (input) => {
             let output = ``;
             output += scores(input);
             return output;
