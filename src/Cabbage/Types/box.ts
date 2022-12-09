@@ -1,4 +1,6 @@
 
+import { cssUnit, CssUnit } from '../../Utility/cssUnit';
+
 export class Box {
     constructor(json: any) {
         this.x = json.x;
@@ -11,96 +13,32 @@ export class Box {
         return this._x;
     }
 
-    public set x(value: number | string) {
-        if (typeof value == "number") {
-            this._x = value as number;
-        }
-        else if (typeof value == "string") {
-            const stringValue = value as string;
-            if (stringValue.endsWith("px")) {
-                this._x = Number.parseFloat(stringValue.replace("px", "")) || 0;
-            }
-            else if (stringValue.endsWith("%")) {
-                const percentage = (Number.parseFloat(stringValue.replace("%", "")) || 0) / 100;
-                this._x = percentage * this._parent?.width || 0;
-            }
-            else {
-                this._x = Number.parseFloat(stringValue) || 0;
-            }
-        }
+    public set x(value: cssUnit) {
+        this._x = CssUnit.ToNumber(value, this._parent?.width);
     }
 
     public get y(): number {
         return this._y;
     }
 
-    public set y(value: number | string) {
-        if (typeof value == "number") {
-            this._y = value as number;
-        }
-        else if (typeof value == "string") {
-            const stringValue = value as string;
-            if (stringValue.endsWith("px")) {
-                this._y = Number.parseFloat(stringValue.replace("px", "")) || 0;
-            }
-            else if (stringValue.endsWith("%")) {
-                const percentage = (Number.parseFloat(stringValue.replace("%", "")) || 0) / 100;
-                this._y = percentage * this._parent?.height || 0;
-            }
-            else {
-                this._y = Number.parseFloat(stringValue) || 0;
-            }
-        }
+    public set y(value: cssUnit) {
+        this._y = CssUnit.ToNumber(value, this._parent?.width);
     }
 
     public get width(): number {
         return this._width;
     }
 
-    public set width(value: number | string) {
-        if (typeof value == "number") {
-            this._width = value as number;
-        }
-        else if (typeof value == "string") {
-            const stringValue = value as string;
-            if (stringValue.endsWith("px")) {
-                this._width = Number.parseFloat(stringValue.replace("px", "")) || 0;
-            }
-            else if (stringValue.endsWith("%")) {
-                if (!this._parent) {
-                    this._width = 0;
-                    return;
-                }
-                const percentage = (Number.parseFloat(stringValue.replace("%", "")) || 0) / 100;
-                this._width = percentage * this._parent?.width || 0;
-            }
-            else {
-                this._width = Number.parseFloat(stringValue) || 0;
-            }
-        }
+    public set width(value: cssUnit) {
+        this._width = CssUnit.ToNumber(value, this._parent?.width);
     }
 
     public get height(): number {
         return this._height;
     }
 
-    public set height(value: number | string) {
-        if (typeof value == "number") {
-            this._height = value as number;
-        }
-        else if (typeof value == "string") {
-            const stringValue = value as string;
-            if (stringValue.endsWith("px")) {
-                this._height = Number.parseFloat(stringValue.replace("px", "")) || 0;
-            }
-            else if (stringValue.endsWith("%")) {
-                const percentage = (Number.parseFloat(stringValue.replace("%", "")) || 0) / 100;
-                this._height = percentage * this._parent?.height || 0;
-            }
-            else {
-                this._height = Number.parseFloat(stringValue) || 0;
-            }
-        }
+    public set height(value: cssUnit) {
+        this._height = CssUnit.ToNumber(value, this._parent?.width);
     }
 
     public output(): string {
