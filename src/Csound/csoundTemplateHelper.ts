@@ -99,6 +99,12 @@ global.CsoundTemplateHelper = class {
             return output;
         }
 
+        const variableNameFromFileName = (fileName: string) => {
+            fileName = fileName.replace(`/`, `_`);
+            fileName = fileName.replace(`.`, `_`);
+            return fileName;
+        }
+
         registerHelper(`CsdOptionsCore`, (input) => {
             let output = ``;
             output += `--env:INCDIR=${buildRootDir()}`
@@ -121,12 +127,6 @@ global.CsoundTemplateHelper = class {
             output += scores(input);
             return output;
         });
-
-        const variableNameFromFileName = (fileName: string) => {
-            fileName = fileName.replace(`/`, `_`);
-            fileName = fileName.replace(`.`, `_`);
-            return fileName;
-        }
 
         registerHelper(`includeGuardStart`, (input) => {
             let fileName = variableNameFromFileName(input.data.root.fileName);
