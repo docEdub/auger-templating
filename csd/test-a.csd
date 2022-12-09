@@ -33,5 +33,4 @@ i"A" 0 0.031
 </CsScore>
 </CsoundSynthesizer>
 
-{{#Cabbage}}
-{{/Cabbage}}
+{{Cabbage}}
