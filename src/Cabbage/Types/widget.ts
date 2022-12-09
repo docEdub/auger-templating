@@ -1,21 +1,21 @@
 
-export class Widget {
-    public get width() {
-        return this._width;
+import { Box } from './box';
+import { Form } from './form';
+
+export class Widget extends Box {
+    constructor(json: any) {
+        super(json);
     }
 
-    public set width(value: Number) {
-        this._width = value;
+    public get parent(): Form | Widget {
+        return this._parent.constructor == Form.constructor ? this._parent as Form : this._parent as Widget;
     }
 
-    public get height() {
-        return this._height;
+    public set parent(widget: Form | Widget) {
+        this._setParent(widget);
     }
 
-    public set height(value: Number) {
-        this._height = value;
+    public get children() {
+        return this._children as Array<Widget>;
     }
-
-    private _width: Number = 0;
-    private _height: Number = 0;
 }

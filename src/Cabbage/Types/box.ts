@@ -46,8 +46,42 @@ export class Box {
         return "";
     }
 
-    private _parent: Box = null;
-    private _children: Array<Box> = null;
+    protected _setParent(box: Box) {
+        this._parent = box;
+        if (!this._parent?._hasChild(this)) {
+            this._parent._addChild(this);
+        }
+    }
+
+    protected _hasChild(box: Box) {
+        return this._children.indexOf(box) !== -1;
+    }
+
+    protected _addChild(box: Box) {
+        if (!box) {
+            return;
+        }
+        if (this._hasChild(box)) {
+            return;
+        }
+        this._children.push(box);
+        box._setParent(this);
+    }
+
+    protected _removeChild(box: Box) {
+        if (!box) {
+            return;
+        }
+        box._parent = null;
+        if (!this._hasChild(box)) {
+            return;
+        }
+        const i = this._children.indexOf(box);
+        this._children.slice(i, i + 1);
+    }
+
+    protected _parent: Box = null;
+    protected _children: Array<Box> = null;
     private _x: number = 0
     private _y: number = 0
     private _width: number = 0

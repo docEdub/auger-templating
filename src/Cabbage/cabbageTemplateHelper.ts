@@ -1,5 +1,6 @@
 
-import { Form } from "./Types/form";
+import { Form } from './Types/form';
+import { Widget } from './Types/widget';
 
 // Note:
 // - The class name must be the same as the filename starting with an uppercase letter, without the `.ts` suffix.

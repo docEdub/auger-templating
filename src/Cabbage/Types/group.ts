@@ -1,11 +1,16 @@
 
-import { Widget } from "./widget";
+import { Widget } from './widget';
 
 export class Group extends Widget {
-    constructor() {
-        super()
+    constructor(json: any) {
+        super(json);
     }
 
-    private _children = new Array<Widget>;
-}
+    public addChild(child: Widget) {
+        this._addChild(child);
+    }
 
+    public removeChild(child: Widget) {
+        this._removeChild(child);
+    }
+}
