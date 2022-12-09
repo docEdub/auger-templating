@@ -43,6 +43,28 @@ function(get_typescript_build_root_filename source out_filename)
 endfunction()
 
 
+function(add_check_dependencies_are_gone_target dependency_file out_target)
+    string(REPLACE "${ROOT_DIR}/" "" relative_dependency_file "${dependency_file}")
+    get_filename_component(dependency_file_basename "${dependency_file}" NAME)
+    get_filename_as_target("${dependency_file_basename}" target)
+    set(target "areDependenciesGone-${target}")
+    string(REPLACE ".d.tmp" "" dependency_file_basename "${dependency_file_basename}")
+    add_custom_target(${target}
+        COMMENT "Checking ${dependency_file_basename} dependencies"
+        COMMAND node "${TOOLS_DIR}/areDependenciesGone.js"
+            --dependency-file "${dependency_file}"
+            || (
+                echo "test" &&
+                echo "Reconfiguring CMake due to missing dependency in \"${relative_dependency_file}\"\\\\n" &&
+                "${CMAKE_COMMAND}" -E rm "${dependency_file}" &&
+                cd "${ROOT_DIR}" &&
+                "${CMAKE_COMMAND}" -B "${BUILD_DIR}"
+            )
+    )
+    set(${out_target} ${target} PARENT_SCOPE)
+endfunction()
+
+
 # Adds a custom command to run `webpack` if the given template helper source changes or if any of its dependencies
 # change ("dependencies" being the files brought in by the TypeScript `import` statement).
 #
@@ -103,6 +125,8 @@ function(add_custom_command_for_template_helper)
         string(REPLACE "\n" ";" dependencies "${dependencies}")
         verbose_log("dependencies = ${dependencies}")
 
+        add_check_dependencies_are_gone_target("${dependencies_output}.tmp" check_dependencies_are_gone)
+
         add_custom_command(
             COMMENT "Updating ${source} dependencies ..."
             OUTPUT "${dependencies_output}.tmp"
@@ -112,7 +136,10 @@ function(add_custom_command_for_template_helper)
                 --output-file "${dependencies_output}.tmp"
                 ${VERBOSE_CLI_FLAG}
                 && ${CMAKE_COMMAND} -E copy_if_different "${dependencies_output}.tmp" "${dependencies_output}"
-            DEPENDS ${dependencies}
+            DEPENDS
+                ${dependencies}
+                ${check_dependencies_are_gone}
+                "${TOOLS_DIR}/areDependenciesGone.js"
         )
 
         get_filename_component(target "${source}" NAME)
@@ -121,6 +148,7 @@ function(add_custom_command_for_template_helper)
 
         set_property(GLOBAL APPEND PROPERTY _reconfigure_dependencies ${target} "${dependencies_output}")
         set_property(GLOBAL APPEND PROPERTY _webpack_dependencies ${dependencies})
+        set_property(GLOBAL APPEND PROPERTY _webpack_dependencies ${check_dependencies_are_gone})
     endif()
 endfunction()
 
