@@ -2,7 +2,7 @@
 export type cssUnit = number | string;
 
 export class CssUnit {
-    static ToNumber(cssUnit: cssUnit, referenceUnit?: number): number {
+    static AsNumber(cssUnit: cssUnit, referenceUnit?: number): number {
         if (typeof cssUnit == `number`) {
             return cssUnit as number;
         }

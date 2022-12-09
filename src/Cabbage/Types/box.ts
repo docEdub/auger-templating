@@ -14,7 +14,7 @@ export class Box {
     }
 
     public set x(value: cssUnit) {
-        this._x = CssUnit.ToNumber(value, this._parent?.width);
+        this._x = CssUnit.AsNumber(value, this._parent?.width);
     }
 
     public get y(): number {
@@ -22,7 +22,7 @@ export class Box {
     }
 
     public set y(value: cssUnit) {
-        this._y = CssUnit.ToNumber(value, this._parent?.width);
+        this._y = CssUnit.AsNumber(value, this._parent?.width);
     }
 
     public get width(): number {
@@ -30,7 +30,7 @@ export class Box {
     }
 
     public set width(value: cssUnit) {
-        this._width = CssUnit.ToNumber(value, this._parent?.width);
+        this._width = CssUnit.AsNumber(value, this._parent?.width);
     }
 
     public get height(): number {
@@ -38,7 +38,7 @@ export class Box {
     }
 
     public set height(value: cssUnit) {
-        this._height = CssUnit.ToNumber(value, this._parent?.width);
+        this._height = CssUnit.AsNumber(value, this._parent?.width);
     }
 
     public output(): string {
