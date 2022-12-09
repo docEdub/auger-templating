@@ -33,10 +33,10 @@ global.CsoundTemplateHelper = class {
             let enableLogK = false;
             for (let i = 0; i < logLevels.length; i++) {
                 const logLevel = logLevels[i];
-                if (input.data.root[`Enable log${logLevel.name}_i`]) {
+                if (input.data.root[`Enable Log${logLevel.name}_i`]) {
                     enableLogI = true;
                 }
-                if (input.data.root[`Enable log${logLevel.name}_k`]) {
+                if (input.data.root[`Enable Log${logLevel.name}_k`]) {
                     enableLogK = true;
                 }
                 if (enableLogI && enableLogK) {
@@ -149,8 +149,8 @@ global.CsoundTemplateHelper = class {
         // Add log level i helpers.
         for (let i = 0; i < logLevels.length; i++) {
             const logLevel = logLevels[i];
-            registerHelper(`log${logLevel.name}_i`, (input) => {
-                const disabler = input.data.root[`Enable log${logLevel.name}_i`] ? `` : `; `;
+            registerHelper(`Log${logLevel.name}_i`, (input) => {
+                const disabler = input.data.root[`Enable Log${logLevel.name}_i`] ? `` : `; `;
                 let output = ``;
                 output += `${disabler}prints("%s  i.%d  ${input.data.root.fileName}(${input.loc.start.line})  [${logLevel.abbreviation}]:  ", timeString_i(), i(gki))\n`;
                 output += `    ${disabler}$log_i`;
@@ -161,8 +161,8 @@ global.CsoundTemplateHelper = class {
         // Add log level k helpers.
         for (let i = 0; i < logLevels.length; i++) {
             const logLevel = logLevels[i];
-            registerHelper(`log${logLevel.name}_k`, (input) => {
-                const disabler = input.data.root[`Enable log${logLevel.name}_k`] ? `` : `; `;
+            registerHelper(`Log${logLevel.name}_k`, (input) => {
+                const disabler = input.data.root[`Enable Log${logLevel.name}_k`] ? `` : `; `;
                 let output = ``;
                 output += `${disabler}printsk("%s  k.%d  ${input.data.root.fileName}(${input.loc.start.line})  [${logLevel.abbreviation}]:  ", timeString_k(), gki - 1)\n`;
                 output += `    ${disabler}$log_k`;

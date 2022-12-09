@@ -2,15 +2,15 @@
     "sr": 48000,
     "kr": 1000,
 
-    "Enable logDebug_i": true,
-    "Enable logTrace_i": true,
-    "Enable logInfo_i": true,
-    "Enable logWarning_i": true,
-    "Enable logError_i": true,
+    "Enable LogDebug_i": true,
+    "Enable LogTrace_i": true,
+    "Enable LogInfo_i": true,
+    "Enable LogWarning_i": true,
+    "Enable LogError_i": true,
 
-    "Enable logTrace_k": true,
-    "Enable logDebug_k": true,
-    "Enable logInfo_k": true,
-    "Enable logWarning_k": true,
-    "Enable logError_k": true
+    "Enable LogTrace_k": true,
+    "Enable LogDebug_k": true,
+    "Enable LogInfo_k": true,
+    "Enable LogWarning_k": true,
+    "Enable LogError_k": true
 }
