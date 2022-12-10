@@ -1,5 +1,5 @@
 
-import { cssUnit, CssUnit } from '../../Utility/cssUnit';
+import { cssNumber, CssNumber } from '../../Utility/cssNumber';
 
 export class Box {
     constructor(json: any) {
@@ -16,32 +16,32 @@ export class Box {
         return this._x;
     }
 
-    public set x(value: cssUnit) {
-        this._x = CssUnit.AsNumber(value, this._parent?.width);
+    public set x(value: cssNumber) {
+        this._x = CssNumber.AsNumber(value, this._parent?.width);
     }
 
     public get y(): number {
         return this._y;
     }
 
-    public set y(value: cssUnit) {
-        this._y = CssUnit.AsNumber(value, this._parent?.width);
+    public set y(value: cssNumber) {
+        this._y = CssNumber.AsNumber(value, this._parent?.width);
     }
 
     public get width(): number {
         return this._width;
     }
 
-    public set width(value: cssUnit) {
-        this._width = CssUnit.AsNumber(value, this._parent?.width);
+    public set width(value: cssNumber) {
+        this._width = CssNumber.AsNumber(value, this._parent?.width);
     }
 
     public get height(): number {
         return this._height;
     }
 
-    public set height(value: cssUnit) {
-        this._height = CssUnit.AsNumber(value, this._parent?.width);
+    public set height(value: cssNumber) {
+        this._height = CssNumber.AsNumber(value, this._parent?.width);
     }
 
     public output(): string {
@@ -88,11 +88,11 @@ export class Box {
     }
 
     protected _parent: Box = null;
-    protected _children: Array<Box> = new Array<Box>;
-    private _x: number = 0
-    private _y: number = 0
-    private _width: number = 0
-    private _height: number = 0
+    protected _children = new Array<Box>;
+    private _x = 0
+    private _y = 0
+    private _width = 0
+    private _height = 0
 }
 
 if (global.testing) {

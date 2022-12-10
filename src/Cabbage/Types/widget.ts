@@ -1,16 +1,17 @@
 
 import { Box } from './box';
+import { Group } from './group';
 
 export class Widget extends Box {
     constructor(json: any) {
         super(json);
     }
 
-    public get parent(): Widget {
-        return this._parent as Widget;
+    public get parent(): Group {
+        return this._parent as Group;
     }
 
-    public set parent(widget: Widget) {
+    public set parent(widget: Group) {
         this._setParent(widget);
     }
 

@@ -1,5 +1,7 @@
 
 import { Form } from './Types/form';
+import { Group } from './Types/group'; require('./Types/group');
+import { CssMatte } from '../Utility/cssMatte'; require('../Utility/cssMatte');
 import { Widget } from './Types/widget';
 
 // Note:
