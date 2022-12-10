@@ -65,7 +65,13 @@ verbose_log(`\n`);
 verbose_log(`Arguments:`)
 verbose_log(arg);
 
+const filesTraversed = [];
+
 const recursedDependencies = (absoluteFileName) => {
+    if (filesTraversed.indexOf(absoluteFileName) !== -1) {
+        return null;
+    }
+    filesTraversed.push(absoluteFileName);
     const dependencies = [];
     dependencies.push(absoluteFileName);
     const file = fs.readFileSync(absoluteFileName, "utf8");
@@ -79,7 +85,7 @@ const recursedDependencies = (absoluteFileName) => {
             dependencyFileName = path.resolve(path.dirname(absoluteFileName), dependencyFileName);
         }
         const candidateDependencies = recursedDependencies(dependencyFileName);
-        for (let i = 0; i < candidateDependencies.length; i++) {
+        for (let i = 0; i < candidateDependencies?.length; i++) {
             const candidateDependency = candidateDependencies[i];
             if (dependencies.indexOf(candidateDependency) === -1) {
                 dependencies.push(candidateDependency);
