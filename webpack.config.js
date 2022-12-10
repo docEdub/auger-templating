@@ -34,5 +34,7 @@ module.exports = {
         ]
     },
     mode: "development",
-    target: "node"
+
+    // Allow node modules to be used in TypeScript, e.g. `const fs = require(fs)`.
+    target: "node",
 };
