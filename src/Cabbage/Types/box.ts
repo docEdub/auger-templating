@@ -3,6 +3,9 @@ import { cssUnit, CssUnit } from '../../Utility/cssUnit';
 
 export class Box {
     constructor(json: any) {
+        if (!json) {
+            return;
+        }
         this.x = json.x;
         this.y = json.y;
         this.width = json.width;
@@ -46,42 +49,46 @@ export class Box {
         return "";
     }
 
-    protected _setParent(box: Box) {
-        this._parent = box;
-        if (!this._parent?._hasChild(this)) {
-            this._parent._addChild(this);
+    protected _setParent(parent: Box) {
+        if (this._parent == parent) {
+            return;
         }
+        if (this._parent) {
+            this._parent._removeChild(this);
+        }
+        this._parent = parent;
+        this._parent?._addChild(this);
     }
 
-    protected _hasChild(box: Box) {
-        return this._children.indexOf(box) !== -1;
+    protected _hasChild(child: Box) {
+        return this._children?.indexOf(child) !== -1;
     }
 
-    protected _addChild(box: Box) {
-        if (!box) {
+    protected _addChild(child: Box) {
+        if (!child) {
             return;
         }
-        if (this._hasChild(box)) {
+        if (this._hasChild(child)) {
             return;
         }
-        this._children.push(box);
-        box._setParent(this);
+        this._children.push(child);
+        child._setParent(this);
     }
 
-    protected _removeChild(box: Box) {
-        if (!box) {
+    protected _removeChild(child: Box) {
+        if (!child) {
             return;
         }
-        box._parent = null;
-        if (!this._hasChild(box)) {
+        child._parent = null;
+        if (!this._hasChild(child)) {
             return;
         }
-        const i = this._children.indexOf(box);
-        this._children.slice(i, i + 1);
+        const i = this._children.indexOf(child);
+        this._children.splice(i, 1);
     }
 
     protected _parent: Box = null;
-    protected _children: Array<Box> = null;
+    protected _children: Array<Box> = new Array<Box>;
     private _x: number = 0
     private _y: number = 0
     private _width: number = 0

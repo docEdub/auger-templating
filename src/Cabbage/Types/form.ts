@@ -1,6 +1,6 @@
-import { Box } from "./box";
+import { Widget } from "./widget";
 
-export class Form extends Box {
+export class Form extends Widget {
     constructor(json: any) {
         super(json);
         this._json = json;
