@@ -78,7 +78,13 @@ const recursedDependencies = (absoluteFileName) => {
             }
             dependencyFileName = path.resolve(path.dirname(absoluteFileName), dependencyFileName);
         }
-        dependencies.push(...recursedDependencies(dependencyFileName));
+        const candidateDependencies = recursedDependencies(dependencyFileName);
+        for (let i = 0; i < candidateDependencies.length; i++) {
+            const candidateDependency = candidateDependencies[i];
+            if (dependencies.indexOf(candidateDependency) === -1) {
+                dependencies.push(candidateDependency);
+            }
+        }
     }
     return dependencies;
 }
