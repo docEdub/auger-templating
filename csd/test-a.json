@@ -7,8 +7,6 @@
         "children": [
             {
                 "type": "group",
-                "x": "250px",
-                "y": "250px",
                 "width": "500px",
                 "height": "250px",
                 "color": "red"
