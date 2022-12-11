@@ -2,6 +2,8 @@ global.testing = true;
 require("../../../.build/.root/src/Cabbage/cabbageTemplateHelper");
 
 const GroupLayout_None = 0;
+const GroupLayout_LeftToRight = 1;
+const GroupLayout_TopToBottom = 2;
 
 describe(`Group`, () => {
     describe(`constructor`, () => {
@@ -34,6 +36,24 @@ describe(`Group`, () => {
                 paddingRight: "1px"
             });
             expect(group.paddingRight).toBe(1);
+        });
+        test(`sets layout to None from given json`, () => {
+            const group = new Group({
+                layout: "None"
+            });
+            expect(group.layout).toBe(GroupLayout_None);
+        });
+        test(`sets layout to LeftToRight from given json`, () => {
+            const group = new Group({
+                layout: "LeftToRight"
+            });
+            expect(group.layout).toBe(GroupLayout_LeftToRight);
+        });
+        test(`sets layout to TopToBottom from given json`, () => {
+            const group = new Group({
+                layout: "TopToBottom"
+            });
+            expect(group.layout).toBe(GroupLayout_TopToBottom);
         });
     });
     describe(`padding`, () => {

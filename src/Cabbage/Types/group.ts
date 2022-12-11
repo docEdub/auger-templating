@@ -5,12 +5,10 @@ import { Css } from '../../Utility/css';
 import { cssFrame, CssFrame } from '../../Utility/cssFrame';
 import { cssLength, CssLength } from '../../Utility/cssLength';
 
-enum GroupLayout {
+export enum GroupLayout {
     None = 0,
     LeftToRight,
-    TopToBottom,
-    RightToLeft,
-    BottomToTop
+    TopToBottom
 }
 
 export class Group extends Widget {
@@ -34,6 +32,16 @@ export class Group extends Widget {
         }
         if (json.paddingRight) {
             this.paddingRight = json.paddingRight;
+        }
+        if (json.layout) {
+            switch (json.layout) {
+                case `LeftToRight`:
+                    this.layout = GroupLayout.LeftToRight;
+                    break;
+                case `TopToBottom`:
+                    this.layout = GroupLayout.TopToBottom;
+                    break;
+            }
         }
     }
 
