@@ -2,6 +2,12 @@ global.testing = true;
 require("../../../.build/.root/src/Cabbage/cabbageTemplateHelper");
 
 describe(`Group`, () => {
+    describe(`children`, () => {
+        test(`is initialized to an empty array`, () => {
+            const parent = new Group;
+            expect(parent.children.length).toBe(0);
+        });
+    });
     describe(`addChild`, () => {
         test(`adds the child`, () => {
             const child = new Widget;

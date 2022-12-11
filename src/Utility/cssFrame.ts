@@ -2,21 +2,21 @@
 import { Css } from './css';
 import { cssNumber, CssNumber } from './cssNumber';
 
-export type cssMatte = Array<cssNumber> | string;
+export type cssFrame = Array<cssNumber> | string;
 
-export class CssMatte {
-    public static AsNumberArray(cssMatte: cssMatte, referenceWidth?: number, referenceHeight?: number) {
+export class CssFrame {
+    public static AsNumberArray(cssFrame: cssFrame, referenceWidth?: number, referenceHeight?: number) {
         const outputArray = new Array<number>(4);
         outputArray.fill(0);
-        if (!cssMatte) {
+        if (!cssFrame) {
             return outputArray;
         }
         let inputArray: Array<cssNumber> = null;
-        if (Array.isArray(cssMatte)) {
-            inputArray = cssMatte;
+        if (Array.isArray(cssFrame)) {
+            inputArray = cssFrame;
         }
-        else if (typeof cssMatte === `string`) {
-            const inputString = cssMatte as string;
+        else if (typeof cssFrame === `string`) {
+            const inputString = cssFrame as string;
             const inputStringArray = inputString.split(` `);
             inputArray = new Array<cssNumber>();
             for (let i = 0; i < Math.min(4, inputStringArray.length); i++) {
@@ -52,5 +52,5 @@ export class CssMatte {
 }
 
 if (global.testing) {
-    global.CssMatte = CssMatte;
+    global.CssFrame = CssFrame;
 }
