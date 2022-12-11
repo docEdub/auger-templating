@@ -117,20 +117,9 @@ export class Group extends Widget {
         child.parent = null;
     }
 
-    public updateLayout() {
-    }
-
     private _padding = new Array<number>(4);
     private _layout = GroupLayout.None;
     private _children = new Array<Widget>;
-
-    private _doLeftToRightLayout() {
-        let x = 0;
-        let y = 0;
-        for (let i = 0; i < this._children.length; i++) {
-
-        }
-    }
 }
 
 if (global.testing) {
