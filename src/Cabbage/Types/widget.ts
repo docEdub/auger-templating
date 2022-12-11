@@ -3,7 +3,7 @@ import { Group } from './group';
 
 import { Css } from '../../Utility/css';
 import { cssFrame, CssFrame } from '../../Utility/cssFrame';
-import { cssNumber, CssNumber } from '../../Utility/cssNumber';
+import { cssLength, CssLength } from '../../Utility/cssLength';
 
 export class Widget {
     constructor(json: any) {
@@ -38,8 +38,8 @@ export class Widget {
         return this._position[Css.Top];
     }
 
-    public set top(value: cssNumber) {
-        const top = CssNumber.AsNumber(value, this.parent?.height);
+    public set top(value: cssLength) {
+        const top = CssLength.AsNumber(value, this.parent?.height);
         if (this._isHeightSet) {
             this._position[Css.Bottom] = top + this.height;
         }
@@ -50,8 +50,8 @@ export class Widget {
         return this._position[Css.Left];
     }
 
-    public set left(value: cssNumber) {
-        const left = CssNumber.AsNumber(value, this.parent?.width);
+    public set left(value: cssLength) {
+        const left = CssLength.AsNumber(value, this.parent?.width);
         if (this._isWidthSet) {
             this._position[Css.Right] = left + this.width;
         }
@@ -62,8 +62,8 @@ export class Widget {
         return this._position[Css.Bottom];
     }
 
-    public set bottom(value: cssNumber) {
-        const bottom = CssNumber.AsNumber(value, this.parent?.height);
+    public set bottom(value: cssLength) {
+        const bottom = CssLength.AsNumber(value, this.parent?.height);
         if (this._isHeightSet) {
             this._position[Css.Top] = bottom - this.height;
         }
@@ -74,8 +74,8 @@ export class Widget {
         return this._position[Css.Right];
     }
 
-    public set right(value: cssNumber) {
-        const right = CssNumber.AsNumber(value, this.parent?.width);
+    public set right(value: cssLength) {
+        const right = CssLength.AsNumber(value, this.parent?.width);
         if (this._isWidthSet) {
             this._position[Css.Left] = right - this.width;
         }
@@ -86,8 +86,8 @@ export class Widget {
         return this.bottom - this.top;
     }
 
-    public set height(value: cssNumber) {
-        this.bottom = this.top + CssNumber.AsNumber(value);
+    public set height(value: cssLength) {
+        this.bottom = this.top + CssLength.AsNumber(value);
         this._isHeightSet = true;
     }
 
@@ -95,8 +95,8 @@ export class Widget {
         return this.right - this.left;
     }
 
-    public set width(value: cssNumber) {
-        this.right = this.left + CssNumber.AsNumber(value);
+    public set width(value: cssLength) {
+        this.right = this.left + CssLength.AsNumber(value);
         this._isWidthSet = true;
     }
 
@@ -108,20 +108,20 @@ export class Widget {
         this._margin = CssFrame.AsNumberArray(value, this.parent?.width, this.parent?.height);
     }
 
-    public set marginTop(value: cssNumber) {
-        this._margin[Css.Top] = CssNumber.AsNumber(value, this.parent?.height);
+    public set marginTop(value: cssLength) {
+        this._margin[Css.Top] = CssLength.AsNumber(value, this.parent?.height);
     }
 
-    public set marginLeft(value: cssNumber) {
-        this._margin[Css.Left] = CssNumber.AsNumber(value, this.parent?.width);
+    public set marginLeft(value: cssLength) {
+        this._margin[Css.Left] = CssLength.AsNumber(value, this.parent?.width);
     }
 
-    public set marginBottom(value: cssNumber) {
-        this._margin[Css.Bottom] = CssNumber.AsNumber(value, this.parent?.height);
+    public set marginBottom(value: cssLength) {
+        this._margin[Css.Bottom] = CssLength.AsNumber(value, this.parent?.height);
     }
 
-    public set marginRight(value: cssNumber) {
-        this._margin[Css.Right] = CssNumber.AsNumber(value, this.parent?.width);
+    public set marginRight(value: cssLength) {
+        this._margin[Css.Right] = CssLength.AsNumber(value, this.parent?.width);
     }
 
     public output(): string {

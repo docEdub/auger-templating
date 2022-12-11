@@ -3,7 +3,7 @@ import { Widget } from './widget';
 
 import { Css } from '../../Utility/css';
 import { cssFrame, CssFrame } from '../../Utility/cssFrame';
-import { cssNumber, CssNumber } from '../../Utility/cssNumber';
+import { cssLength, CssLength } from '../../Utility/cssLength';
 
 enum GroupLayout {
     None = 0,
@@ -27,20 +27,20 @@ export class Group extends Widget {
         this._padding = CssFrame.AsNumberArray(value, this.parent?.width, this.parent?.height);
     }
 
-    public set paddingTop(value: cssNumber) {
-        this._padding[Css.Top] = CssNumber.AsNumber(value, this.parent?.height);
+    public set paddingTop(value: cssLength) {
+        this._padding[Css.Top] = CssLength.AsNumber(value, this.parent?.height);
     }
 
-    public set paddingLeft(value: cssNumber) {
-        this._padding[Css.Left] = CssNumber.AsNumber(value, this.parent?.width);
+    public set paddingLeft(value: cssLength) {
+        this._padding[Css.Left] = CssLength.AsNumber(value, this.parent?.width);
     }
 
-    public set paddingBottom(value: cssNumber) {
-        this._padding[Css.Bottom] = CssNumber.AsNumber(value, this.parent?.height);
+    public set paddingBottom(value: cssLength) {
+        this._padding[Css.Bottom] = CssLength.AsNumber(value, this.parent?.height);
     }
 
-    public set paddingRight(value: cssNumber) {
-        this._padding[Css.Right] = CssNumber.AsNumber(value, this.parent?.width);
+    public set paddingRight(value: cssLength) {
+        this._padding[Css.Right] = CssLength.AsNumber(value, this.parent?.width);
     }
 
     public get layout() {

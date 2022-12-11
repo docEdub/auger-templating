@@ -1,8 +1,8 @@
 
 import { Css } from './css';
-import { cssNumber, CssNumber } from './cssNumber';
+import { cssLength, CssLength } from './cssLength';
 
-export type cssFrame = Array<cssNumber> | string;
+export type cssFrame = Array<cssLength> | string;
 
 export class CssFrame {
     public static AsNumberArray(cssFrame: cssFrame, referenceWidth?: number, referenceHeight?: number) {
@@ -11,14 +11,14 @@ export class CssFrame {
         if (!cssFrame) {
             return outputArray;
         }
-        let inputArray: Array<cssNumber> = null;
+        let inputArray: Array<cssLength> = null;
         if (Array.isArray(cssFrame)) {
             inputArray = cssFrame;
         }
         else if (typeof cssFrame === `string`) {
             const inputString = cssFrame as string;
             const inputStringArray = inputString.split(` `);
-            inputArray = new Array<cssNumber>();
+            inputArray = new Array<cssLength>();
             for (let i = 0; i < Math.min(4, inputStringArray.length); i++) {
                 inputArray[i] = inputStringArray[i];
             }
@@ -26,26 +26,26 @@ export class CssFrame {
         if (inputArray.length === 0) {
             return outputArray;
         }
-        outputArray[Css.Top] = CssNumber.AsNumber(inputArray[Css.Top], referenceHeight);
+        outputArray[Css.Top] = CssLength.AsNumber(inputArray[Css.Top], referenceHeight);
         if (inputArray.length === 1) {
-            outputArray[Css.Left] = CssNumber.AsNumber(inputArray[Css.Top], referenceWidth);
+            outputArray[Css.Left] = CssLength.AsNumber(inputArray[Css.Top], referenceWidth);
             outputArray[Css.Bottom] = outputArray[Css.Top];
             outputArray[Css.Right] = outputArray[Css.Left];
         }
         else if (inputArray.length === 2) {
-            outputArray[Css.Left] = CssNumber.AsNumber(inputArray[Css.Left], referenceWidth);
+            outputArray[Css.Left] = CssLength.AsNumber(inputArray[Css.Left], referenceWidth);
             outputArray[Css.Bottom] = outputArray[Css.Top];
             outputArray[Css.Right] = outputArray[Css.Left];
         }
         else if (inputArray.length === 3) {
-            outputArray[Css.Left] = CssNumber.AsNumber(inputArray[Css.Left], referenceWidth);
-            outputArray[Css.Bottom] = CssNumber.AsNumber(inputArray[Css.Bottom], referenceHeight);
+            outputArray[Css.Left] = CssLength.AsNumber(inputArray[Css.Left], referenceWidth);
+            outputArray[Css.Bottom] = CssLength.AsNumber(inputArray[Css.Bottom], referenceHeight);
             outputArray[Css.Right] = outputArray[Css.Left];
         }
         else {
-            outputArray[Css.Left] = CssNumber.AsNumber(inputArray[Css.Left], referenceWidth);
-            outputArray[Css.Bottom] = CssNumber.AsNumber(inputArray[Css.Bottom], referenceHeight);
-            outputArray[Css.Right] = CssNumber.AsNumber(inputArray[Css.Right], referenceWidth);
+            outputArray[Css.Left] = CssLength.AsNumber(inputArray[Css.Left], referenceWidth);
+            outputArray[Css.Bottom] = CssLength.AsNumber(inputArray[Css.Bottom], referenceHeight);
+            outputArray[Css.Right] = CssLength.AsNumber(inputArray[Css.Right], referenceWidth);
         }
         return outputArray;
     }
