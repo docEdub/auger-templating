@@ -4,7 +4,7 @@
         "height": 1000,
         "name": "Test",
         "id": "0001",
-        "widgets": [
+        "children": [
             {
                 "type": "group",
                 "x": "250px",
