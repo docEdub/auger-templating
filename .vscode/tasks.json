@@ -22,12 +22,22 @@
             "command": "time npm run make",
             "group": {
                 "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Run tests",
+            "dependsOn": "Build",
+            "type": "shell",
+            "command": "npm run test",
+            "group": {
+                "kind": "build",
                 "isDefault": true
             }
         },
         {
             "label": "Run Csound with current file",
-            "dependsOn": "Build",
+            "dependsOn": "Run tests",
             "type": "shell",
             "command": "csound ${relativeFile} -odac",
             // "command": "osascript -e 'tell app \"Terminal\" to do script \"cd \\\"${workspaceFolder}/.build/.root\\\" && csound ${relativeFile} -odac\"'",
