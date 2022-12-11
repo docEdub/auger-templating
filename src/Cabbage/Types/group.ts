@@ -14,7 +14,6 @@ enum GroupLayout {
 }
 
 export class Group extends Widget {
-
     constructor(json: any) {
         super(json);
         this._padding.fill(0);
