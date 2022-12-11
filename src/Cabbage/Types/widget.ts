@@ -7,6 +7,47 @@ import { cssLength, CssLength } from '../../Utility/cssLength';
 
 export class Widget {
     constructor(json: any) {
+        this._position.fill(0);
+        this._margin.fill(0);
+        if (!json) {
+            return;
+        }
+        if (json.position) {
+            this.position = json.position;
+        }
+        if (json.top) {
+            this.top = json.top;
+        }
+        if (json.left) {
+            this.left = json.left;
+        }
+        if (json.bottom) {
+            this.bottom = json.bottom;
+        }
+        if (json.right) {
+            this.right = json.right;
+        }
+        if (json.height) {
+            this.height = json.height;
+        }
+        if (json.width) {
+            this.width = json.width;
+        }
+        if (json.margin) {
+            this.margin = json.margin;
+        }
+        if (json.marginTop) {
+            this.marginTop = json.marginTop;
+        }
+        if (json.marginLeft) {
+            this.marginLeft = json.marginLeft;
+        }
+        if (json.marginBottom) {
+            this.marginBottom = json.marginBottom;
+        }
+        if (json.marginRight) {
+            this.marginRight = json.marginRight;
+        }
     }
 
     public get parent(): Group {
@@ -108,16 +149,32 @@ export class Widget {
         this._margin = CssFrame.AsNumberArray(value, this.parent?.width, this.parent?.height);
     }
 
+    public get marginTop(): number {
+        return this._margin[Css.Top];
+    }
+
     public set marginTop(value: cssLength) {
         this._margin[Css.Top] = CssLength.AsNumber(value, this.parent?.height);
+    }
+
+    public get marginLeft(): number {
+        return this._margin[Css.Left];
     }
 
     public set marginLeft(value: cssLength) {
         this._margin[Css.Left] = CssLength.AsNumber(value, this.parent?.width);
     }
 
+    public get marginBottom(): number {
+        return this._margin[Css.Bottom];
+    }
+
     public set marginBottom(value: cssLength) {
         this._margin[Css.Bottom] = CssLength.AsNumber(value, this.parent?.height);
+    }
+
+    public get marginRight(): number {
+        return this._margin[Css.Right];
     }
 
     public set marginRight(value: cssLength) {

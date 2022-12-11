@@ -1,7 +1,53 @@
 global.testing = true;
 require("../../../.build/.root/src/Cabbage/cabbageTemplateHelper");
 
+const GroupLayout_None = 0;
+
 describe(`Group`, () => {
+    describe(`constructor`, () => {
+        test(`sets padding from given json`, () => {
+            const group = new Group({
+                padding: "1px 2px 3px 4px"
+            });
+            expect(group.padding).toStrictEqual([1, 2, 3, 4]);
+        });
+        test(`sets paddingTop from given json`, () => {
+            const group = new Group({
+                paddingTop: "1px"
+            });
+            expect(group.paddingTop).toBe(1);
+        });
+        test(`sets paddingLeft from given json`, () => {
+            const group = new Group({
+                paddingLeft: "1px"
+            });
+            expect(group.paddingLeft).toBe(1);
+        });
+        test(`sets paddingBottom from given json`, () => {
+            const group = new Group({
+                paddingBottom: "1px"
+            });
+            expect(group.paddingBottom).toBe(1);
+        });
+        test(`sets paddingRight from given json`, () => {
+            const group = new Group({
+                paddingRight: "1px"
+            });
+            expect(group.paddingRight).toBe(1);
+        });
+    });
+    describe(`padding`, () => {
+        test(`is initialized to [0, 0, 0, 0]`, () => {
+            const group = new Group;
+            expect(group.padding).toStrictEqual([0, 0, 0, 0]);
+        });
+    });
+    describe(`layout`, () => {
+        test(`is initialized to GroupLayout.None`, () => {
+            const group = new Group;
+            expect(group.layout).toBe(GroupLayout_None);
+        });
+    });
     describe(`children`, () => {
         test(`is initialized to an empty array`, () => {
             const parent = new Group;
