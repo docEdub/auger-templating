@@ -21,6 +21,7 @@ export class Label extends Widget {
         output += super.postOutput();
         output += Output.Optional(`text`, this.json['text']);
         output += Output.Optional(`fontColour`, this.json['color']);
+        output += Output.Optional(`corners`, this.json['corner-radius'], 0);
         output += `\n`;
         return output;
     }
