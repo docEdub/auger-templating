@@ -72,5 +72,21 @@ describe(`WidgetFactory`, () => {
             const child = form.children[0];
             expect(child.children.length).toBe(2);
         });
+        test(`creates a group`, () => {
+            const widgetFactory = new WidgetFactory;
+            const form = widgetFactory.create(JSON.parse(`{
+                "ui": {
+                    "type": "form",
+                    "children": [
+                        {
+                            "type": "group"
+                        }
+                    ]
+                }
+            }`));
+            const child = form.children[0];
+            console.log(child.constructor.name);
+            expect(child.constructor.name).toBe(`Group`);
+        });
     });
 });
