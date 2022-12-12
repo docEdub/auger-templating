@@ -8,57 +8,58 @@
         ],
         "type": "form",
         "name": "Test",
-        "height": 100,
-        "width": 300,
         "padding": "5px",
+        "height": 300,
+        "width": 400,
         "layout": "LeftToRight",
         "background-color": "black",
         "id": "0001",
+        "columns": 4,
         "children": [
             {
                 "type": "label",
-                "text": "1",
-                "width": "33.333%",
+                "text": "(`${this.parent.children.length}`)",
+                "width": "(`${(1 / this.parent.json.columns) * 100}%`)",
                 "height": "50%",
                 "background-color": "Pink",
                 "color": "black"
             },
             {
                 "type": "label",
-                "text": "2",
-                "width": "33.333%",
+                "text": "(`${this.parent.children.length}`)",
+                "width": "(`${(2 / this.parent.json.columns) * 100}%`)",
                 "height": "50%",
                 "background-color": "LightGreen",
                 "color": "black"
             },
             {
                 "type": "label",
-                "text": "3",
-                "width": "33.333%",
+                "text": "(`${this.parent.children.length}`)",
+                "width": "(`${(1 / this.parent.json.columns) * 100}%`)",
                 "height": "50%",
                 "background-color": "LightBlue",
                 "color": "black"
             },
             {
                 "type": "label",
-                "text": "4",
-                "width": "33.333%",
+                "text": "(`${this.parent.children.length}`)",
+                "width": "(`${(1 / this.parent.json.columns) * 100}%`)",
                 "height": "50%",
                 "background-color": "Plum",
                 "color": "black"
             },
             {
                 "type": "label",
-                "text": "5",
-                "width": "33.333%",
+                "text": "(`${this.parent.children.length}`)",
+                "width": "(`${(1.5 / this.parent.json.columns) * 100}%`)",
                 "height": "50%",
                 "background-color": "HotPink",
                 "color": "black"
             },
             {
                 "type": "label",
-                "text": "6",
-                "width": "33.333%",
+                "text": "(`${this.parent.children.length}`)",
+                "width": "(`${(1.5 / this.parent.json.columns) * 100}%`)",
                 "height": "50%",
                 "background-color": "DarkOrange",
                 "color": "black"

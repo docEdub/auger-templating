@@ -16,6 +16,9 @@ export class Widget {
             return;
         }
         this._json = json;
+        Object.keys(json).forEach((key: string) => {
+           json[key] = this.eval(json[key]);
+        });
         if (json.position) {
             this.position = json.position;
         }
@@ -307,6 +310,16 @@ export class Widget {
     protected clearHeightSetAndWidthSetFlags() {
         this._isHeightSet = false;
         this._isWidthSet = false;
+    }
+
+    protected eval(value) {
+        if (typeof value === `string`) {
+            const s = value as string;
+            if (s.startsWith(`(`) && s.endsWith(`)`)) {
+                return eval(s);
+            }
+        }
+        return value;
     }
 
     private _json: any = null;
