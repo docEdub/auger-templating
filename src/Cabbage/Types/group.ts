@@ -145,8 +145,7 @@ export class Group extends Widget {
         output += super.postOutput();
         output += ` {\n`;
         for (let i = 0; i < this.children.length; i++) {
-            output += this.children[i].preOutput(`${indent}${Config.Indent}`);
-            output += this.children[i].postOutput(`${indent}${Config.Indent}`);
+            output += this.children[i].output(`${indent}${Config.Indent}`);
         }
         output += `${indent}}\n`;
         return output;

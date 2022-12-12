@@ -262,7 +262,23 @@ export class Widget {
         }
     }
 
-    public preOutput(indent: string = ``): string {
+    protected commentOutput(indent: string = ``): string {
+        let output = ``;
+        const comment = this.json['comment'];
+        if (comment) {
+            output += `${indent}; ${comment}\n`;
+        }
+        const comments = this.json['comments'];
+        if (comments && Array.isArray(comments)) {
+            for (let i = 0; i < comments.length; i++) {
+                const comment = comments[i];
+                output += `${indent}; ${comment}\n`;
+            }
+        }
+        return output;
+    }
+
+    protected preOutput(indent: string = ``): string {
         let output = ``;
         if (this.type !== `form`) {
             output += ` bounds(`
@@ -275,13 +291,13 @@ export class Widget {
         return output;
     }
 
-    public postOutput(indent: string = ``): string {
+    protected postOutput(indent: string = ``): string {
         let output = ``;
         return output;
     }
 
     public output(indent: string = ``) {
-        return `${this.preOutput(indent)}${this.postOutput(indent)}`;
+        return `${this.commentOutput(indent)}${this.preOutput(indent)}${this.postOutput(indent)}`;
     }
 
     protected get json() {
