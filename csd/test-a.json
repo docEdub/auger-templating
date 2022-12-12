@@ -16,7 +16,6 @@
         "id": "0001",
         "children": [
             {
-                "comment": "Label: row 1, column 1.",
                 "type": "label",
                 "text": "1",
                 "width": "33.333%",
@@ -25,7 +24,6 @@
                 "color": "black"
             },
             {
-                "comment": "Label: row 1, column 2.",
                 "type": "label",
                 "text": "2",
                 "width": "33.333%",
@@ -34,7 +32,6 @@
                 "color": "black"
             },
             {
-                "comment": "Label: row 1, column 3.",
                 "type": "label",
                 "text": "3",
                 "width": "33.333%",
@@ -43,7 +40,6 @@
                 "color": "black"
             },
             {
-                "comment": "Label: row 2, column 1.",
                 "type": "label",
                 "text": "4",
                 "width": "33.333%",
@@ -52,7 +48,6 @@
                 "color": "black"
             },
             {
-                "comment": "Label: row 2, column 2.",
                 "type": "label",
                 "text": "5",
                 "width": "33.333%",
@@ -61,7 +56,6 @@
                 "color": "black"
             },
             {
-                "comment": "Label: row 2, column 3.",
                 "type": "label",
                 "text": "6",
                 "width": "33.333%",
