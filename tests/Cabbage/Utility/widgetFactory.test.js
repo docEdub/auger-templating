@@ -85,8 +85,22 @@ describe(`WidgetFactory`, () => {
                 }
             }`));
             const child = form.children[0];
-            console.log(child.constructor.name);
             expect(child.constructor.name).toBe(`Group`);
+        });
+        test(`creates a label`, () => {
+            const widgetFactory = new WidgetFactory;
+            const form = widgetFactory.create(JSON.parse(`{
+                "ui": {
+                    "type": "form",
+                    "children": [
+                        {
+                            "type": "label"
+                        }
+                    ]
+                }
+            }`));
+            const child = form.children[0];
+            expect(child.constructor.name).toBe(`Label`);
         });
     });
 });

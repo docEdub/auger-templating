@@ -1,5 +1,6 @@
 import { Form } from "../Types/form";
 import { Group } from "../Types/group";
+import { Label } from "../Types/label";
 import { Widget } from "../Types/widget";
 
 export class WidgetFactory {
@@ -14,6 +15,7 @@ export class WidgetFactory {
         switch (type) {
             case `form`: return this.createFormWidget(json);
             case `group`: return this.createGroupWidget(json, parent);
+            case `label`: return new Label(json, parent);
         }
         return null;
     }

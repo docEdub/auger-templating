@@ -280,6 +280,10 @@ export class Widget {
         return output;
     }
 
+    public output(indent: string = ``) {
+        return `${this.preOutput(indent)}${this.postOutput(indent)}`;
+    }
+
     protected get json() {
         return this._json;
     }

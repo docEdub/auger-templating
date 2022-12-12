@@ -10,34 +10,52 @@
         "id": "0001",
         "children": [
             {
-                "type": "group",
+                "type": "label",
+                "text": "1",
                 "width": "33.333%",
                 "height": "50%",
-                "background-color": "red"
+                "background-color": "Pink",
+                "color": "black"
             },
             {
-                "type": "group",
+                "type": "label",
+                "text": "2",
                 "width": "33.333%",
                 "height": "50%",
-                "background-color": "green"
+                "background-color": "LightGreen",
+                "color": "black"
             },
             {
-                "type": "group",
+                "type": "label",
+                "text": "3",
                 "width": "33.333%",
                 "height": "50%",
-                "background-color": "blue"
+                "background-color": "LightBlue",
+                "color": "black"
             },
             {
-                "type": "group",
+                "type": "label",
+                "text": "4",
                 "width": "33.333%",
                 "height": "50%",
-                "background-color": "purple"
+                "background-color": "Plum",
+                "color": "black"
             },
             {
-                "type": "group",
+                "type": "label",
+                "text": "5",
                 "width": "33.333%",
                 "height": "50%",
-                "background-color": "HotPink"
+                "background-color": "HotPink",
+                "color": "black"
+            },
+            {
+                "type": "label",
+                "text": "6",
+                "width": "33.333%",
+                "height": "50%",
+                "background-color": "DarkOrange",
+                "color": "black"
             }
         ]
     }
