@@ -61,6 +61,85 @@ describe(`Group`, () => {
             const group = new Group;
             expect(group.padding).toStrictEqual([0, 0, 0, 0]);
         });
+        test(`changes top when paddingTop is set`, () => {
+            const group = new Group(JSON.parse(`{
+                "top": 0,
+                "paddingTop": 10
+            }`));
+            expect(group.top).toBe(10);
+        });
+        test(`changes left when paddingLeft is set`, () => {
+            const group = new Group(JSON.parse(`{
+                "left": 0,
+                "paddingLeft": 10
+            }`));
+            expect(group.left).toBe(10);
+        });
+        test(`changes bottom when paddingBottom is set`, () => {
+            const group = new Group(JSON.parse(`{
+                "bottom": 10,
+                "paddingBottom": 10
+            }`));
+            expect(group.left).toBe(0);
+        });
+        test(`changes right when paddingRight is set`, () => {
+            const group = new Group(JSON.parse(`{
+                "right": 10,
+                "paddingRight": 10
+            }`));
+            expect(group.left).toBe(0);
+        });
+        test(`changes top, left, bottom and right when padding is set to number`, () => {
+            const group = new Group(JSON.parse(`{
+                "top": 1,
+                "left": 1,
+                "bottom": 9,
+                "right": 9,
+                "padding": 1
+            }`));
+            expect(group.top).toBe(2);
+            expect(group.left).toBe(2);
+            expect(group.bottom).toBe(8);
+            expect(group.right).toBe(8);
+        });
+        test(`changes top, left, bottom and right when padding is set to percentage`, () => {
+            const group = new Group(JSON.parse(`{
+                "top": 0,
+                "left": 0,
+                "bottom": 100,
+                "right": 200,
+                "padding": "10%"
+            }`));
+            expect(group.top).toBe(10);
+            expect(group.left).toBe(20);
+            expect(group.bottom).toBe(90);
+            expect(group.right).toBe(180);
+        });
+        test(`changes top, left, bottom and right when height and with are set, and padding is set to percentage`, () => {
+            const group = new Group(JSON.parse(`{
+                "height": 100,
+                "width": 200,
+                "padding": "10%"
+            }`));
+            expect(group.top).toBe(10);
+            expect(group.left).toBe(20);
+            expect(group.bottom).toBe(90);
+            expect(group.right).toBe(180);
+        });
+        test(`changes top, left, bottom and right when height and with are set to percentages, and padding is set to percentage`, () => {
+            const parent = new Group;
+            parent.height = 100;
+            parent.width = 200;
+            const group = new Group(JSON.parse(`{
+                "height": "100%",
+                "width": "100%",
+                "padding": "10%"
+            }`), parent);
+            expect(group.top).toBe(10);
+            expect(group.left).toBe(20);
+            expect(group.bottom).toBe(90);
+            expect(group.right).toBe(180);
+        });
     });
     describe(`layout`, () => {
         test(`is initialized to GroupLayout.None`, () => {

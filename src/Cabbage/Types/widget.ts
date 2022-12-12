@@ -1,17 +1,21 @@
 
 import { Group } from './group';
 
+import { Output } from '../Utility/output';
+
 import { Css } from '../../Utility/css';
 import { cssFrame, CssFrame } from '../../Utility/cssFrame';
 import { cssLength, CssLength } from '../../Utility/cssLength';
 
 export class Widget {
-    constructor(json: any) {
+    constructor(json: any, parent: Group = null) {
+        this.parent = parent;
         this._position.fill(0);
         this._margin.fill(0);
         if (!json) {
             return;
         }
+        this._json = json;
         if (json.position) {
             this.position = json.position;
         }
@@ -48,6 +52,10 @@ export class Widget {
         if (json.marginRight) {
             this.marginRight = json.marginRight;
         }
+    }
+
+    public get type(): string {
+        return this._json?.type;
     }
 
     public get parent(): Group {
@@ -128,7 +136,7 @@ export class Widget {
     }
 
     public set height(value: cssLength) {
-        this.bottom = this.top + CssLength.AsNumber(value);
+        this.bottom = this.top + CssLength.AsNumber(value, this.parent?.height);
         this._isHeightSet = true;
     }
 
@@ -137,7 +145,7 @@ export class Widget {
     }
 
     public set width(value: cssLength) {
-        this.right = this.left + CssLength.AsNumber(value);
+        this.right = this.left + CssLength.AsNumber(value, this.parent?.width);
         this._isWidthSet = true;
     }
 
@@ -181,14 +189,115 @@ export class Widget {
         this._margin[Css.Right] = CssLength.AsNumber(value, this.parent?.width);
     }
 
-    public output(): string {
-        // NB: We don't output x, y, width, or height because the format varies between form boxes and widget boxes.
-        return "";
+    public get marginedTop(): number {
+        return this._marginedTop;
     }
+
+    public set marginedTop(value: number) {
+        this._marginedTop = value;
+    }
+
+    public get marginedLeft(): number {
+        return this._marginedLeft;
+    }
+
+    public set marginedLeft(value: number) {
+        this._marginedLeft = value;
+    }
+
+    public get marginedBottom(): number {
+        return this.top + this.marginedHeight;
+    }
+
+    public get marginedRight(): number {
+        return this.left + this.marginedWidth;
+    }
+
+    public get marginedHeight(): number {
+        return this._marginedHeight;
+    }
+
+    public set marginedHeight(value: number) {
+        this._marginedHeight = value;
+    }
+
+    public get marginedWidth(): number {
+        return this._marginedWidth;
+    }
+
+    public set marginedWidth(value: number) {
+        this._marginedWidth = value;
+    }
+
+    public get paddingTop(): number {
+        return 0;
+    }
+
+    public get paddingLeft(): number {
+        return 0;
+    }
+
+    public get paddingBottom(): number {
+        return 0;
+    }
+
+    public get paddingRight(): number {
+        return 0;
+    }
+
+    public isA(Type: any) {
+        return Type === this.constructor || Type.isPrototypeOf(this.constructor);
+    }
+
+    public updateMarginedProperties() {
+        this.marginedTop = this.top + this.marginTop;
+        this.marginedLeft = this.left + this.marginLeft;
+        this.marginedHeight = this.height + this.marginTop + this.marginBottom;
+        this.marginedWidth = this.width + this.marginLeft + this.marginRight;
+        if (this.isA(Group)) {
+            const group = this as unknown as Group;
+            for (let i = 0; i < group.children.length; i++) {
+                group.children[i].updateMarginedProperties();
+            }
+        }
+    }
+
+    public preOutput(indent: string = ``): string {
+        let output = ``;
+        if (this.type !== `form`) {
+            output += ` bounds(`
+            output +=   `${Output.Rounded(this.marginedLeft)}, `;
+            output +=   `${Output.Rounded(this.marginedTop)}, `;
+            output +=   `${Output.Rounded(this.width)}, `;
+            output +=   `${Output.Rounded(this.height)})`;
+        }
+        output += Output.Optional(`colour`, this.json['background-color']);
+        return output;
+    }
+
+    public postOutput(indent: string = ``): string {
+        let output = ``;
+        return output;
+    }
+
+    protected get json() {
+        return this._json;
+    }
+
+    protected clearHeightSetAndWidthSetFlags() {
+        this._isHeightSet = false;
+        this._isWidthSet = false;
+    }
+
+    private _json: any = null;
 
     private _parent: Group = null;
     private _position = new Array<number>(4);
     private _margin = new Array<number>(4);
+    private _marginedTop = 0;
+    private _marginedLeft = 0;
+    private _marginedHeight = 0;
+    private _marginedWidth = 0;
 
     private _isHeightSet = false;
     private _isWidthSet = false;

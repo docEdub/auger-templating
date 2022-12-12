@@ -4,16 +4,16 @@ import { Widget } from "../Types/widget";
 
 export class WidgetFactory {
     public create(json: any): Form {
-        return this.createWidget(`form`, json?.form) as Form;
+        return this.createWidget(`form`, json?.ui) as Form;
     }
 
-    private createWidget(type: string, json: any): Widget {
+    private createWidget(type: string, json: any, parent: Group = null): Widget {
         if (!json) {
             json = {};
         }
         switch (type) {
             case `form`: return this.createFormWidget(json);
-            case `group`: return this.createGroupWidget(json);
+            case `group`: return this.createGroupWidget(json, parent);
         }
         return null;
     }
@@ -24,8 +24,8 @@ export class WidgetFactory {
         return form;
     }
 
-    private createGroupWidget(json: any): Group {
-        const group = new Group(json);
+    private createGroupWidget(json: any, parent: Group = null): Group {
+        const group = new Group(json, parent);
         this.createChildWidgets(group, json.children);
         return group;
     }
@@ -39,7 +39,7 @@ export class WidgetFactory {
         }
         for (let i = 0; i < json.length; i++) {
             const childJson = json[i];
-            const child = this.createWidget(childJson.type, childJson);
+            const child = this.createWidget(childJson.type, childJson, group);
             group.addChild(child);
         }
     }

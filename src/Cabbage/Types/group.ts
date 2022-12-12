@@ -1,6 +1,8 @@
 
 import { Widget } from './widget';
 
+import { Config } from '../Utility/config';
+
 import { Css } from '../../Utility/css';
 import { cssFrame, CssFrame } from '../../Utility/cssFrame';
 import { cssLength, CssLength } from '../../Utility/cssLength';
@@ -12,8 +14,8 @@ export enum GroupLayout {
 }
 
 export class Group extends Widget {
-    constructor(json: any) {
-        super(json);
+    constructor(json: any, parent: Group = null) {
+        super(json, parent);
         this._padding.fill(0);
         if (!json) {
             return;
@@ -43,6 +45,11 @@ export class Group extends Widget {
                     break;
             }
         }
+        this.clearHeightSetAndWidthSetFlags();
+        this.height = this.height - (this.paddingTop + this.paddingBottom);
+        this.width = this.width - (this.paddingLeft + this.paddingRight);
+        this.top = this.top + this.paddingTop;
+        this.left = this.left + this.paddingLeft;
     }
 
     public get padding(): Array<number> {
@@ -50,7 +57,7 @@ export class Group extends Widget {
     }
 
     public set padding(value: cssFrame) {
-        this._padding = CssFrame.AsNumberArray(value, this.parent?.width, this.parent?.height);
+        this._padding = CssFrame.AsNumberArray(value, this.width, this.height);
     }
 
     public get paddingTop(): number {
@@ -58,7 +65,7 @@ export class Group extends Widget {
     }
 
     public set paddingTop(value: cssLength) {
-        this._padding[Css.Top] = CssLength.AsNumber(value, this.parent?.height);
+        this._padding[Css.Top] = CssLength.AsNumber(value, this.height);
     }
 
     public get paddingLeft(): number {
@@ -74,7 +81,7 @@ export class Group extends Widget {
     }
 
     public set paddingBottom(value: cssLength) {
-        this._padding[Css.Bottom] = CssLength.AsNumber(value, this.parent?.height);
+        this._padding[Css.Bottom] = CssLength.AsNumber(value, this.height);
     }
 
     public get paddingRight(): number {
@@ -82,7 +89,7 @@ export class Group extends Widget {
     }
 
     public set paddingRight(value: cssLength) {
-        this._padding[Css.Right] = CssLength.AsNumber(value, this.parent?.width);
+        this._padding[Css.Right] = CssLength.AsNumber(value, this.width);
     }
 
     public get layout() {
@@ -122,6 +129,27 @@ export class Group extends Widget {
         const i = this._children.indexOf(child);
         this._children.splice(i, 1);
         child.parent = null;
+    }
+
+    public preOutput(indent: string = ``): string {
+        let output = ``;
+        if (this.type != `form`) {
+            output += `${indent}image`
+        }
+        output += super.preOutput();
+        return output;
+    }
+
+    public postOutput(indent: string = ``): string {
+        let output = ``;
+        output += super.postOutput();
+        output += ` {\n`;
+        for (let i = 0; i < this.children.length; i++) {
+            output += this.children[i].preOutput(`${indent}${Config.Indent}`);
+            output += this.children[i].postOutput(`${indent}${Config.Indent}`);
+        }
+        output += `${indent}}\n`;
+        return output;
     }
 
     private _padding = new Array<number>(4);

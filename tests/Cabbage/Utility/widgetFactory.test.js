@@ -21,7 +21,8 @@ describe(`WidgetFactory`, () => {
         test(`creates a form with a child`, () => {
             const widgetFactory = new WidgetFactory;
             const form = widgetFactory.create(JSON.parse(`{
-                "form": {
+                "ui": {
+                    "type": "form",
                     "children": [
                         {
                             "type": "group"
@@ -34,7 +35,8 @@ describe(`WidgetFactory`, () => {
         test(`creates a form with a multiple children`, () => {
             const widgetFactory = new WidgetFactory;
             const form = widgetFactory.create(JSON.parse(`{
-                "form": {
+                "ui": {
+                    "type": "form",
                     "children": [
                         {
                             "type": "group"
@@ -50,7 +52,8 @@ describe(`WidgetFactory`, () => {
         test(`creates a form with a nested children`, () => {
             const widgetFactory = new WidgetFactory;
             const form = widgetFactory.create(JSON.parse(`{
-                "form": {
+                "ui": {
+                    "type": "form",
                     "children": [
                         {
                             "type": "group",

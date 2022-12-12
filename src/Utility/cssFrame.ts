@@ -12,6 +12,10 @@ export class CssFrame {
             return outputArray;
         }
         let inputArray: Array<cssLength> = null;
+        if (typeof cssFrame === `number`) {
+            inputArray = new Array<cssLength>(1);
+            inputArray[0] = cssFrame;
+        }
         if (Array.isArray(cssFrame)) {
             inputArray = cssFrame;
         }

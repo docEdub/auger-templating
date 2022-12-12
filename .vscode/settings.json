@@ -1,0 +1,15 @@
+{
+    "triggerTaskOnSave.tasks": {
+        "Run tests": [
+            "csd/**",
+            "instr/**",
+            "json/**",
+            "sco/**",
+            "src/**",
+            "tests/**",
+            "tools/**",
+            "udo/**",
+            "webpack.config.js"
+        ]
+    }
+}

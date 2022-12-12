@@ -4,6 +4,7 @@ import { Widget } from "../Types/widget";
 
 export class LayoutBuilder {
     public build(form: Form) {
+        form.updateMarginedProperties();
         this.buildGroup(form);
     }
 
@@ -19,34 +20,40 @@ export class LayoutBuilder {
     }
 
     private buildGroupLeftToRight(group: Group) {
-        let top = 0;
-        let left = 0;
-        let nextTop = 0;
+        let top = group.top;
+        let left = group.left;
+        let nextTop = -1;
         for (let i = 0; i < group.children?.length; i++) {
             const child = group.children[i];
-            child.top = top;
-            child.left = left;
-            left = child.right;
-            nextTop = Math.max(nextTop, top + child.bottom);
+            if (child.top !== top || child.left !== left) {
+                child.top = top + child.paddingTop;
+                child.left = left + child.paddingLeft;
+                child.updateMarginedProperties();
+            }
+            left = child.marginedRight;
+            nextTop = Math.max(nextTop, child.marginedBottom);
             if (group.width <= left) {
                 top = nextTop;
-                left = 0;
+                left = group.left;
             }
         }
     }
 
     private buildGroupTopToBottom(group: Group) {
-        let top = 0;
-        let left = 0;
-        let nextLeft = 0;
+        let top = group.top;
+        let left = group.left;
+        let nextLeft = -1;
         for (let i = 0; i < group.children?.length; i++) {
             const child = group.children[i];
-            child.top = top;
-            child.left = left;
-            top = child.bottom;
-            nextLeft = Math.max(nextLeft, left + child.right);
+            if (child.top !== top || child.left !== left) {
+                child.top = top + child.paddingTop;
+                child.left = left + child.paddingLeft;
+                child.updateMarginedProperties();
+            }
+            top = child.marginedBottom;
+            nextLeft = Math.max(nextLeft, child.marginedRight);
             if (group.height <= top) {
-                top = 0;
+                top = group.top;
                 left = nextLeft;
             }
         }

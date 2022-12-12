@@ -1,22 +1,23 @@
 import { Group } from "./group";
 
+import { Output } from "../Utility/output";
+
 export class Form extends Group {
     constructor(json: any) {
         super(json);
-        this._json = json;
     }
 
     public output(): string {
-        const json = this._json;
         let output = "";
         output += `form`;
-        output += ` size(${this.width}, ${this.height})`
-        output +=   super.output();
-        output += ` caption("${json.name}")`;
-        output += ` pluginId("${json.id}")`;
+        // We use json.width and json.height because the widget's width and height may have been changed by padding.
+        output += ` size(${this.json.width}, ${this.json.height})`
+        output += super.preOutput();
+        output += Output.Optional(`caption`, this.json['name']);
+        output += Output.Optional(`pluginId`, this.json['id']);
+        output += ` guiMode("queue")`;
+        output +=   super.postOutput();
         output += `\n`;
         return output;
     }
-
-    private _json: any = null;
 }

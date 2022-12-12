@@ -1,15 +1,43 @@
 {
-    "form": {
-        "width": 1000,
-        "height": 1000,
+    "ui": {
+        "type": "form",
         "name": "Test",
+        "height": 100,
+        "width": 300,
+        "padding": "5px",
+        "layout": "LeftToRight",
+        "background-color": "black",
         "id": "0001",
         "children": [
             {
                 "type": "group",
-                "width": "500px",
-                "height": "250px",
-                "color": "red"
+                "width": "33.333%",
+                "height": "50%",
+                "background-color": "red"
+            },
+            {
+                "type": "group",
+                "width": "33.333%",
+                "height": "50%",
+                "background-color": "green"
+            },
+            {
+                "type": "group",
+                "width": "33.333%",
+                "height": "50%",
+                "background-color": "blue"
+            },
+            {
+                "type": "group",
+                "width": "33.333%",
+                "height": "50%",
+                "background-color": "purple"
+            },
+            {
+                "type": "group",
+                "width": "33.333%",
+                "height": "50%",
+                "background-color": "HotPink"
             }
         ]
     }

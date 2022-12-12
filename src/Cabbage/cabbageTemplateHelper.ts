@@ -15,7 +15,7 @@ global.CabbageTemplateHelper = class {
             let output = "";
             output += `<Cabbage>\n`;
             output += form.output();
-            output += `</Cabbage>\n`;
+            output += `</Cabbage>`;
             return new Handlebars.SafeString(output);
         });
     }
