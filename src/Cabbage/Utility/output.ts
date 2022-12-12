@@ -22,6 +22,6 @@ export class Output {
     }
 
     public static Rounded(value: number) {
-        return Math.round(value * 1000) / 1000;
+        return Math.round(value);
     }
 }
