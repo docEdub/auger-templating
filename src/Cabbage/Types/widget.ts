@@ -17,7 +17,7 @@ export class Widget {
         }
         this._json = json;
         Object.keys(json).forEach((key: string) => {
-           json[key] = this.eval(json[key]);
+            json[key] = this.eval(key);
         });
         if (json.position) {
             this.position = json.position;
@@ -312,10 +312,31 @@ export class Widget {
         this._isWidthSet = false;
     }
 
-    protected eval(value) {
+    protected eval(key: string) {
+        const value = this.json[key];
         if (typeof value === `string`) {
             const s = value as string;
             if (s.startsWith(`(`) && s.endsWith(`)`)) {
+                const parent = this.parent;
+                const json = this.json;
+                const childNumber = this.parent?.children?.length ?? -1;
+                const inherit = (key2: string = key, parent = this.parent) => {
+                    if (!parent) {
+                        console.error(`inherit could not find ${key2} in ancestry.`);
+                        return null;
+                    }
+                    let value = parent.json[key2];
+                    if (value === null || value === undefined) {
+                        value = parent[key2];
+                    }
+                    if (value === null || value === undefined) {
+                        value = inherit(key2, parent.parent);
+                    }
+                    if (value !== null && value !== undefined) {
+                        console.log(`inherit ${key} = ${value}.`);
+                    }
+                    return value;
+                }
                 return eval(s);
             }
         }
