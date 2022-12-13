@@ -332,9 +332,6 @@ export class Widget {
                     if (value === null || value === undefined) {
                         value = inherit(key2, parent.parent);
                     }
-                    if (value !== null && value !== undefined) {
-                        console.log(`inherit ${key} = ${value}.`);
-                    }
                     return value;
                 }
                 return eval(s);

@@ -11,7 +11,7 @@
         "padding": "5px",
         "height": 300,
         "width": 400,
-        "--layout": "LeftToRight",
+        "layout": "LeftToRight",
         "background-color": "black",
         "id": "0001",
         "columns": 3,
@@ -24,8 +24,7 @@
                 "type": "group",
                 "height": "100%",
                 "width": "100%",
-                "--layout": "(inherit())",
-                "layout": "LeftToRight",
+                "layout": "(inherit())",
                 "children": [
                     {
                         "type": "label",
