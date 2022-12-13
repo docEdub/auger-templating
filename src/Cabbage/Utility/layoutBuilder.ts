@@ -16,7 +16,13 @@ export class LayoutBuilder {
             case GroupLayout.TopToBottom:
                 this.buildGroupTopToBottom(group);
                 break;
+        }
+        for (let i = 0; i < group.children?.length; i++) {
+            const child = group.children[i];
+            if (child.type === `group`) {
+                this.buildGroup(child as Group);
             }
+        }
     }
 
     private buildGroupLeftToRight(group: Group) {
