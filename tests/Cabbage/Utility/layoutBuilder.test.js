@@ -673,19 +673,19 @@ describe(`LayoutBuilder`, () => {
             const child0 = form.children[0];
             expect(child0.width).toBe(form.width);
         });
-        test(`sets group top, left, width and height correctly when width and height are "100%" and padding is "10%`, () => {
+        test(`sets group top, left, width and height correctly when width and height are "100%" and padding is "10%"`, () => {
             const form = createFormAndBuildLayout(`{
                 "ui": {
                     "type": "form",
                     "height": 100,
                     "width": 200,
+                    "padding": "10%",
                     "layout": "LeftToRight",
                     "children": [
                         {
                             "type": "group",
                             "height": "100%",
-                            "width": "100%",
-                            "padding": "10%"
+                            "width": "100%"
                         }
                     ]
                 }
