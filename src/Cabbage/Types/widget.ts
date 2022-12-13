@@ -290,7 +290,12 @@ export class Widget {
             output +=   `${Output.Rounded(this.width)}, `;
             output +=   `${Output.Rounded(this.height)})`;
         }
-        output += Output.Optional(`colour`, this.json['background-color']);
+        if (this.json['background'] !== null && this.json['background'] !== undefined) {
+            output += Output.Optional(`colour`, this.json['background']);
+        }
+        else {
+            output += Output.Optional(`colour`, this.json['background-color']);
+        }
         return output;
     }
 

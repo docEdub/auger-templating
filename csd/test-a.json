@@ -12,7 +12,7 @@
         "height": 300,
         "width": 400,
         "layout": "LeftToRight",
-        "background-color": "black",
+        "background": "black",
         "id": "0001",
         "columns": 3,
         "rows": 3,
@@ -25,6 +25,7 @@
                 "height": "100%",
                 "width": "100%",
                 "layout": "(inherit())",
+                "background": "(inherit())",
                 "children": [
                     {
                         "type": "label",
