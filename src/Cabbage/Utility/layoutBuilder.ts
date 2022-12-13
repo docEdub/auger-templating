@@ -2,6 +2,8 @@ import { Form } from "../Types/form";
 import { Group, GroupLayout } from "../Types/group";
 import { Widget } from "../Types/widget";
 
+import { Output } from "./output";
+
 export class LayoutBuilder {
     public build(form: Form) {
         form.updateMarginedProperties();
@@ -32,13 +34,13 @@ export class LayoutBuilder {
         for (let i = 0; i < group.children?.length; i++) {
             const child = group.children[i];
             if (child.top !== top || child.left !== left) {
-                child.top = top + child.paddingTop;
-                child.left = left + child.paddingLeft;
+                child.top = top;
+                child.left = left;
                 child.updateMarginedProperties();
             }
             left = child.marginedRight;
             nextTop = Math.max(nextTop, child.marginedBottom);
-            if (group.width <= left) {
+            if (group.width <= Output.Rounded(left)) {
                 top = nextTop;
                 left = group.left;
             }
@@ -46,19 +48,19 @@ export class LayoutBuilder {
     }
 
     private buildGroupTopToBottom(group: Group) {
-        let top = group.top;
-        let left = group.left;
+        let top = group.paddingTop;
+        let left = group.paddingLeft;
         let nextLeft = -1;
         for (let i = 0; i < group.children?.length; i++) {
             const child = group.children[i];
             if (child.top !== top || child.left !== left) {
-                child.top = top + child.paddingTop;
-                child.left = left + child.paddingLeft;
+                child.top = top;
+                child.left = left;
                 child.updateMarginedProperties();
             }
             top = child.marginedBottom;
             nextLeft = Math.max(nextLeft, child.marginedRight);
-            if (group.height <= top) {
+            if (group.height <= Output.Rounded(top)) {
                 top = group.top;
                 left = nextLeft;
             }

@@ -751,5 +751,113 @@ describe(`LayoutBuilder`, () => {
             expect(childLabel1.width).toBe(95);
             expect(childLabel1.height).toBe(95);
         });
+        test(`Lays out nested label bounds correctly when form and group layouts are both LeftToRight and children have varying widths`, () => {
+            const form = createFormAndBuildLayout(`{
+                "ui": {
+                    "type": "form",
+                    "name": "Test",
+                    "height": 300,
+                    "width": 400,
+                    "padding": "5px",
+                    "layout": "LeftToRight",
+                    "background-color": "black",
+                    "id": "0001",
+                    "columns": 3,
+                    "rows": 3,
+                    "childHeight": "((1 / json.rows) * 100)",
+                    "childWidth": "((1 / json.columns) * 100)",
+                    "childColor": "DarkRed",
+                    "children": [
+                        {
+                            "type": "group",
+                            "height": "100%",
+                            "width": "100%",
+                            "layout": "(inherit())",
+                            "children": [
+                                {
+                                    "type": "label",
+                                    "text": "(\`\${childNumber}\`)",
+                                    "width": "(\`\${1 * inherit('childWidth')}%\`)",
+                                    "height": "(\`\${1 * inherit('childHeight')}%\`)",
+                                    "background-color": "Pink",
+                                    "color": "(inherit('childColor'))"
+                                },
+                                {
+                                    "type": "label",
+                                    "text": "(\`\${childNumber}\`)",
+                                    "width": "(\`\${2 * inherit('childWidth')}%\`)",
+                                    "height": "(\`\${1 * inherit('childHeight')}%\`)",
+                                    "background-color": "LightGreen",
+                                    "color": "(parent.json.childColor)"
+                                },
+                                {
+                                    "type": "label",
+                                    "text": "(\`\${childNumber}\`)",
+                                    "width": "(\`\${1.5 * inherit('childWidth')}%\`)",
+                                    "height": "(\`\${1 * inherit('childHeight')}%\`)",
+                                    "background-color": "LightBlue",
+                                    "color": "(inherit('childColor'))"
+                                },
+                                {
+                                    "type": "label",
+                                    "text": "(\`\${childNumber}\`)",
+                                    "width": "(\`\${1.5 * inherit('childWidth')}%\`)",
+                                    "height": "(\`\${1 * inherit('childHeight')}%\`)",
+                                    "background-color": "Plum",
+                                    "color": "(inherit('childColor'))"
+                                },
+                                {
+                                    "type": "label",
+                                    "text": "(\`\${childNumber}\`)",
+                                    "width": "(\`\${2 * inherit('childWidth')}%\`)",
+                                    "height": "(\`\${1 * inherit('childHeight')}%\`)",
+                                    "background-color": "HotPink",
+                                    "color": "(inherit('childColor'))"
+                                },
+                                {
+                                    "type": "label",
+                                    "text": "(\`\${childNumber}\`)",
+                                    "width": "(\`\${1 * inherit('childWidth')}%\`)",
+                                    "height": "(\`\${1 * inherit('childHeight')}%\`)",
+                                    "background-color": "DarkOrange",
+                                    "color": "(inherit('childColor'))"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }`);
+            // console.log(form.output());
+            const childLabel0 = form.children[0].children[0];
+            const childLabel1 = form.children[0].children[1];
+            const childLabel2 = form.children[0].children[2];
+            const childLabel3 = form.children[0].children[3];
+            const childLabel4 = form.children[0].children[4];
+            const childLabel5 = form.children[0].children[5];
+            expect.closeTo(childLabel0.left, 0);
+            expect.closeTo(childLabel0.top, 0);
+            expect.closeTo(childLabel0.width, 130);
+            expect.closeTo(childLabel0.height, 97);
+            expect.closeTo(childLabel1.left, 130);
+            expect.closeTo(childLabel1.top, 0);
+            expect.closeTo(childLabel1.width, 260);
+            expect.closeTo(childLabel1.height, 97);
+            expect.closeTo(childLabel2.left, 0);
+            expect.closeTo(childLabel2.top, 97);
+            expect.closeTo(childLabel2.width, 195);
+            expect.closeTo(childLabel2.height, 97);
+            expect.closeTo(childLabel3.left, 195);
+            expect.closeTo(childLabel3.top, 97);
+            expect.closeTo(childLabel3.width, 195);
+            expect.closeTo(childLabel3.height, 97);
+            expect.closeTo(childLabel4.left, 0);
+            expect.closeTo(childLabel4.top, 193);
+            expect.closeTo(childLabel4.width, 260);
+            expect.closeTo(childLabel4.height, 97);
+            expect.closeTo(childLabel5.left, 260);
+            expect.closeTo(childLabel5.top, 193);
+            expect.closeTo(childLabel5.width, 130);
+            expect.closeTo(childLabel5.height, 97);
+        });
     });
 });
