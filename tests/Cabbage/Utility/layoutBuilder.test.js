@@ -696,5 +696,60 @@ describe(`LayoutBuilder`, () => {
             expect(child0.height).toBe(80);
             expect(child0.width).toBe(160);
         });
+        test(`sets nested label bounds correctly when form and group layouts are both LeftToRight and form has padding`, () => {
+            const form = createFormAndBuildLayout(`{
+                "ui": {
+                    "type": "form",
+                    "name": "Test",
+                    "height": 200,
+                    "width": 200,
+                    "padding": "5px",
+                    "layout": "LeftToRight",
+                    "background-color": "black",
+                    "id": "0001",
+                    "columns": 2,
+                    "rows": 2,
+                    "childHeight": "((1 / json.rows) * 100)",
+                    "childWidth": "((1 / json.columns) * 100)",
+                    "childColor": "DarkRed",
+                    "children": [
+                        {
+                            "type": "group",
+                            "height": "100%",
+                            "width": "100%",
+                            "layout": "(inherit())",
+                            "children": [
+                                {
+                                    "type": "label",
+                                    "text": "(\`\${childNumber}\`)",
+                                    "width": "(\`\${1 * inherit('childWidth')}%\`)",
+                                    "height": "(\`\${1 * inherit('childHeight')}%\`)",
+                                    "background-color": "Pink",
+                                    "color": "(inherit('childColor'))"
+                                },
+                                {
+                                    "type": "label",
+                                    "text": "(\`\${childNumber}\`)",
+                                    "width": "(\`\${1 * inherit('childWidth')}%\`)",
+                                    "height": "(\`\${1 * inherit('childHeight')}%\`)",
+                                    "background-color": "LightGreen",
+                                    "color": "(parent.json.childColor)"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }`);
+            const childLabel0 = form.children[0].children[0];
+            const childLabel1 = form.children[0].children[1];
+            expect(childLabel0.top).toBe(0);
+            expect(childLabel0.left).toBe(0);
+            expect(childLabel0.width).toBe(95);
+            expect(childLabel0.height).toBe(95);
+            expect(childLabel1.top).toBe(0);
+            expect(childLabel1.left).toBe(95);
+            expect(childLabel1.width).toBe(95);
+            expect(childLabel1.height).toBe(95);
+        });
     });
 });
