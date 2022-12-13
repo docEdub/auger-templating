@@ -40,7 +40,7 @@
                         "width": "(`${2 * inherit('childWidth')}%`)",
                         "height": "(`${1 * inherit('childHeight')}%`)",
                         "background-color": "LightGreen",
-                        "color": "(parent.json.childColor)"
+                        "color": "(inherit('childColor'))"
                     },
                     {
                         "type": "label",
