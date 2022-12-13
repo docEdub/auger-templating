@@ -42,7 +42,7 @@ export class LayoutBuilder {
             nextTop = Math.max(nextTop, child.marginedBottom);
             if (group.width <= Output.Rounded(left)) {
                 top = nextTop;
-                left = group.left;
+                left = group.paddingLeft;
             }
         }
     }
@@ -61,7 +61,7 @@ export class LayoutBuilder {
             top = child.marginedBottom;
             nextLeft = Math.max(nextLeft, child.marginedRight);
             if (group.height <= Output.Rounded(top)) {
-                top = group.top;
+                top = group.paddingTop;
                 left = nextLeft;
             }
         }
