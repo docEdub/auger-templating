@@ -46,7 +46,7 @@
                         "type": "label",
                         "text": "(`${childNumber}`)",
                         "width": "(`${1.5 * inherit('childWidth')}%`)",
-                        "height": "(`${1 * inherit('childHeight')}%`)",
+                        "height": "(`${1 * inherit('childHeight') + 0.1}%`)",
                         "background-color": "LightBlue",
                         "color": "(inherit('childColor'))"
                     },
@@ -54,7 +54,7 @@
                         "type": "label",
                         "text": "(`${childNumber}`)",
                         "width": "(`${1.5 * inherit('childWidth')}%`)",
-                        "height": "(`${1 * inherit('childHeight')}%`)",
+                        "height": "(`${1 * inherit('childHeight') + 0.1}%`)",
                         "background-color": "Plum",
                         "color": "(inherit('childColor'))"
                     },
