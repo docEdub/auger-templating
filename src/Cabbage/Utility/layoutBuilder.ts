@@ -26,8 +26,8 @@ export class LayoutBuilder {
     }
 
     private buildGroupLeftToRight(group: Group) {
-        let top = group.top;
-        let left = group.left;
+        let top = group.paddingTop;
+        let left = group.paddingLeft;
         let nextTop = -1;
         for (let i = 0; i < group.children?.length; i++) {
             const child = group.children[i];
