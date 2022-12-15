@@ -1,6 +1,4 @@
 
-import { Group } from './group';
-
 import { Output } from '../Utility/output';
 
 import { Css } from '../../Utility/css';
@@ -8,7 +6,7 @@ import { cssFrame, CssFrame } from '../../Utility/cssFrame';
 import { cssLength, CssLength } from '../../Utility/cssLength';
 
 export class Widget {
-    constructor(json: any, parent: Group = null) {
+    constructor(json: any = null, parent: Widget = null) {
         this.parent = parent;
         this._position.fill(0);
         this._margin.fill(0);
@@ -61,11 +59,11 @@ export class Widget {
         return this._json?.type;
     }
 
-    public get parent(): Group {
+    public get parent(): Widget {
         return this._parent;
     }
 
-    public set parent(parent: Group) {
+    public set parent(parent: Widget) {
         if (this._parent == parent) {
             return;
         }
@@ -248,8 +246,35 @@ export class Widget {
         return 0;
     }
 
-    public isA(Type: any) {
-        return Type === this.constructor || Type.isPrototypeOf(this.constructor);
+    public get children() {
+        return this._children;
+    }
+
+    public hasChild(child: Widget) {
+        return this._children?.indexOf(child) !== -1;
+    }
+
+    public addChild(child: Widget) {
+        if (!child) {
+            return;
+        }
+        if (this.hasChild(child)) {
+            return;
+        }
+        this._children.push(child);
+        child.parent = this;
+    }
+
+    public removeChild(child: Widget) {
+        if (!child) {
+            return;
+        }
+        if (!this.hasChild(child)) {
+            return;
+        }
+        const i = this._children.indexOf(child);
+        this._children.splice(i, 1);
+        child.parent = null;
     }
 
     public updateMarginedProperties() {
@@ -257,11 +282,8 @@ export class Widget {
         this.marginedLeft = this.left + this.marginLeft;
         this.marginedHeight = this.height + this.marginTop + this.marginBottom;
         this.marginedWidth = this.width + this.marginLeft + this.marginRight;
-        if (this.isA(Group)) {
-            const group = this as unknown as Group;
-            for (let i = 0; i < group.children.length; i++) {
-                group.children[i].updateMarginedProperties();
-            }
+        for (let i = 0; i < this.children.length; i++) {
+            this.children[i].updateMarginedProperties();
         }
     }
 
@@ -347,7 +369,8 @@ export class Widget {
 
     private _json: any = null;
 
-    private _parent: Group = null;
+    private _parent: Widget = null;
+    private _children = new Array<Widget>;
     private _position = new Array<number>(4);
     private _margin = new Array<number>(4);
     private _marginedTop = 0;
@@ -357,8 +380,4 @@ export class Widget {
 
     private _isHeightSet = false;
     private _isWidthSet = false;
-}
-
-if (global.testing) {
-    global.Widget = Widget;
 }

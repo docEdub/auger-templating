@@ -14,7 +14,7 @@ export enum GroupLayout {
 }
 
 export class Group extends Widget {
-    constructor(json: any, parent: Group = null) {
+    constructor(json: any = null, parent: Group = null) {
         super(json, parent);
         this._padding.fill(0);
         if (!json) {
@@ -100,37 +100,6 @@ export class Group extends Widget {
         this._layout = value;
     }
 
-    public get children() {
-        return this._children;
-    }
-
-    public hasChild(child: Widget) {
-        return this._children?.indexOf(child) !== -1;
-    }
-
-    public addChild(child: Widget) {
-        if (!child) {
-            return;
-        }
-        if (this.hasChild(child)) {
-            return;
-        }
-        this._children.push(child);
-        child.parent = this;
-    }
-
-    public removeChild(child: Widget) {
-        if (!child) {
-            return;
-        }
-        if (!this.hasChild(child)) {
-            return;
-        }
-        const i = this._children.indexOf(child);
-        this._children.splice(i, 1);
-        child.parent = null;
-    }
-
     public preOutput(indent: string = ``): string {
         let output = ``;
         if (this.type != `form`) {
@@ -153,9 +122,4 @@ export class Group extends Widget {
 
     private _padding = new Array<number>(4);
     private _layout = GroupLayout.None;
-    private _children = new Array<Widget>;
-}
-
-if (global.testing) {
-    global.Group = Group;
 }

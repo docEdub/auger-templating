@@ -1,5 +1,5 @@
-global.testing = true;
-require("../../.build/.root/src/Cabbage/cabbageTemplateHelper");
+
+import { CssLength } from "../../src/Utility/cssLength";
 
 describe(`CssLength`, () => {
     describe(`AsNumber`, () => {

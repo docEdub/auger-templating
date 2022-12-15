@@ -54,7 +54,3 @@ export class CssFrame {
         return outputArray;
     }
 }
-
-if (global.testing) {
-    global.CssFrame = CssFrame;
-}

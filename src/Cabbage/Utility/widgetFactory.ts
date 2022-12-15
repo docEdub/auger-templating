@@ -46,7 +46,3 @@ export class WidgetFactory {
         }
     }
 }
-
-if (global.testing) {
-    global.WidgetFactory = WidgetFactory;
-}

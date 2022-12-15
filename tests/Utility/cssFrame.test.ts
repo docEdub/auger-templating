@@ -1,5 +1,5 @@
-global.testing = true;
-require("../../.build/.root/src/Cabbage/cabbageTemplateHelper");
+
+import { CssFrame } from "../../src/Utility/cssFrame";
 
 describe(`CssFrame`, () => {
     describe(`AsNumberArray`, () => {

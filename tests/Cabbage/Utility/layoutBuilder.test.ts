@@ -1,5 +1,6 @@
-global.testing = true;
-require("../../../.build/.root/src/Cabbage/cabbageTemplateHelper");
+
+import { LayoutBuilder } from "../../../src/Cabbage/Utility/layoutBuilder";
+import { WidgetFactory } from "../../../src/Cabbage/Utility/widgetFactory";
 
 const createFormAndBuildLayout = (jsonString) => {
     const widgetFactory = new WidgetFactory;

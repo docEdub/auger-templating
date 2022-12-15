@@ -1,5 +1,5 @@
-global.testing = true;
-require("../../../.build/.root/src/Cabbage/cabbageTemplateHelper");
+
+import { WidgetFactory } from "../../../src/Cabbage/Utility/widgetFactory";
 
 describe(`WidgetFactory`, () => {
     describe(`create`, () => {

@@ -67,7 +67,3 @@ export class LayoutBuilder {
         }
     }
 }
-
-if (global.testing) {
-    global.LayoutBuilder = LayoutBuilder;
-}

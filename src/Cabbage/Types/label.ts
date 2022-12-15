@@ -5,7 +5,7 @@ import { Widget } from "./widget";
 import { Output } from "../Utility/output";
 
 export class Label extends Widget {
-    constructor(json, parent: Group = null) {
+    constructor(json: any = null, parent: Group = null) {
         super(json, parent);
     }
 
@@ -25,8 +25,4 @@ export class Label extends Widget {
         output += `\n`;
         return output;
     }
-}
-
-if (global.testing) {
-    global.Label = Label;
 }

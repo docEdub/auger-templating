@@ -8,10 +8,17 @@
             "tools/**",
             "udo/**"
         ],
-        "Run tests": [
+        "Run TypeScript tests": [
             "src/**",
             "tests/**",
+            "tests-ts/**",
             "webpack.config.js"
         ]
+    },
+    "jest.disabledWorkspaceFolders": [
+        "tests"
+    ],
+    "jest.autoRun": {
+        "watch": false
     }
 }

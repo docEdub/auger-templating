@@ -1,5 +1,5 @@
-global.testing = true;
-require("../../../.build/.root/src/Cabbage/cabbageTemplateHelper");
+
+import { Label } from "../../../src/Cabbage/Types/label";
 
 const defaults = `corners(0)`;
 

@@ -1,5 +1,6 @@
-global.testing = true;
-require("../../../.build/.root/src/Cabbage/cabbageTemplateHelper");
+
+import { Group } from "../../../src/Cabbage/Types/group";
+import { Widget } from "../../../src/Cabbage/Types/widget";
 
 describe(`Widget`, () => {
     describe(`constructor`, () => {

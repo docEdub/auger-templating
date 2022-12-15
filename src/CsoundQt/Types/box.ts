@@ -117,7 +117,3 @@ export class Box {
     private _width: number = 0
     private _height: number = 0
 }
-
-if (global.testing) {
-    global.Box = Box;
-}

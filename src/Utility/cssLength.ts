@@ -22,7 +22,3 @@ export class CssLength {
         return 0;
     }
 }
-
-if (global.testing) {
-    global.CssLength = CssLength;
-}
