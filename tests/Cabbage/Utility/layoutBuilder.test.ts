@@ -1,10 +1,12 @@
 
+import { Form } from "../../../src/Cabbage/Types/form";
+
 import { LayoutBuilder } from "../../../src/Cabbage/Utility/layoutBuilder";
 import { WidgetFactory } from "../../../src/Cabbage/Utility/widgetFactory";
 
 const createFormAndBuildLayout = (jsonString) => {
     const widgetFactory = new WidgetFactory;
-    const form = widgetFactory.create(JSON.parse(jsonString));
+    const form = widgetFactory.create(JSON.parse(jsonString).ui) as Form;
     const layoutBuilder = new LayoutBuilder;
     layoutBuilder.build(form);
     return form;

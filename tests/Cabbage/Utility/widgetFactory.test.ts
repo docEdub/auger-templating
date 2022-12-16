@@ -1,5 +1,12 @@
 
+import { Form } from "../../../src/Cabbage/Types/form";
+
 import { WidgetFactory } from "../../../src/Cabbage/Utility/widgetFactory";
+
+const createForm = (jsonString): Form => {
+    const widgetFactory = new WidgetFactory;
+    return widgetFactory.create(JSON.parse(jsonString).ui) as Form;
+}
 
 describe(`WidgetFactory`, () => {
     describe(`create`, () => {
@@ -19,8 +26,7 @@ describe(`WidgetFactory`, () => {
             expect(form).not.toBeNull();
         });
         test(`creates a form with a child`, () => {
-            const widgetFactory = new WidgetFactory;
-            const form = widgetFactory.create(JSON.parse(`{
+            const form = createForm(`{
                 "ui": {
                     "type": "form",
                     "children": [
@@ -29,12 +35,11 @@ describe(`WidgetFactory`, () => {
                         }
                     ]
                 }
-            }`));
+            }`);
             expect(form.children.length).toBe(1);
         });
         test(`creates a form with a multiple children`, () => {
-            const widgetFactory = new WidgetFactory;
-            const form = widgetFactory.create(JSON.parse(`{
+            const form = createForm(`{
                 "ui": {
                     "type": "form",
                     "children": [
@@ -46,12 +51,11 @@ describe(`WidgetFactory`, () => {
                         }
                     ]
                 }
-            }`));
+            }`);
             expect(form.children.length).toBe(2);
         });
         test(`creates a form with a nested children`, () => {
-            const widgetFactory = new WidgetFactory;
-            const form = widgetFactory.create(JSON.parse(`{
+            const form = createForm(`{
                 "ui": {
                     "type": "form",
                     "children": [
@@ -68,13 +72,12 @@ describe(`WidgetFactory`, () => {
                         }
                     ]
                 }
-            }`));
+            }`);
             const child = form.children[0];
             expect(child.children.length).toBe(2);
         });
         test(`creates a group`, () => {
-            const widgetFactory = new WidgetFactory;
-            const form = widgetFactory.create(JSON.parse(`{
+            const form = createForm(`{
                 "ui": {
                     "type": "form",
                     "children": [
@@ -83,13 +86,12 @@ describe(`WidgetFactory`, () => {
                         }
                     ]
                 }
-            }`));
+            }`);
             const child = form.children[0];
             expect(child.constructor.name).toBe(`Group`);
         });
         test(`creates a label`, () => {
-            const widgetFactory = new WidgetFactory;
-            const form = widgetFactory.create(JSON.parse(`{
+            const form = createForm(`{
                 "ui": {
                     "type": "form",
                     "children": [
@@ -98,7 +100,7 @@ describe(`WidgetFactory`, () => {
                         }
                     ]
                 }
-            }`));
+            }`);
             const child = form.children[0];
             expect(child.constructor.name).toBe(`Label`);
         });

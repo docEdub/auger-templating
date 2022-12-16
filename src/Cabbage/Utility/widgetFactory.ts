@@ -1,14 +1,42 @@
+
 import { Form } from "../Types/form";
 import { Group } from "../Types/group";
 import { Label } from "../Types/label";
 import { Widget } from "../Types/widget";
 
 export class WidgetFactory {
-    public create(json: any): Form {
-        return this.createWidget(`form`, json?.ui) as Form;
+    public create(json: any, type?: string): Widget {
+        if (!type) {
+            type = json?.type;
+        }
+        if (!type) {
+            type = `form`;
+        }
+        return this.createWidget(type, json);
     }
 
-    private createWidget(type: string, json: any, parent: Group = null): Widget {
+    public addTypes(json: any) {
+        if (!Array.isArray(json)) {
+            throw new Error(`Given json is not an array`);
+        }
+        for (let i = 0; i < json.length; i++) {
+            const item = json[i];
+            const typeName = item['type'];
+            if (!typeName) {
+                throw new Error(`No 'type' key found`);
+            }
+            if (!item['baseType']) {
+                throw new Error(`No 'baseType' key found`);
+            }
+            this._typeMap[typeName] = item;
+        }
+    }
+
+    public createType(typeName: string): Widget {
+        return null;
+    }
+
+    public createWidget(type: string, json: any, parent: Group = null): Widget {
         if (!json) {
             json = {};
         }
@@ -37,7 +65,7 @@ export class WidgetFactory {
             return;
         }
         if (!Array.isArray(json)) {
-            throw new Error(`WidgetFactory.createChildWidgets json is not an array`);
+            throw new Error(`Given json is not an array`);
         }
         for (let i = 0; i < json.length; i++) {
             const childJson = json[i];
@@ -45,4 +73,6 @@ export class WidgetFactory {
             group.addChild(child);
         }
     }
+
+    private _typeMap = new Map<string, any>;
 }
