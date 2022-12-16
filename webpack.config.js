@@ -7,7 +7,7 @@ module.exports = {
         ["src/Csound/csoundTemplateHelper"]: path.resolve(__dirname, "src/Csound/csoundTemplateHelper.ts"),
     },
     output: {
-        // clean: true, // NB: Cleaning .build/.root deletes the output .csd, which disrupts Cabbage's hot reload.
+        // clean: true, // NB: Cleaning .build/.root deletes the output .csd, which disrupts Cabbage's live reload.
         filename: '[name].js',
         path: path.join(__dirname, '.build/.root'),
         publicPath: '/',
