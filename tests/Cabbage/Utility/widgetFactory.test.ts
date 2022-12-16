@@ -8,6 +8,13 @@ const createForm = (jsonString): Form => {
     return widgetFactory.create(JSON.parse(jsonString).ui) as Form;
 }
 
+const createFormWithTypes = (jsonString): Form => {
+    const widgetFactory = new WidgetFactory;
+    const json = JSON.parse(jsonString);
+    widgetFactory.addTypes(json.uiTypes);
+    return widgetFactory.create(json.ui) as Form;
+}
+
 describe(`WidgetFactory`, () => {
     describe(`create`, () => {
         test(`creates a form when the given json is null`, () => {
@@ -103,6 +110,82 @@ describe(`WidgetFactory`, () => {
             }`);
             const child = form.children[0];
             expect(child.constructor.name).toBe(`Label`);
+        });
+        test(`creates a user defined type widget`, () => {
+            const form = createFormWithTypes(`{
+                "uiTypes": [
+                    {
+                        "type": "small-label",
+                        "extends": "label",
+                        "width": "1px",
+                        "height": "2px"
+                    }
+                ],
+                "ui": {
+                    "type": "form",
+                    "children": [
+                        {
+                            "type": "small-label"
+                        }
+                    ]
+                }
+            }`);
+            const child0 = form.children[0];
+            expect(child0.constructor.name).toBe(`Label`);
+            expect(child0.width).toBe(1);
+            expect(child0.height).toBe(2);
+        });
+        test(`creates a nested user defined type widget that extends a group`, () => {
+            const form = createFormWithTypes(`{
+                "uiTypes": [
+                    {
+                        "type": "group-a",
+                        "extends": "group",
+                        "children": [
+                            {
+                                "type": "label"
+                            }
+                        ]
+                    }
+                ],
+                "ui": {
+                    "type": "form",
+                    "children": [
+                        {
+                            "type": "group-a"
+                        }
+                    ]
+                }
+            }`);
+            const group = form.children[0];
+            const child0 = group.children[0];
+            expect(group.constructor.name).toBe(`Group`);
+            expect(child0.constructor.name).toBe(`Label`);
+        });
+        test(`creates a user defined type widget with its width and height overridden`, () => {
+            const form = createFormWithTypes(`{
+                "uiTypes": [
+                    {
+                        "type": "small-label",
+                        "extends": "label",
+                        "width": "1px",
+                        "height": "2px"
+                    }
+                ],
+                "ui": {
+                    "type": "form",
+                    "children": [
+                        {
+                            "type": "small-label",
+                            "width": "3px",
+                            "height": "4px"
+                        }
+                    ]
+                }
+            }`);
+            const child0 = form.children[0];
+            expect(child0.width).toBe(3);
+            expect(child0.height).toBe(4);
         });
     });
 });

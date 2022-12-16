@@ -9,7 +9,8 @@ global.CabbageTemplateHelper = class {
     constructor(Handlebars: any) {
         Handlebars.registerHelper(`Cabbage`, (input) => {
             const widgetFactory = new WidgetFactory;
-            const form = widgetFactory.create(input.data.root);
+            widgetFactory.addTypes(input.data.root.uiTypes);
+            const form = widgetFactory.create(input.data.root.ui) as Form;
             const layoutBuilder = new LayoutBuilder;
             layoutBuilder.build(form);
             let output = "";

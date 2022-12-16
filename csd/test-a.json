@@ -28,51 +28,39 @@
                 "background": "(inherit())",
                 "children": [
                     {
-                        "type": "label",
-                        "text": "(`${childNumber}`)",
+                        "type": "label-a-red",
                         "width": "(`${1 * inherit('childWidth')}%`)",
                         "height": "(`${1 * inherit('childHeight')}%`)",
-                        "background-color": "Pink",
                         "color": "(inherit('childColor'))"
                     },
                     {
-                        "type": "label",
-                        "text": "(`${childNumber}`)",
+                        "type": "label-a-green",
                         "width": "(`${2 * inherit('childWidth')}%`)",
                         "height": "(`${1 * inherit('childHeight')}%`)",
-                        "background-color": "LightGreen",
                         "color": "(inherit('childColor'))"
                     },
                     {
-                        "type": "label",
-                        "text": "(`${childNumber}`)",
+                        "type": "label-a-blue",
                         "width": "(`${1.5 * inherit('childWidth')}%`)",
                         "height": "(`${1 * inherit('childHeight') + 0.1}%`)",
-                        "background-color": "LightBlue",
                         "color": "(inherit('childColor'))"
                     },
                     {
-                        "type": "label",
-                        "text": "(`${childNumber}`)",
+                        "type": "label-b-red",
                         "width": "(`${1.5 * inherit('childWidth')}%`)",
                         "height": "(`${1 * inherit('childHeight') + 0.1}%`)",
-                        "background-color": "Plum",
                         "color": "(inherit('childColor'))"
                     },
                     {
-                        "type": "label",
-                        "text": "(`${childNumber}`)",
+                        "type": "label-b-green",
                         "width": "(`${2 * inherit('childWidth')}%`)",
                         "height": "(`${1 * inherit('childHeight')}%`)",
-                        "background-color": "HotPink",
                         "color": "(inherit('childColor'))"
                     },
                     {
-                        "type": "label",
-                        "text": "(`${childNumber}`)",
+                        "type": "label-b-blue",
                         "width": "(`${1 * inherit('childWidth')}%`)",
                         "height": "(`${1 * inherit('childHeight')}%`)",
-                        "background-color": "DarkOrange",
                         "color": "(inherit('childColor'))"
                     }
                 ]

@@ -5,16 +5,6 @@ import { Label } from "../Types/label";
 import { Widget } from "../Types/widget";
 
 export class WidgetFactory {
-    public create(json: any, type?: string): Widget {
-        if (!type) {
-            type = json?.type;
-        }
-        if (!type) {
-            type = `form`;
-        }
-        return this.createWidget(type, json);
-    }
-
     public addTypes(json: any) {
         if (!Array.isArray(json)) {
             throw new Error(`Given json is not an array`);
@@ -25,18 +15,24 @@ export class WidgetFactory {
             if (!typeName) {
                 throw new Error(`No 'type' key found`);
             }
-            if (!item['baseType']) {
-                throw new Error(`No 'baseType' key found`);
+            if (!item['extends']) {
+                throw new Error(`No 'extends' key found for type ${typeName}`);
             }
-            this._typeMap[typeName] = item;
+            this._typeJsonMap.set(typeName, item);
         }
     }
 
-    public createType(typeName: string): Widget {
-        return null;
+    public create(json: any, type?: string): Widget {
+        if (!type) {
+            type = json?.type;
+        }
+        if (!type) {
+            type = `form`;
+        }
+        return this.createWidget(type, json);
     }
 
-    public createWidget(type: string, json: any, parent: Group = null): Widget {
+    private createWidget(type: string, json: any, parent: Group = null): Widget {
         if (!json) {
             json = {};
         }
@@ -44,6 +40,15 @@ export class WidgetFactory {
             case `form`: return this.createFormWidget(json);
             case `group`: return this.createGroupWidget(json, parent);
             case `label`: return new Label(json, parent);
+            default:
+                if (!this._typeJsonMap.has(type)) {
+                    throw new Error(`Type ${type} not found`);
+                }
+                const mergedJson = {
+                    ...this._typeJsonMap.get(type),
+                    ...json
+                }
+                const widget = this.createWidget(mergedJson.extends, mergedJson, parent);
         }
         return null;
     }
@@ -74,5 +79,5 @@ export class WidgetFactory {
         }
     }
 
-    private _typeMap = new Map<string, any>;
+    private _typeJsonMap = new Map<string, any>;
 }
