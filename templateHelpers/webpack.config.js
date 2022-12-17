@@ -3,13 +3,13 @@ const WebpackTouch = require('webpack-touch');
 
 module.exports = {
     entry: {
-        ["src/Cabbage/cabbageTemplateHelper"]: path.resolve(__dirname, "src/Cabbage/cabbageTemplateHelper.ts"),
-        ["src/Csound/csoundTemplateHelper"]: path.resolve(__dirname, "src/Csound/csoundTemplateHelper.ts"),
+        ["cabbageTemplateHelper"]: path.resolve(__dirname, "src/cabbageTemplateHelper.ts"),
+        ["csoundTemplateHelper"]: path.resolve(__dirname, "src/csoundTemplateHelper.ts"),
     },
     output: {
         // clean: true, // NB: Cleaning .build/.root deletes the output .csd, which disrupts Cabbage's live reload.
         filename: '[name].js',
-        path: path.join(__dirname, '.build/.root'),
+        path: path.join(__dirname, '..', '.build', '.root', 'templateHelpers', 'src'),
         publicPath: '/',
     },
     plugins: [

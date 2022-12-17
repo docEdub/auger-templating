@@ -1,23 +1,25 @@
 {
-    "triggerTaskOnSave.tasks": {
-        "Build": [
-            "csd/**",
-            "instr/**",
-            "json/**",
-            "sco/**",
-            "src/**",
-            "tools/**",
-            "udo/**"
-        ],
-        "Run TypeScript tests": [
-            "src/**",
-            "tests/**",
-            "tests-ts/**",
-            "webpack.config.js"
-        ]
-    },
+//     "triggerTaskOnSave.tasks": {
+//         "Build": [
+//             "csd/**",
+//             "instr/**",
+//             "json/**",
+//             "sco/**",
+//             "templateHelpers/src/**",
+//             "tools/**",
+//             "udo/**",
+//             "CMakeLists.txt",
+//             "tsconfig.json",
+//             "webpack.config.js"
+//         ],
+//         "Run TypeScript tests": [
+//             "templateHelpers/src/**",
+//             "templateHelpers/unitTests/**",
+//             "jest.config.js",
+//             "webpack.config.js"
+//         ]
+//     },
     "jest.disabledWorkspaceFolders": [
-        "tests"
     ],
     "jest.autoRun": {
         "watch": false
