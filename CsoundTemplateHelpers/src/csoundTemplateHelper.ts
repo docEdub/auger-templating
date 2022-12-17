@@ -21,7 +21,7 @@ global.CsoundTemplateHelper = class {
         const buildRootDir = () => {
             for (let i = 0; i < process.argv.length - 1; i++) {
                 if (process.argv[i] === `--build-dir`) {
-                    return `${process.argv[i + 1]}/.root`;
+                    return `${process.argv[i + 1]}/.output`;
                 }
             }
             throw new Error(`Unable to find build root directory.`);

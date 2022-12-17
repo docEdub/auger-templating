@@ -4,6 +4,8 @@ project("Auger")
 
 get_filename_component(ROOT_DIR "${CMAKE_SOURCE_DIR}" ABSOLUTE)
 get_filename_component(BUILD_DIR "${CMAKE_BINARY_DIR}" ABSOLUTE)
+get_filename_component(BUILD_DEPENDENCIES_DIR "${BUILD_DIR}/.dependencies" ABSOLUTE)
+get_filename_component(BUILD_OUTPUT_DIR "${BUILD_DIR}/.output" ABSOLUTE)
 
 add_subdirectory("CsoundTemplateHelpers")
 

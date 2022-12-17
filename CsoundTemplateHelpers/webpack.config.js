@@ -1,19 +1,21 @@
 const path = require("path");
 const WebpackTouch = require('webpack-touch');
 
+const CsoundTemplateHelpers_BuildOutputDir = path.join(__dirname, '..', '.build', '.output', 'CsoundTemplateHelpers')
+
 module.exports = {
     entry: {
         ["cabbageTemplateHelper"]: path.resolve(__dirname, "src/cabbageTemplateHelper.ts"),
         ["csoundTemplateHelper"]: path.resolve(__dirname, "src/csoundTemplateHelper.ts"),
     },
     output: {
-        // clean: true, // NB: Cleaning .build/.root deletes the output .csd, which disrupts Cabbage's live reload.
+        // clean: true, // NB: Cleaning .build/.output deletes the output .csd, which disrupts Cabbage's live reload.
         filename: '[name].js',
-        path: path.join(__dirname, '..', '.build', '.root', 'CsoundTemplateHelpers', 'src'),
+        path: path.join(CsoundTemplateHelpers_BuildOutputDir, 'src'),
         publicPath: '/',
     },
     plugins: [
-        new WebpackTouch({ filename: path.join('..', '.build' ,'.root', 'CsoundTemplateHelpers', '.webpack.stamp'), delay: 0 })
+        new WebpackTouch({ filename: path.join(CsoundTemplateHelpers_BuildOutputDir, '.webpack.stamp'), delay: 0 })
     ],
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
