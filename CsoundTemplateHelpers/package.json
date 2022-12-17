@@ -1,10 +1,5 @@
 {
   "scripts": {
-    "cmake": "cmake -B .build",
-    "cmake:rm": "cmake -E rm -rf .build",
-    "make": "cmake --build .build --parallel 8",
-    "make:rm": "cmake -E rm -rf .build/.root",
-    "make:edit_cache": "make -f .build/Makefile edit_cache",
     "test": "jest",
     "webpack": "webpack"
   },
