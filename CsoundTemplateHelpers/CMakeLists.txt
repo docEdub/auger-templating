@@ -83,7 +83,6 @@ function(add_custom_command_for_template_helper)
     get_property(CsoundTemplateHelpersScriptsSourceDir GLOBAL PROPERTY CsoundTemplateHelpersScriptsSourceDir)
 
     set(source "${ARGN}")
-    message("source = ${source}")
 
     if(NOT ${source} IN_LIST _custom_command_template_helper_sources)
         list(APPEND _custom_command_template_helper_sources "${source}")
@@ -178,7 +177,6 @@ function(add_custom_commands_for_template_sources)
         get_typescript_build_root_filename("${helper}" output_filename)
         list(APPEND helpers "${output_filename}")
     endforeach()
-    message("helpers = ${helpers}")
 
     foreach(source ${ARG_OPCODES} ${ARG_INSTRUMENTS} ${ARG_SCORES} ${ARG_SOURCES})
         add_custom_command(
