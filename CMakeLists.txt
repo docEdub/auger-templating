@@ -5,7 +5,7 @@ project("Auger")
 get_filename_component(ROOT_DIR "${CMAKE_SOURCE_DIR}" ABSOLUTE)
 get_filename_component(BUILD_DIR "${CMAKE_BINARY_DIR}" ABSOLUTE)
 
-add_subdirectory("templateHelpers")
+add_subdirectory("CsoundTemplateHelpers")
 
 add_custom_commands_for_template_sources(
     OPCODES
@@ -27,6 +27,6 @@ add_custom_commands_for_template_sources(
         "json/types-b.json"
         "json/csound-definitions.json"
     HELPERS
-        "templateHelpers/src/cabbageTemplateHelper.ts"
-        "templateHelpers/src/csoundTemplateHelper.ts"
+        "CsoundTemplateHelpers/src/cabbageTemplateHelper.ts"
+        "CsoundTemplateHelpers/src/csoundTemplateHelper.ts"
 )

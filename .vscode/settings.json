@@ -5,7 +5,7 @@
 //             "instr/**",
 //             "json/**",
 //             "sco/**",
-//             "templateHelpers/src/**",
+//             "CsoundTemplateHelpers/src/**",
 //             "tools/**",
 //             "udo/**",
 //             "CMakeLists.txt",
@@ -13,8 +13,8 @@
 //             "webpack.config.js"
 //         ],
 //         "Run TypeScript tests": [
-//             "templateHelpers/src/**",
-//             "templateHelpers/unitTests/**",
+//             "CsoundTemplateHelpers/src/**",
+//             "CsoundTemplateHelpers/unitTests/**",
 //             "jest.config.js",
 //             "webpack.config.js"
 //         ]

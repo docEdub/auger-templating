@@ -9,7 +9,7 @@ module.exports = {
     output: {
         // clean: true, // NB: Cleaning .build/.root deletes the output .csd, which disrupts Cabbage's live reload.
         filename: '[name].js',
-        path: path.join(__dirname, '..', '.build', '.root', 'templateHelpers', 'src'),
+        path: path.join(__dirname, '..', '.build', '.root', 'CsoundTemplateHelpers', 'src'),
         publicPath: '/',
     },
     plugins: [
