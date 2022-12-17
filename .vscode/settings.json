@@ -5,6 +5,7 @@
             "instr/**",
             "json/**",
             "sco/**",
+            "src/**",
             "tools/**",
             "udo/**"
         ],
