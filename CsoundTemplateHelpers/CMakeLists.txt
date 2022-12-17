@@ -1,9 +1,11 @@
 
 set(CsoundTemplateHelpersSourceDir "${CMAKE_CURRENT_LIST_DIR}")
 set(CsoundTemplateHelpersScriptsSourceDir "${CMAKE_CURRENT_LIST_DIR}/scripts")
+string(REPLACE "${CMAKE_SOURCE_DIR}" "${BUILD_DIR}/.root" CsoundTemplateHelpersBuildDir "${CsoundTemplateHelpersSourceDir}")
 
 set_property(GLOBAL PROPERTY CsoundTemplateHelpersSourceDir "${CsoundTemplateHelpersSourceDir}")
 set_property(GLOBAL PROPERTY CsoundTemplateHelpersScriptsSourceDir "${CsoundTemplateHelpersScriptsSourceDir}")
+set_property(GLOBAL PROPERTY CsoundTemplateHelpersBuildDir "${CsoundTemplateHelpersBuildDir}")
 
 set(VERBOSE off CACHE BOOL "")
 set(VERBOSE_CLI_FLAG "")
@@ -157,6 +159,7 @@ endfunction()
 function(add_custom_commands_for_template_sources)
     get_property(CsoundTemplateHelpersSourceDir GLOBAL PROPERTY CsoundTemplateHelpersSourceDir)
     get_property(CsoundTemplateHelpersScriptsSourceDir GLOBAL PROPERTY CsoundTemplateHelpersScriptsSourceDir)
+    get_property(CsoundTemplateHelpersBuildDir GLOBAL PROPERTY CsoundTemplateHelpersBuildDir)
 
     set(options OPTIONS)
     set(one_value_keywords ONE_VALUE_KEYWORDS)
@@ -226,14 +229,14 @@ function(add_custom_commands_for_template_sources)
     verbose_log("_webpack_dependencies = ${_webpack_dependencies}")
     add_custom_command(
         COMMENT "Running webpack ..."
-        OUTPUT "${BUILD_DIR}/.root/.webpack.stamp"
+        OUTPUT "${CsoundTemplateHelpersBuildDir}/.webpack.stamp"
         WORKING_DIRECTORY "${BUILD_DIR}"
         COMMAND npm run webpack
         DEPENDS
             ${_webpack_dependencies}
             "${CsoundTemplateHelpersSourceDir}/webpack.config.js"
     )
-    add_custom_target(webpack ALL DEPENDS "${BUILD_DIR}/.root/.webpack.stamp")
+    add_custom_target(webpack ALL DEPENDS "${CsoundTemplateHelpersBuildDir}/.webpack.stamp")
 
     # Add the target needed to generate the templates when one or more of the following occurs:
     #   1. Template helper files change causing the webpack command to be run.

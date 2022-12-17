@@ -13,7 +13,7 @@ module.exports = {
         publicPath: '/',
     },
     plugins: [
-        new WebpackTouch({ filename: '.build/.root/.webpack.stamp', delay: 0 })
+        new WebpackTouch({ filename: path.join('..', '.build' ,'.root', 'CsoundTemplateHelpers', '.webpack.stamp'), delay: 0 })
     ],
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
