@@ -1,14 +1,18 @@
 {
     "scripts": {
-        "build": "(ls .build >/dev/null 2>&1 || npm run cmake) && npm run make",
-        "configure": "(ls .build >/dev/null 2>&1 || npm run cmake) && npm run make:edit_cache",
-        "reset": "npm run build:rm",
+        "build": "(ls .build >/dev/null 2>&1 || npm run _cmake) && npm run _make",
+        "configure": "(ls .build >/dev/null 2>&1 || npm run _cmake) && npm run _make:edit_cache",
+        "install": "cd CsoundTemplateHelpers && npm run install",
+        "reset": "npm run _rm:build",
         "test": "cd CsoundTemplateHelpers && npm run test",
 
-        "build:rm": "cmake -E rm -rf .build",
-        "cmake": "cmake -B .build",
-        "make": "cmake --build .build --parallel 8",
-        "make:edit_cache": "make -f .build/Makefile edit_cache",
-        "webpack": "cd CsoundTemplateHelpers && npm run webpack"
+        "config": "npm run configure",
+        "configuration": "npm run configure",
+
+        "_cmake": "cmake -B .build",
+        "_make": "cmake --build .build --parallel 8",
+        "_make:edit_cache": "make -f .build/Makefile edit_cache",
+        "_rm:build": "cmake -E rm -rf .build",
+        "_webpack": "cd CsoundTemplateHelpers && npm run webpack"
     }
 }
