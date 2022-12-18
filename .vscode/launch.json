@@ -9,7 +9,7 @@
             "preLaunchTask": "Run Csound with current file",
             "type": "node",
             "request": "launch",
-            "args": [ "${workspaceFolder}/CsoundTemplateHelpers/scripts/noop.js" ]
+            "args": [ "${workspaceFolder}/CsoundHandlebarHelpers/scripts/noop.js" ]
         }
     ]
 }
