@@ -10,16 +10,9 @@ get_filename_component(BUILD_OUTPUT_DIR "${BUILD_DIR}/.output" ABSOLUTE)
 set(CsoundHandlebarHelpers_RootDir "submodules/CsoundHandlebarHelpers")
 add_subdirectory("${CsoundHandlebarHelpers_RootDir}")
 
+initialize_csound_handlebar_targets()
+
 add_csound_templates(
-    OPCODES
-        "udo/time_i.orc"
-        "udo/time_k.orc"
-        "udo/timeString_i.orc"
-        "udo/timeString_k.orc"
-    INSTRUMENTS
-        "instr/instr 1.orc"
-    SCORES
-        "sco/instr 1.sco"
     SOURCES
         "csd/test-a.csd"
         "csd/test-b.csd"
@@ -28,8 +21,6 @@ add_csound_templates(
         "csd/test-b.json"
         "json/types-a.json"
         "json/types-b.json"
-        "json/csound-definitions.json"
-    HELPERS
-        "${CsoundHandlebarHelpers_RootDir}/src/cabbageTemplateHelper.ts"
-        "${CsoundHandlebarHelpers_RootDir}/src/csoundTemplateHelper.ts"
 )
+
+finalize_csound_handlebar_targets()
