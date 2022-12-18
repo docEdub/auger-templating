@@ -5,17 +5,17 @@
             "instr/**",
             "json/**",
             "sco/**",
-            "submodules/CsoundTemplateHelpers/scripts/**",
-            "submodules/CsoundTemplateHelpers/src/**",
-            "submodules/CsoundTemplateHelpers/CMakeLists.txt",
+            "submodules/CsoundHandlebarHelpers/scripts/**",
+            "submodules/CsoundHandlebarHelpers/src/**",
+            "submodules/CsoundHandlebarHelpers/CMakeLists.txt",
             "udo/**",
             "CMakeLists.txt",
             "tsconfig.json",
             "webpack.config.js"
         ],
         "Run tests": [
-            "submodules/CsoundTemplateHelpers/src/**",
-            "submodules/CsoundTemplateHelpers/unitTests/**",
+            "submodules/CsoundHandlebarHelpers/src/**",
+            "submodules/CsoundHandlebarHelpers/unitTests/**",
             "jest.config.js",
             "webpack.config.js"
         ]
