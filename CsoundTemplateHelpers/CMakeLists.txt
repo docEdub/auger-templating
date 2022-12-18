@@ -187,7 +187,7 @@ function(add_custom_command_for_template_helper)
 endfunction()
 
 
-function(add_custom_commands_for_template_sources)
+function(add_csound_templates)
     get_property(CsoundTemplateHelpers_SourceDir GLOBAL PROPERTY CsoundTemplateHelpers_SourceDir)
     get_property(CsoundTemplateHelpers_ScriptsSourceDir GLOBAL PROPERTY CsoundTemplateHelpers_ScriptsSourceDir)
     get_property(CsoundTemplateHelpers_BuildOutputDir GLOBAL PROPERTY CsoundTemplateHelpers_BuildOutputDir)

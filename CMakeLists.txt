@@ -9,7 +9,7 @@ get_filename_component(BUILD_OUTPUT_DIR "${BUILD_DIR}/.output" ABSOLUTE)
 
 add_subdirectory("CsoundTemplateHelpers")
 
-add_custom_commands_for_template_sources(
+add_csound_templates(
     OPCODES
         "udo/time_i.orc"
         "udo/time_k.orc"
