@@ -1,18 +1,1 @@
-{
-    "form": {
-        "width": 1000,
-        "height": 1000,
-        "name": "Test",
-        "id": "0001",
-        "widgets": [
-            {
-                "type": "group",
-                "x": "250px",
-                "y": "250px",
-                "width": "500px",
-                "height": "250px",
-                "color": "red"
-            }
-        ]
-    }
-}
+{}

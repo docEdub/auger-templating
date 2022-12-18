@@ -15,9 +15,16 @@ initialize_csound_handlebar_targets()
 add_csound_templates(
     SOURCES
         "csd/test-a.csd"
-        "csd/test-b.csd"
     JSON
         "csd/test-a.json"
+        "json/types-a.json"
+        "json/types-b.json"
+)
+
+add_csound_templates(
+    SOURCES
+        "csd/test-b.csd"
+    JSON
         "csd/test-b.json"
         "json/types-a.json"
         "json/types-b.json"
