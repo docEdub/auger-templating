@@ -2,9 +2,9 @@
     "scripts": {
         "build": "(ls .build >/dev/null 2>&1 || npm run _cmake) && npm run _make",
         "configure": "(ls .build >/dev/null 2>&1 || npm run _cmake) && npm run _make:edit_cache",
-        "install": "npm --prefix CsoundTemplateHelpers install",
+        "install": "npm --prefix submodules/CsoundTemplateHelpers install",
         "rebuild": "npm run _rm:build && npm run build",
-        "test": "npm --prefix CsoundTemplateHelpers run test",
+        "test": "npm --prefix submodules/CsoundTemplateHelpers run test",
 
         "config": "npm run configure",
         "configuration": "npm run configure",

@@ -7,7 +7,7 @@ get_filename_component(BUILD_DIR "${CMAKE_BINARY_DIR}" ABSOLUTE)
 get_filename_component(BUILD_DEPENDENCIES_DIR "${BUILD_DIR}/.dependencies" ABSOLUTE)
 get_filename_component(BUILD_OUTPUT_DIR "${BUILD_DIR}/.output" ABSOLUTE)
 
-set(CsoundTemplateHelpers_RootDir "CsoundTemplateHelpers")
+set(CsoundTemplateHelpers_RootDir "submodules/CsoundTemplateHelpers")
 add_subdirectory("${CsoundTemplateHelpers_RootDir}")
 
 add_csound_templates(
