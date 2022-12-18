@@ -3,7 +3,7 @@ const WebpackTouch = require('webpack-touch');
 
 module.exports = (env) => {
     const subdir = __dirname.replace(`${env.rootDir}/`, ``);
-    const CsoundTemplateHelpers_BuildOutputDir = path.join(env.rootDir, '.build', '.output', subdir);
+    const CsoundHandlebarHelpers_BuildOutputDir = path.join(env.rootDir, '.build', '.output', subdir);
 
     return {
         entry: {
@@ -13,11 +13,11 @@ module.exports = (env) => {
         output: {
             // clean: true, // NB: Cleaning .build/.output deletes the output .csd, which disrupts Cabbage's live reload.
             filename: '[name].js',
-            path: path.join(CsoundTemplateHelpers_BuildOutputDir, 'src'),
+            path: path.join(CsoundHandlebarHelpers_BuildOutputDir, 'src'),
             publicPath: '/',
         },
         plugins: [
-            new WebpackTouch({ filename: path.join(CsoundTemplateHelpers_BuildOutputDir, '.webpack.stamp'), delay: 0 })
+            new WebpackTouch({ filename: path.join(CsoundHandlebarHelpers_BuildOutputDir, '.webpack.stamp'), delay: 0 })
         ],
         resolve: {
             extensions: [".tsx", ".ts", ".js"]

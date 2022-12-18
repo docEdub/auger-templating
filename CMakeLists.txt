@@ -7,8 +7,8 @@ get_filename_component(BUILD_DIR "${CMAKE_BINARY_DIR}" ABSOLUTE)
 get_filename_component(BUILD_DEPENDENCIES_DIR "${BUILD_DIR}/.dependencies" ABSOLUTE)
 get_filename_component(BUILD_OUTPUT_DIR "${BUILD_DIR}/.output" ABSOLUTE)
 
-set(CsoundTemplateHelpers_RootDir "submodules/CsoundHandlebarHelpers")
-add_subdirectory("${CsoundTemplateHelpers_RootDir}")
+set(CsoundHandlebarHelpers_RootDir "submodules/CsoundHandlebarHelpers")
+add_subdirectory("${CsoundHandlebarHelpers_RootDir}")
 
 add_csound_templates(
     OPCODES
@@ -30,6 +30,6 @@ add_csound_templates(
         "json/types-b.json"
         "json/csound-definitions.json"
     HELPERS
-        "${CsoundTemplateHelpers_RootDir}/src/cabbageTemplateHelper.ts"
-        "${CsoundTemplateHelpers_RootDir}/src/csoundTemplateHelper.ts"
+        "${CsoundHandlebarHelpers_RootDir}/src/cabbageTemplateHelper.ts"
+        "${CsoundHandlebarHelpers_RootDir}/src/csoundTemplateHelper.ts"
 )
