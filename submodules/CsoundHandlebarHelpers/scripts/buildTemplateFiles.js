@@ -10,7 +10,7 @@ const JsonMerger = require("json-merger");
 
 // Note:
 // - The `buildDir` arg is expected to be an absolute path.
-// - All other path arguments are expected to be relative to the root directory.
+// - All other path arguments are expected to be relative to the source root directory.
 // - The `helper-files` arg items are expected to be given as Typescript filenames.
 
 const cliOptions = [
@@ -107,18 +107,18 @@ verbose_log(arg);
 
 // Load helpers
 
-const buildRootDir = path.join(arg.buildDir, ".root");
+const buildOutputDir = path.join(arg.buildDir, ".output");
 
 verbose_log(``);
 verbose_log(`Constants:`);
 verbose_log(`{`);
-verbose_log(`  buildRootDir = ${buildRootDir}`);
+verbose_log(`  buildOutputDir = ${buildOutputDir}`);
 
 for (let i = 0; i < arg.helperFiles.length; i++) {
     const helperTypescriptBasename = path.basename(arg.helperFiles[i]);
     const helperRelativeDir = path.dirname(arg.helperFiles[i]);
     const helperJavascriptBasename = helperTypescriptBasename.replace(".ts", ".js");
-    const helperBuildFilename = path.join(buildRootDir, helperRelativeDir, helperJavascriptBasename);
+    const helperBuildFilename = path.join(buildOutputDir, helperRelativeDir, helperJavascriptBasename);
     const helperBasenameWithoutExtension = helperJavascriptBasename.replace(".js", "");
     const helperClassName =
         `${helperBasenameWithoutExtension.charAt(0).toUpperCase()}${helperBasenameWithoutExtension.slice(1)}`
@@ -156,7 +156,7 @@ verbose_log(arg.verbose ? `  ${JSON.stringify(json, null, 2).replaceAll("\n", "\
 
 // Build template source
 
-const sourceBuildDir = path.join(buildRootDir, path.dirname(arg.source));
+const sourceBuildDir = path.join(buildOutputDir, path.dirname(arg.source));
 const sourceBasename = path.basename(arg.source);
 const sourceBuildFilename = path.join(sourceBuildDir, sourceBasename);
 

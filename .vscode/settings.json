@@ -5,18 +5,22 @@
             "instr/**",
             "json/**",
             "sco/**",
-            "tools/**",
-            "udo/**"
+            "submodules/CsoundHandlebarHelpers/scripts/**",
+            "submodules/CsoundHandlebarHelpers/src/**",
+            "submodules/CsoundHandlebarHelpers/CMakeLists.txt",
+            "udo/**",
+            "CMakeLists.txt",
+            "tsconfig.json",
+            "webpack.config.js"
         ],
-        "Run TypeScript tests": [
-            "src/**",
-            "tests/**",
-            "tests-ts/**",
+        "Run tests": [
+            "submodules/CsoundHandlebarHelpers/src/**",
+            "submodules/CsoundHandlebarHelpers/unitTests/**",
+            "jest.config.js",
             "webpack.config.js"
         ]
     },
     "jest.disabledWorkspaceFolders": [
-        "tests"
     ],
     "jest.autoRun": {
         "watch": false

@@ -4,25 +4,21 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run CMake if .build folder is gone",
-            "type": "shell",
-            "command": "ls .build >/dev/null 2>&1 || time npm run cmake",
-            "presentation": {
-                "clear": true
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            }
-        },
-        {
             "label": "Build",
-            "dependsOn": "Run CMake if .build folder is gone",
             "type": "shell",
-            "command": "time npm run make",
+            "command": "npm run build",
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "clear": true,
+                "echo": true,
+                "focus": false,
+                "group": "build and test",
+                "panel": "dedicated",
+                "reveal": "never",
+                "showReuseMessage": false
             }
         },
         {
@@ -30,18 +26,27 @@
             "dependsOn": "Build",
             "type": "shell",
             "command": "csound ${relativeFile} -odac",
-            // "command": "osascript -e 'tell app \"Terminal\" to do script \"cd \\\"${workspaceFolder}/.build/.root\\\" && csound ${relativeFile} -odac\"'",
+            // "command": "osascript -e 'tell app \"Terminal\" to do script \"cd \\\"${workspaceFolder}/.build/.output\\\" && csound ${relativeFile} -odac\"'",
             "options": {
-                "cwd": "${workspaceFolder}/.build/.root"
+                "cwd": "${workspaceFolder}/.build/.output"
             }
         },
         {
-            "label": "Run TypeScript tests",
+            "label": "Run tests",
             "type": "shell",
             "command": "npm run test",
             "group": {
                 "kind": "build",
                 "isDefault": false
+            },
+            "presentation": {
+                "clear": true,
+                "echo": true,
+                "focus": false,
+                "group": "build and test",
+                "panel": "dedicated",
+                "reveal": "never",
+                "showReuseMessage": false
             }
         }
     ]
