@@ -20,13 +20,15 @@ if(NOT required_variables_found)
     message(FATAL_ERROR "One or more required variables are not defined")
 endif()
 
-set(CsoundTemplateHelpers_SourceDir "${CMAKE_CURRENT_LIST_DIR}")
-set(CsoundTemplateHelpers_ScriptsSourceDir "${CMAKE_CURRENT_LIST_DIR}/scripts")
-set(CsoundTemplateHelpers_BuildOutputDir "${BUILD_OUTPUT_DIR}/CsoundTemplateHelpers")
-set(CsoundTemplateHelpers_BuildDependenciesDir "${BUILD_DEPENDENCIES_DIR}/CsoundTemplateHelpers")
+string(REPLACE "${ROOT_DIR}/" "" subdir "${CMAKE_CURRENT_LIST_DIR}")
 
-set_property(GLOBAL PROPERTY CsoundTemplateHelpers_SourceDir "${CsoundTemplateHelpers_SourceDir}")
-set_property(GLOBAL PROPERTY CsoundTemplateHelpers_ScriptsSourceDir "${CsoundTemplateHelpers_ScriptsSourceDir}")
+set(CsoundTemplateHelpers_RootDir "${CMAKE_CURRENT_LIST_DIR}")
+set(CsoundTemplateHelpers_ScriptsDir "${CMAKE_CURRENT_LIST_DIR}/scripts")
+set(CsoundTemplateHelpers_BuildOutputDir "${BUILD_OUTPUT_DIR}/${subdir}")
+set(CsoundTemplateHelpers_BuildDependenciesDir "${BUILD_DEPENDENCIES_DIR}/${subdir}")
+
+set_property(GLOBAL PROPERTY CsoundTemplateHelpers_RootDir "${CsoundTemplateHelpers_RootDir}")
+set_property(GLOBAL PROPERTY CsoundTemplateHelpers_ScriptsDir "${CsoundTemplateHelpers_ScriptsDir}")
 set_property(GLOBAL PROPERTY CsoundTemplateHelpers_BuildOutputDir "${CsoundTemplateHelpers_BuildOutputDir}")
 set_property(GLOBAL PROPERTY CsoundTemplateHelpers_BuildDependenciesDir "${CsoundTemplateHelpers_BuildDependenciesDir}")
 
@@ -66,7 +68,7 @@ endfunction()
 
 
 function(add_check_dependencies_are_gone_target dependency_file out_target)
-    get_property(CsoundTemplateHelpers_ScriptsSourceDir GLOBAL PROPERTY CsoundTemplateHelpers_ScriptsSourceDir)
+    get_property(CsoundTemplateHelpers_ScriptsDir GLOBAL PROPERTY CsoundTemplateHelpers_ScriptsDir)
 
     get_filename_component(dependency_file_basename "${dependency_file}" NAME)
     get_filename_as_target("${dependency_file_basename}" target)
@@ -76,7 +78,7 @@ function(add_check_dependencies_are_gone_target dependency_file out_target)
 
     add_custom_target(${target}
         COMMENT "Checking ${dependency_file_basename} dependencies"
-        COMMAND node "${CsoundTemplateHelpers_ScriptsSourceDir}/areDependenciesGone.js"
+        COMMAND node "${CsoundTemplateHelpers_ScriptsDir}/areDependenciesGone.js"
             --dependency-file "${dependency_file}"
             ${VERBOSE_CLI_FLAG}
             || (
@@ -106,7 +108,7 @@ endfunction()
 # to update the template helper source's dependencies list in the generated project or makefile.
 #
 function(add_custom_command_for_template_helper)
-    get_property(CsoundTemplateHelpers_ScriptsSourceDir GLOBAL PROPERTY CsoundTemplateHelpers_ScriptsSourceDir)
+    get_property(CsoundTemplateHelpers_ScriptsDir GLOBAL PROPERTY CsoundTemplateHelpers_ScriptsDir)
     get_property(CsoundTemplateHelpers_BuildDependenciesDir GLOBAL PROPERTY CsoundTemplateHelpers_BuildDependenciesDir)
     set(source "${ARGN}")
 
@@ -120,7 +122,7 @@ function(add_custom_command_for_template_helper)
 
         execute_process(
             WORKING_DIRECTORY "${ROOT_DIR}"
-            COMMAND node "${CsoundTemplateHelpers_ScriptsSourceDir}/getTypescriptFileDependencies.js"
+            COMMAND node "${CsoundTemplateHelpers_ScriptsDir}/getTypescriptFileDependencies.js"
                 --helper-file "${source}"
                 --output-file "${dependencies_output}.tmp"
                 ${VERBOSE_CLI_FLAG}
@@ -164,7 +166,7 @@ function(add_custom_command_for_template_helper)
             COMMENT "Updating ${source} dependencies ..."
             OUTPUT "${dependencies_output}.tmp"
             WORKING_DIRECTORY "${ROOT_DIR}"
-            COMMAND node "${CsoundTemplateHelpers_ScriptsSourceDir}/getTypescriptFileDependencies.js"
+            COMMAND node "${CsoundTemplateHelpers_ScriptsDir}/getTypescriptFileDependencies.js"
                 --helper-file "${source}"
                 --output-file "${dependencies_output}.tmp"
                 ${VERBOSE_CLI_FLAG}
@@ -172,7 +174,7 @@ function(add_custom_command_for_template_helper)
             DEPENDS
                 ${dependencies}
                 ${check_dependencies_are_gone}
-                "${CsoundTemplateHelpers_ScriptsSourceDir}/areDependenciesGone.js"
+                "${CsoundTemplateHelpers_ScriptsDir}/areDependenciesGone.js"
         )
 
         get_filename_component(target "${source}" NAME)
@@ -188,8 +190,8 @@ endfunction()
 
 
 function(add_csound_templates)
-    get_property(CsoundTemplateHelpers_SourceDir GLOBAL PROPERTY CsoundTemplateHelpers_SourceDir)
-    get_property(CsoundTemplateHelpers_ScriptsSourceDir GLOBAL PROPERTY CsoundTemplateHelpers_ScriptsSourceDir)
+    get_property(CsoundTemplateHelpers_RootDir GLOBAL PROPERTY CsoundTemplateHelpers_RootDir)
+    get_property(CsoundTemplateHelpers_ScriptsDir GLOBAL PROPERTY CsoundTemplateHelpers_ScriptsDir)
     get_property(CsoundTemplateHelpers_BuildOutputDir GLOBAL PROPERTY CsoundTemplateHelpers_BuildOutputDir)
     get_property(CsoundTemplateHelpers_BuildDependenciesDir GLOBAL PROPERTY CsoundTemplateHelpers_BuildDependenciesDir)
 
@@ -217,7 +219,7 @@ function(add_csound_templates)
             COMMENT "Generating ${source} ..."
             OUTPUT "${BUILD_OUTPUT_DIR}/${source}"
             WORKING_DIRECTORY "${ROOT_DIR}"
-            COMMAND node "${CsoundTemplateHelpers_ScriptsSourceDir}/buildTemplateFiles.js"
+            COMMAND node "${CsoundTemplateHelpers_ScriptsDir}/buildTemplateFiles.js"
                 --build-dir "${BUILD_DIR}"
                 --instruments ${ARG_INSTRUMENTS}
                 --opcodes ${ARG_OPCODES}
@@ -227,7 +229,7 @@ function(add_csound_templates)
                 --source "${source}"
                 ${VERBOSE_CLI_FLAG}
             DEPENDS
-                "${CsoundTemplateHelpers_ScriptsSourceDir}/buildTemplateFiles.js"
+                "${CsoundTemplateHelpers_ScriptsDir}/buildTemplateFiles.js"
                 ${helpers}
                 "${ARG_JSON}"
                 "${source}"
@@ -266,10 +268,10 @@ function(add_csound_templates)
         COMMENT "Running webpack ..."
         OUTPUT "${CsoundTemplateHelpers_BuildOutputDir}/.webpack.stamp"
         WORKING_DIRECTORY "${BUILD_DIR}"
-        COMMAND npm run _webpack
+        COMMAND npm --prefix "${CsoundTemplateHelpers_RootDir}" run webpack -- --env rootDir="${ROOT_DIR}"
         DEPENDS
             ${_webpack_dependencies}
-            "${CsoundTemplateHelpers_SourceDir}/webpack.config.js"
+            "${CsoundTemplateHelpers_RootDir}/webpack.config.js"
     )
 
     add_custom_target(webpack ALL DEPENDS "${CsoundTemplateHelpers_BuildOutputDir}/.webpack.stamp")
