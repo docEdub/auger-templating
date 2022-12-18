@@ -1,0 +1,3 @@
+[submodule "submodules/CsoundHandlebarHelpers"]
+	path = submodules/CsoundHandlebarHelpers
+	url = https://github.com/docEdub/CsoundHandlebarHelpers.git
