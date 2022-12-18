@@ -3,7 +3,7 @@
         "build": "(ls .build >/dev/null 2>&1 || npm run _cmake) && npm run _make",
         "configure": "(ls .build >/dev/null 2>&1 || npm run _cmake) && npm run _make:edit_cache",
         "install": "cd CsoundTemplateHelpers && npm run install",
-        "reset": "npm run _rm:build",
+        "rebuild": "npm run _rm:build && npm run build",
         "test": "cd CsoundTemplateHelpers && npm run test",
 
         "config": "npm run configure",
