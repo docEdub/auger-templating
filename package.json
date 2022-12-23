@@ -4,6 +4,7 @@
         "configure": "(ls .build >/dev/null 2>&1 || npm run _cmake) && npm run _make:edit_cache",
         "install": "npm --prefix submodules/CsoundHandlebarHelpers install",
         "rebuild": "npm run _rm:build && npm run build",
+        "reset": "npm run _rm:build",
         "test": "npm --prefix submodules/CsoundHandlebarHelpers run test",
 
         "config": "npm run configure",
