@@ -2,10 +2,10 @@
     "scripts": {
         "build": "(ls .build >/dev/null 2>&1 || npm run _cmake) && npm run _make",
         "configure": "(ls .build >/dev/null 2>&1 || npm run _cmake) && npm run _make:edit_cache",
-        "install": "npm --prefix submodules/CsoundHandlebarHelpers install",
+        "install": "npm --prefix tools/CsoundTemplating install",
         "rebuild": "npm run _rm:build && npm run build",
         "reset": "npm run _rm:build",
-        "test": "npm --prefix submodules/CsoundHandlebarHelpers run test",
+        "test": "npm --prefix tools/CsoundTemplating run test",
 
         "config": "npm run configure",
         "configuration": "npm run configure",

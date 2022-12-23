@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.17)
 
 project("Auger")
 
-list(APPEND CMAKE_PREFIX_PATH "submodules/CsoundHandlebarHelpers")
+list(APPEND CMAKE_PREFIX_PATH "tools/CsoundTemplating")
 find_package(CsoundTemplating REQUIRED)
 
 configure_csound_templates(
