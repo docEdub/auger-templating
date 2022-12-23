@@ -2,22 +2,19 @@
     "triggerTaskOnSave.tasks": {
         "Build": [
             "csd/**",
-            "instr/**",
             "json/**",
-            "sco/**",
-            "submodules/CsoundHandlebarHelpers/scripts/**",
-            "submodules/CsoundHandlebarHelpers/src/**",
-            "submodules/CsoundHandlebarHelpers/CMakeLists.txt",
-            "udo/**",
-            "CMakeLists.txt",
-            "tsconfig.json",
-            "webpack.config.js"
+            "tools/CsoundTemplating/scripts/**",
+            "tools/CsoundTemplating/src/**",
+            "tools/CsoundTemplating/CsoundTemplatingConfig.cmake",
+            "tools/CsoundTemplating/tsconfig.json",
+            "tools/CsoundTemplating/webpack.config.js",
+            "CMakeLists.txt"
         ],
         "Run tests": [
-            "submodules/CsoundHandlebarHelpers/src/**",
-            "submodules/CsoundHandlebarHelpers/unitTests/**",
-            "jest.config.js",
-            "webpack.config.js"
+            "tools/CsoundTemplating/src/**",
+            "tools/CsoundTemplating/unitTests/**",
+            "tools/CsoundTemplating/jest.config.js",
+            "tools/CsoundTemplating/webpack.config.js"
         ]
     },
     "jest.disabledWorkspaceFolders": [

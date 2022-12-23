@@ -26,7 +26,6 @@
             "dependsOn": "Build",
             "type": "shell",
             "command": "csound ${relativeFile} -odac",
-            // "command": "osascript -e 'tell app \"Terminal\" to do script \"cd \\\"${workspaceFolder}/.build/.output\\\" && csound ${relativeFile} -odac\"'",
             "options": {
                 "cwd": "${workspaceFolder}/.build/.output"
             }
