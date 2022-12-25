@@ -3,6 +3,7 @@
         "Build": [
             "csd/**",
             "json/**",
+            "tools/CsoundTemplating/include/**",
             "tools/CsoundTemplating/scripts/**",
             "tools/CsoundTemplating/src/**",
             "tools/CsoundTemplating/CsoundTemplatingConfig.cmake",
