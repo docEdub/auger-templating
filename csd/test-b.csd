@@ -10,7 +10,5 @@ endin
 i"B" 0 z
 </CsScore>
 </CsoundSynthesizer>
-{{#Cabbage}}
-{{/Cabbage}}
-{{#CsoundQt}}
-{{/CsoundQt}}
+
+{{Cabbage}}

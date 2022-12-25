@@ -1,1 +1,10 @@
-{}
+{
+    "ui": {
+        "type": "form",
+        "name": "Test B",
+        "height": 300,
+        "width": 400,
+        "background": "black",
+        "id": "000B"
+    }
+}
