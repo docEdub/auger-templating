@@ -1,13 +1,13 @@
 <CsoundSynthesizer>
 <CsOptions>
-{{CsdOptionsCore}}
+{{CsOptions}}
 </CsOptions>
 <CsInstruments>
 
 sr = {{sr}}
 kr = {{kr}}
 
-{{CsdOrcGlobalCore}}
+{{CsInstruments}}
 
 instr A
     {{LogTrace_i}}("%s %d, %d, %d ...", "test trace", 1, 2, 3)
@@ -26,7 +26,7 @@ endin
 </CsInstruments>
 <CsScore>
 
-{{CsdScoGlobalCore}}
+{{CsScore}}
 
 i"A" 0 0.031
 
